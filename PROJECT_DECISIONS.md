@@ -1,0 +1,53 @@
+# WayVeda Project Decisions
+
+## Confirmed Decisions
+
+| Topic | Decision | Source | Notes |
+|---|---|---|---|
+| Canonical repo | `https://github.com/sam9s/wayveda-warehouse-system.git` | User confirmation on 2026-04-04 | Local workspace now linked to this remote history |
+| App subdomains | Two subdomains only: `wh.wayveda.cloud` and `db.wayveda.cloud` | `ALICE_INSTRUCTIONS.md` | No separate `api` subdomain |
+| App serving model | One Express process serves API and built frontend on port `4002` | `ALICE_INSTRUCTIONS.md` | Caddy proxies all app traffic to `localhost:4002` |
+| Supabase Studio endpoint | `db.wayveda.cloud` -> `localhost:8000` | `INFRASTRUCTURE.md` and `ALICE_INSTRUCTIONS.md` | Admin-focused access |
+| Product count | `12` canonical products | `ALICE_INSTRUCTIONS.md` | Drop `Cream` entirely |
+| Opening stock date | `2025-07-24` | `ALICE_INSTRUCTIONS.md` | Historical imports are after this baseline |
+| Canonical seed source | `Docs/Wayveda Inventory Sheet.xlsx` | `ALICE_INSTRUCTIONS.md` | Use Ledger tab values for opening stock verification |
+| Canonical product naming | Use the normalized database names in the mapping table | `ALICE_INSTRUCTIONS.md` | Required for import scripts and later Shiprocket mapping |
+| Core movement model | Single `inventory_movements` table with `movement_type` discriminator | `Docs/WayVeda_Project_Spec.md` | Do not split into separate transaction tables |
+| Analytics model | SQL views compute balances and analytics | `Docs/WayVeda_Project_Spec.md` | Do not recreate spreadsheet logic in JS |
+| Shiprocket scope in Phase 1 | Read-only pull integration | `Docs/WayVeda_Project_Spec.md` | Manual dispatch remains available |
+| CSS approach | CSS Modules | `START_HERE.md` and spec | Match GREST pattern |
+| CI/CD model | GitHub Actions self-hosted runner on the same VPS | User clarification on 2026-04-03 | Flow is local -> GitHub -> VPS runner deploy |
+| App port | `4002` | Spec and infrastructure docs | Matches GREST convention |
+
+## Resolved Document Conflicts
+
+| Conflict | Resolution |
+|---|---|
+| `api.{domain}` appeared in older architecture text | Ignore it. Use only `wh` and `db` |
+| Spec referenced 13 SKUs | Override to 12 canonical products |
+| `Cream` appeared in older product lists | Drop it completely |
+| `Power Roll Oil Ubtan` appeared in older text | Canonical product is `Power Roll Oil Unflavoured` |
+| Older docs implied immediate coding as first task | Current execution starts with planning and then Phase A infrastructure |
+
+## Working Assumptions
+
+These are active unless explicitly changed:
+
+- Deployment branch will be `main`
+- The current public GitHub repo is the canonical remote
+- Supabase secrets will be generated directly on the VPS and not committed to git
+- Shiprocket credentials will only be needed in Phase E
+
+## Pending Inputs From Client / PM
+
+- `max_level` values
+- `qty_per_carton` defaults
+- SKU codes if they are needed beyond display/reference
+- Shiprocket API credentials
+
+## Operational Rules
+
+- Never use any SSH keys other than `C:\Users\hp\.ssh\wayveda_vps_ed25519` for this project
+- Do not commit live `.env` files
+- Preserve manual dispatch capability even after Shiprocket sync is added
+- Treat the Ledger verification values in `ALICE_INSTRUCTIONS.md` as the import validation target

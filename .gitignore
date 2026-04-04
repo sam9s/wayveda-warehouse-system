@@ -27,3 +27,7 @@ Thumbs.db
 # Temp
 tmp/
 *.tmp
+.~lock.*#
+
+# Local reference assets
+GWMS_repo/

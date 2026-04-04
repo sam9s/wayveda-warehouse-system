@@ -36,11 +36,17 @@ When Phase A is complete, the VPS should have:
 ## 2. VPS Details
 
 - **Provider:** Hostinger VPS
+- **IP:** 187.127.142.230
 - **OS:** Ubuntu (latest LTS)
 - **Access:** Root SSH
 - **Domain:** `wayveda.cloud` (registered on Hostinger)
+- **Path for repo:** /root/apps
 
 ---
+
+## 2.1. GIT Repo Details
+
+- <https://github.com/sam9s/wayveda-warehouse-system.git>
 
 ## 3. Step-by-Step Setup
 
@@ -112,6 +118,7 @@ cp .env.example .env
 **Edit `.env` in `/root/supabase/supabase/docker/`:**
 
 Critical variables to set:
+
 - `POSTGRES_PASSWORD` — strong random password
 - `JWT_SECRET` — generate with `openssl rand -base64 32`
 - `ANON_KEY` — generate via Supabase JWT tool or `supabase/gotrue` docs
@@ -135,6 +142,7 @@ docker compose ps
 ```
 
 **Verify Supabase is accessible:**
+
 ```bash
 curl http://localhost:8000/rest/v1/ -H "apikey: YOUR_ANON_KEY"
 # Should return empty JSON array or similar
@@ -224,6 +232,7 @@ cp /root/apps/wayveda-warehouse-system/backend/.env.example \
 Then edit `.env` with actual values (see `.env.example` for the template).
 
 **The project manager (Sammy) will provide the actual values for:**
+
 - Supabase keys (from Step 3.5)
 - Shiprocket API credentials
 - JWT secret
@@ -264,22 +273,24 @@ After completing all steps, verify each component:
 ## 5. Reference: GREST Infrastructure
 
 This setup mirrors the GREST Warehouse System infrastructure exactly:
+
 - Same VPS provider pattern (Hostinger)
 - Same Caddy configuration pattern (see `tmp_caddyfile` in GREST repo)
 - Same PM2 configuration pattern (see `ecosystem.config.js` in GREST repo)
 - Same Supabase self-hosted setup
 - Same port conventions (`4002` for app, `8000` for Supabase)
-
-GREST repo for reference: `https://github.com/sam9s/GREST-Warehouse-System.git`
+- Reference repo is at D:\RAVENs\Wayveda-Warehouse-System\GWMS_repo
+- GREST repo for reference: `https://github.com/sam9s/GREST-Warehouse-System.git`
 
 ---
 
 ## 6. What Comes Next (Phase B)
 
 Once Phase A is verified, Phase B begins:
+
 1. Create PostgreSQL tables (schema from `WayVeda_Project_Spec.md` Section 5)
 2. Create SQL views (from same section)
-3. Seed the 13 product SKUs
+3. Seed the 12 product SKUs
 4. Import historical movement data (11 rows from Google Sheet)
 5. Verify ledger calculations
 
@@ -290,16 +301,19 @@ Phase B does NOT require Shiprocket credentials. Those are needed in Phase E.
 ## 7. Troubleshooting
 
 ### Supabase containers won't start
+
 - Check Docker logs: `docker compose logs -f`
 - Ensure port 5432 isn't already in use: `lsof -i :5432`
 - Ensure sufficient disk space: `df -h`
 
 ### Caddy SSL fails
+
 - DNS must resolve first — check with: `dig wh.wayveda.cloud`
 - Ports 80 and 443 must be open: `ufw status`
 - Check Caddy logs: `journalctl -u caddy -f`
 
 ### PM2 not persisting after reboot
+
 - Run: `pm2 save` after starting processes
 - Run: `pm2 startup` and follow the output command
 
