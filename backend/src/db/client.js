@@ -5,12 +5,17 @@ function createPool() {
   loadEnv();
 
   const sslMode = (process.env.PGSSLMODE || "").toLowerCase();
-
-  return new Pool({
+  const pool = new Pool({
     connectionString: getEnvOrThrow("DATABASE_URL"),
     max: Number(process.env.PGPOOL_MAX || 4),
     ssl: sslMode === "require" ? { rejectUnauthorized: false } : false,
   });
+
+  pool.on("error", (error) => {
+    console.error(`Postgres pool idle client error: ${error.message}`);
+  });
+
+  return pool;
 }
 
 async function withClient(work) {
