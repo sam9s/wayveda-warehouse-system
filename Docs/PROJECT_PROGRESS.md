@@ -95,6 +95,9 @@
   - adopted `system_admin` as the platform-owner role above business `admin`
   - kept credentials in Supabase Auth and role/state in `public.users`
   - added a bootstrap CLI for creating permanent application users
+- Created and verified the first permanent bootstrap account:
+  - one `system_admin` user now exists on the live VPS
+  - `/api/auth/login`, `/api/auth/me`, and `/api/admin/users` all passed with that account
 
 ## VPS Baseline
 
@@ -158,11 +161,10 @@ Verified on 2026-04-04:
 - Future disruptive infra actions should be explicitly confirmed before execution unless urgent recovery is required.
 - Future backend and analytics work must preserve the owner-approved balance rule for ledger consistency.
 - Successful write-path scenarios will get another pass during frontend integration, but the backend read/auth verification baseline is complete.
-- A permanent app user is still needed for real operator login testing in the new frontend.
 - The user-management lifecycle is documented, but update/deactivate UI and endpoints are still pending.
 
 ## Next Planned Actions
 
-1. Create the first permanent `system_admin` account and verify login through the live frontend.
-2. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows in the new frontend.
-3. Define the first real WayVeda admin/operator accounts after the bootstrap login is confirmed.
+1. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows with the verified `system_admin` account.
+2. Define the first real WayVeda admin/operator accounts after the bootstrap login is confirmed.
+3. Add user-management endpoints and UI for deactivate/reactivate and future role edits.

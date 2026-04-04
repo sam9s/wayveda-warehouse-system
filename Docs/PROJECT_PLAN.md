@@ -201,7 +201,8 @@ Current status:
 - Core screens are implemented and deployed: login, dashboard, ledger, Stock In, Dispatch, RTO, analytics, products, and settings
 - Public app shell is now served through the backend at `https://wh.wayveda.cloud`
 - GitHub Actions deploy run `#16` succeeded after fixing runner PM2 context and post-restart probe timing
-- Remaining work in this slice is permanent `system_admin` login verification and operator-path QA
+- Permanent `system_admin` bootstrap is complete and verified against the live API
+- Remaining work in this slice is operator-path QA and first business-user provisioning
 
 ### Phase E - Shiprocket Integration
 

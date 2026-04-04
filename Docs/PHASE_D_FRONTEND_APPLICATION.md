@@ -78,8 +78,9 @@ Use these inputs in this order:
 - The backend analytics contract was extended so all three analysis screens can share the same date-range and period controls.
 - The built frontend is now served publicly through the backend at `https://wh.wayveda.cloud`.
 - GitHub Actions deploy run `#16` verified the expanded deploy workflow after fixing PM2 runner context and restart-check timing.
+- The first permanent `system_admin` account has been created and verified against the live API.
 - Remaining work in this slice:
-  - test the login screen with a permanent warehouse user
+  - test the browser login flow and operator screens with the permanent `system_admin` account
   - run real operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO
   - refine UI/UX issues found in the first live user pass
 
