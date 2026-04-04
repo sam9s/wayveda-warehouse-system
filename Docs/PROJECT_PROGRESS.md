@@ -3,8 +3,8 @@
 ## Status Snapshot
 
 - Date: 2026-04-04
-- Overall project state: Phase A complete, CI/CD bootstrap complete
-- Active focus: infrastructure baseline is live; next work is Phase B database and historical import setup
+- Overall project state: Phase A complete, CI/CD bootstrap complete, Phase B complete
+- Active focus: backend foundation is ready; next work is Phase C API implementation
 
 ## Completed So Far
 
@@ -47,6 +47,16 @@
   - `wh.wayveda.cloud` resolves to the VPS and returns `502` because the app is not running yet
   - `db.wayveda.cloud` resolves to the VPS and returns `401`, confirming Caddy, TLS, and Supabase public routing are working
 - Relocated project tracking documents under `Docs/` per project documentation rules.
+- Completed Phase B database work:
+  - added versioned migrations for schema and analytics views
+  - added product seed and historical import tooling
+  - seeded all 12 canonical products
+  - imported 326 grouped historical submissions / 1693 movement rows
+  - verified ledger balances against the approved live workbook targets
+- Corrected VPS backend database access to use the self-hosted Supavisor session-mode username format required for host-side Node access.
+- Captured and resolved a Phase B business-rule conflict:
+  - the live Google Sheet ledger subtracts `RTO Fake` twice in the balance formula
+  - the production SQL ledger now matches the live sheet targets for continuity
 
 ## VPS Baseline
 
@@ -98,7 +108,7 @@ Verified on 2026-04-04:
 |---|---|---|
 | A - Infrastructure | Completed | VPS stack is installed and verified, including reboot persistence |
 | A-CI - CI/CD | Completed | Self-hosted runner and initial deploy-sync workflow are working |
-| B - Database + Import | Not started | Live inventory sheet validated for planning |
+| B - Database + Import | Completed | Schema, seed, import, and ledger verification are complete on the VPS |
 | C - Backend API | Not started | Waiting on implementation start |
 | D - Frontend | Not started | Waiting on implementation start |
 | E - Shiprocket | Not started | Credentials not needed yet |
@@ -106,13 +116,13 @@ Verified on 2026-04-04:
 
 ## Current Risks / Watch Items
 
-- Historical Stock In dates contain ambiguous spreadsheet date formats.
 - `max_level`, `qty_per_carton`, and SKU values are still pending from the client.
 - `wh.wayveda.cloud` will return a 502 after DNS is fixed until the app process exists on port `4002`.
 - Future disruptive infra actions should be explicitly confirmed before execution unless urgent recovery is required.
+- The live ledger parity rule for `RTO Fake` must remain documented during backend and analytics work to avoid reintroducing a balance mismatch.
 
 ## Next Planned Actions
 
-1. Begin Phase B database migration and historical import work.
-2. Use `Docs/PHASE_B_DATABASE_IMPORT.md` as the working checklist for Phase B execution.
+1. Start Phase C backend API implementation.
+2. Use `Docs/PHASE_C_BACKEND_API.md` as the working checklist for backend work.
 3. Expand the bootstrap workflow into the full app deployment pipeline once backend/frontend build commands exist.

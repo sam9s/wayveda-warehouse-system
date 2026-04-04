@@ -19,6 +19,8 @@
 | CI/CD model | GitHub Actions self-hosted runner on the same VPS | User clarification on 2026-04-03 | Flow is local -> GitHub -> VPS runner deploy |
 | App port | `4002` | Spec and infrastructure docs | Matches GREST convention |
 | Project documentation location | Project-generated Markdown files live under `Docs/` | User clarification on 2026-04-04 | Avoid creating new project tracking files at repo root |
+| Host-side DB connection | Use Supavisor session mode on `localhost:5432` with username `postgres.your-tenant-id` | Official Supabase self-hosting docs plus VPS verification on 2026-04-04 | Required for host-side Node `pg` access on this self-hosted stack |
+| Ledger balance parity | `v_inventory_ledger.balance` must match the live Google Sheet ledger targets | Live workbook verification during Phase B on 2026-04-04 | This currently means `RTO Fake` is effectively deducted twice in the balance formula |
 
 ## Resolved Document Conflicts
 
@@ -29,6 +31,7 @@
 | `Cream` appeared in older product lists | Drop it completely |
 | `Power Roll Oil Ubtan` appeared in older text | Canonical product is `Power Roll Oil Unflavoured` |
 | Older docs implied immediate coding as first task | Current execution starts with planning and then Phase A infrastructure |
+| Written balance formula differed from the live ledger totals | Follow the live ledger totals for operational continuity and document the override explicitly |
 
 ## Working Assumptions
 
@@ -60,3 +63,4 @@ These are active unless explicitly changed:
 - GitHub Actions self-hosted runner is installed on the same VPS and registered as `wayveda-vps`
 - Initial CD workflow exists at `.github/workflows/deploy-sync.yml`
 - Deployment target path on VPS is `/root/apps/wayveda-warehouse-system`
+- Phase B schema, seed, import, and ledger verification are completed on the VPS

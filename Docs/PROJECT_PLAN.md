@@ -33,10 +33,16 @@ Use the following sources in this precedence order when there is a conflict:
   - `ufw` active with `22`, `80`, and `443` allowed
   - self-hosted Supabase is running via Docker
   - `/root/apps/wayveda-warehouse-system` exists and is synced from `main`
-  - backend `.env` exists on the VPS
+  - backend `.env` exists on the VPS and uses Supavisor session-mode credentials for host-side Node access
   - self-hosted GitHub Actions runner is installed and active
   - `db.wayveda.cloud` resolves publicly and responds over HTTPS
   - `wh.wayveda.cloud` resolves publicly and currently returns `502` until the app is started on `localhost:4002`
+- VPS Phase B state on 2026-04-04:
+  - versioned SQL migrations are in place under `backend/src/db/migrations`
+  - 12 canonical products are seeded
+  - 326 grouped historical submissions and 1693 movement rows are imported
+  - ledger verification passes against the approved workbook targets
+  - balance logic follows the live Google Sheet ledger behavior for continuity
 
 ## Delivery Model
 
@@ -53,7 +59,7 @@ Use the following sources in this precedence order when there is a conflict:
 |---|---|---|---|
 | A | VPS infrastructure foundation | Ubuntu prepared, Node.js, PM2, Docker, Supabase, Caddy, DNS, SSL, repo path | Completed |
 | A-CI | CI/CD foundation on same VPS | Self-hosted GitHub Actions runner, deploy workflow, PM2 reload flow, health checks | Completed |
-| B | Database and historical data foundation | Tables, views, 12 seeded products, imported movement history, verified balances | Planned |
+| B | Database and historical data foundation | Tables, views, 12 seeded products, imported movement history, verified balances | Completed |
 | C | Backend API | Express server, auth, product routes, movement routes, analytics routes, health endpoint | Planned |
 | D | Frontend application | React app shell, auth, dashboard, entry forms, analytics, product management | Planned |
 | E | Shiprocket integration | Auth, polling sync, mapping, auto dispatch creation, sync status UI | Planned |
@@ -135,6 +141,13 @@ Exit criteria:
 - `inventory_movements` contains verified historical data
 - `v_inventory_ledger` matches the approved ledger totals
 
+Current status:
+
+- Completed on 2026-04-04
+- Applied migrations `001` through `004`
+- Imported 326 grouped submissions and 1693 movement rows from the live workbook
+- Verified ledger balances against the approved targets
+
 ### Phase C - Backend API
 
 Scope:
@@ -212,13 +225,13 @@ Exit criteria:
 
 ## Risk Watchlist
 
-- Historical stock-in dates contain ambiguous formats and will need explicit sanity checking during import
 - The repo on GitHub and this local workspace are not identical yet
 - `wh.wayveda.cloud` will return `502` until the app process exists on port `4002`
 - CI/CD cannot be finalized until repo structure and app build commands are stable
+- The live Google Sheet ledger uses a balance formula that differs from the originally written spec, so this legacy parity rule must remain explicit during future analytics work
 
 ## Immediate Next Steps
 
-1. Start Phase B database and historical import work.
-2. Create per-phase working documents under `Docs/` as each phase begins.
-3. Expand the bootstrap workflow into the full deploy pipeline once backend and frontend build commands exist.
+1. Start Phase C backend API implementation.
+2. Use `Docs/PHASE_C_BACKEND_API.md` as the working checklist for backend work.
+3. Expand the bootstrap workflow into the full deploy pipeline once backend/frontend build commands exist.

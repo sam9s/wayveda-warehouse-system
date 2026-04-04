@@ -1,5 +1,9 @@
 # Phase B - Database And Historical Import
 
+## Status
+
+Completed on 2026-04-04.
+
 ## Objective
 
 Establish the production database foundation for WayVeda using the approved schema, seed the 12 canonical products, and import verified historical inventory movements from the live workbook.
@@ -23,12 +27,12 @@ Use these inputs in this order:
 
 ## Execution Steps
 
-1. Finalize the Phase B implementation checklist and migration sequence.
-2. Define the exact SQL schema and views to be created first.
-3. Normalize the 12-product master list and seed values.
-4. Build import scripts for `Stock In`, `Dispatch`, and `RTO`.
-5. Run import validation against approved ledger totals.
-6. Record mismatches and corrections before moving to backend API work.
+1. Finalized the migration sequence and created versioned SQL migrations.
+2. Implemented the schema, indexes, triggers, and analytics views.
+3. Normalized and seeded the 12-product master list.
+4. Built workbook import tooling for `Stock In`, `Dispatch`, and `RTO`.
+5. Imported and verified the historical data against approved ledger totals.
+6. Recorded the live-ledger formula override needed for parity.
 
 ## Validation Targets
 
@@ -39,10 +43,10 @@ Use these inputs in this order:
 
 ## Known Import Risks
 
-- Ambiguous date formats in historical stock-in records
-- Non-numeric cells inside dispatch data
-- Sheet naming irregularity: `RTO ` contains a trailing space
-- Possible naming mismatches between spreadsheet labels and normalized product names
+- Ambiguous stock-in dates were resolved with explicit overrides in the import tool
+- Non-numeric dispatch cells were normalized to zero during import
+- Sheet naming irregularity `RTO ` is handled explicitly in the import tool
+- Spreadsheet name variants are normalized to the canonical 12-product catalog
 
 ## Exit Criteria
 
@@ -51,3 +55,17 @@ Use these inputs in this order:
 - Product seed data is correct for all 12 products
 - Historical movements are imported successfully
 - Verified balances match the approved ledger targets
+
+## Outputs
+
+- Migrations created: `001` through `004`
+- Products seeded: `12`
+- Historical grouped submissions imported: `326`
+- Historical movement rows imported: `1693`
+- Ledger verification: passed
+
+## Phase B Notes
+
+- Host-side Node database access on this self-hosted Supabase stack required the Supavisor session-mode username format `postgres.your-tenant-id`.
+- The live Google Sheet ledger balances do not match the written spec formula exactly.
+- To preserve operational continuity, `v_inventory_ledger.balance` was aligned to the live ledger targets during Phase B.
