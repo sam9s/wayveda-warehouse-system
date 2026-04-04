@@ -32,7 +32,6 @@ async function withClient(work) {
     return await work(client);
   } finally {
     client.release();
-    await pool.end();
   }
 }
 
