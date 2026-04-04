@@ -1,0 +1,19 @@
+{
+  "name": "wayveda-warehouse-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Phase B database foundation and import tooling for the WayVeda Warehouse System",
+  "main": "server.js",
+  "scripts": {
+    "db:migrate": "node src/db/migrate.js",
+    "db:seed:products": "node src/db/seed-products.js",
+    "db:import:history": "node src/db/import-historical-data.js",
+    "db:verify:ledger": "node src/db/verify-ledger.js",
+    "db:phase-b": "npm run db:migrate && npm run db:seed:products && npm run db:import:history && npm run db:verify:ledger"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "exceljs": "^4.4.0",
+    "pg": "^8.16.3"
+  }
+}
