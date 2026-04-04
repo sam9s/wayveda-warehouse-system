@@ -85,7 +85,7 @@ Verified on 2026-04-04:
 ## Repo Baseline
 
 - Remote repo is live on GitHub and includes the planning baseline, source docs, images, and CI bootstrap workflow.
-- This local workspace currently has a small pending documentation relocation/update that is ready to push.
+- Project tracking documents now live under `Docs/` and the relocation has been pushed to `main`.
 - Unrelated tracked file differences still exist and should be reviewed intentionally later:
   - `README.md`
   - `START_HERE.md`
