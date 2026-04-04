@@ -3,8 +3,8 @@
 ## Status Snapshot
 
 - Date: 2026-04-04
-- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C in progress
-- Active focus: live backend verification and closing the remaining Phase C gaps before frontend work
+- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete
+- Active focus: Phase D frontend planning and implementation
 
 ## Completed So Far
 
@@ -66,6 +66,12 @@
   - live backend process deployed on the VPS and reachable via `https://wh.wayveda.cloud/api/health`
 - Expanded CI/CD from repo sync only to backend install, migrate, PM2 restart, and health verification on deploy.
 - Added a reusable auth-flow verification script under `backend/src/scripts/verify-auth-flows.js` so protected backend routes can be smoke-tested without manual terminal work.
+- Verified authenticated backend flows end to end on the live VPS:
+  - temporary smoke-test auth user created and removed automatically
+  - login, current-user, products, dashboard, ledger, movements, and admin users routes returned successfully
+  - movement validation returned the expected `400` for an invalid dispatch payload
+  - verification summary matched the imported foundation data: 12 products, 12 dashboard rows, 12 ledger rows, and 5 recent movements
+- Verified the expanded GitHub Actions deploy workflow succeeds on `main` after the Phase C changes.
 
 ## VPS Baseline
 
@@ -118,7 +124,7 @@ Verified on 2026-04-04:
 | A - Infrastructure | Completed | VPS stack is installed and verified, including reboot persistence |
 | A-CI - CI/CD | Completed | Self-hosted runner deploys backend installs, migrations, PM2 restart, and health checks |
 | B - Database + Import | Completed | Schema, seed, import, and ledger verification are complete on the VPS |
-| C - Backend API | In progress | Backend is live; auth-backed route verification is being finalized |
+| C - Backend API | Completed | Backend is live and auth-backed routes passed the non-destructive smoke test |
 | D - Frontend | Not started | Waiting on implementation start |
 | E - Shiprocket | Not started | Credentials not needed yet |
 | F - Testing + Handover | Not started | Depends on prior phases |
@@ -128,10 +134,10 @@ Verified on 2026-04-04:
 - `max_level`, `qty_per_carton`, and SKU values are still pending from the client.
 - Future disruptive infra actions should be explicitly confirmed before execution unless urgent recovery is required.
 - Future backend and analytics work must preserve the owner-approved balance rule for ledger consistency.
-- Auth-backed backend routes still need one clean smoke-test pass against a real running session before Phase C can be marked complete.
+- Successful write-path scenarios will get another pass during frontend integration, but the backend read/auth verification baseline is complete.
 
 ## Next Planned Actions
 
-1. Run the reusable auth verification script against the live backend and confirm protected routes end to end.
-2. Close any Phase C issues found during authenticated verification.
-3. Start Phase D frontend implementation once the backend verification pass is clean.
+1. Create the frontend application scaffold and route shell for Phase D.
+2. Build the first operator-facing screens: login, dashboard, and inventory views.
+3. Use the live Phase C API as the contract for frontend integration.

@@ -60,7 +60,7 @@ Use the following sources in this precedence order when there is a conflict:
 | A | VPS infrastructure foundation | Ubuntu prepared, Node.js, PM2, Docker, Supabase, Caddy, DNS, SSL, repo path | Completed |
 | A-CI | CI/CD foundation on same VPS | Self-hosted GitHub Actions runner, deploy workflow, PM2 reload flow, health checks | Completed |
 | B | Database and historical data foundation | Tables, views, 12 seeded products, imported movement history, verified balances | Completed |
-| C | Backend API | Express server, auth, product routes, movement routes, analytics routes, health endpoint | In progress |
+| C | Backend API | Express server, auth, product routes, movement routes, analytics routes, health endpoint | Completed |
 | D | Frontend application | React app shell, auth, dashboard, entry forms, analytics, product management | Planned |
 | E | Shiprocket integration | Auth, polling sync, mapping, auto dispatch creation, sync status UI | Planned |
 | F | Testing, production hardening, handover | E2E verification, production deploy validation, rollback path, documentation | Planned |
@@ -118,6 +118,7 @@ Current status:
 - Completed on 2026-04-04 with runner name `wayveda-vps`
 - Workflow is in place at `.github/workflows/deploy-sync.yml`
 - Current deploy steps: sync repo, run `npm ci`, run `npm run db:migrate`, restart PM2, verify `/api/health`
+- Verified successful GitHub Actions deploy runs after the Phase C workflow expansion
 
 ### Phase B - Database, Seed, and Historical Import
 
@@ -168,11 +169,11 @@ Exit criteria:
 
 Current status:
 
-- In progress on 2026-04-04
+- Completed on 2026-04-04
 - Backend server is live on the VPS behind Caddy and PM2
 - Public health endpoint is working at `https://wh.wayveda.cloud/api/health`
 - Protected route groups are implemented for auth, products, movements, inventory, and admin
-- Remaining work is authenticated verification and any fixes found during that pass
+- Auth-backed smoke verification passed against the live VPS using `backend/src/scripts/verify-auth-flows.js`
 
 ### Phase D - Frontend Application
 
@@ -240,6 +241,6 @@ Exit criteria:
 
 ## Immediate Next Steps
 
-1. Run the authenticated backend verification pass and fix any issues it exposes.
-2. Finalize Phase C once the protected routes are verified end to end.
-3. Start Phase D frontend implementation after the backend API is stable.
+1. Start Phase D frontend implementation.
+2. Scaffold the React application shell, auth flow, and dashboard/inventory screens.
+3. Reuse the live Phase C API contract and keep backend smoke verification available for regression checks.

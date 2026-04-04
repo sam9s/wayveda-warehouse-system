@@ -6,7 +6,7 @@ Build the production Express API layer on top of the verified Phase B database f
 
 ## Status
 
-In progress on 2026-04-04.
+Completed on 2026-04-04.
 
 ## Scope
 
@@ -41,7 +41,9 @@ Use these inputs in this order:
 
 - Public backend health is live at `https://wh.wayveda.cloud/api/health`
 - Protected route groups are implemented and mounted under `/api`
-- The remaining Phase C step is a clean authenticated verification pass against the live backend, then any fixes it exposes
+- Auth verification passed against the live VPS using `backend/src/scripts/verify-auth-flows.js`
+- Verified results: 12 products, 12 dashboard rows, 12 ledger rows, 5 recent movements, and admin-authenticated access to `/api/admin/users`
+- The verifier is intentionally non-destructive for inventory data: it checks login, protected reads, and validation behavior without writing movement history
 
 ## Exit Criteria
 
@@ -51,3 +53,7 @@ Use these inputs in this order:
 - Movement entry routes enforce the correct business constraints
 - Inventory and analytics endpoints read from SQL views, not duplicated logic
 - Backend is ready to be wired into the full deploy workflow and frontend work
+
+Exit status:
+
+- Met on 2026-04-04
