@@ -18,6 +18,7 @@
 | CSS approach | CSS Modules | `START_HERE.md` and spec | Match GREST pattern |
 | CI/CD model | GitHub Actions self-hosted runner on the same VPS | User clarification on 2026-04-03 | Flow is local -> GitHub -> VPS runner deploy |
 | App port | `4002` | Spec and infrastructure docs | Matches GREST convention |
+| Project documentation location | Project-generated Markdown files live under `Docs/` | User clarification on 2026-04-04 | Avoid creating new project tracking files at repo root |
 
 ## Resolved Document Conflicts
 
@@ -51,6 +52,7 @@ These are active unless explicitly changed:
 - Do not commit live `.env` files
 - Preserve manual dispatch capability even after Shiprocket sync is added
 - Treat the Ledger verification values in `ALICE_INSTRUCTIONS.md` as the import validation target
+- Confirm before future disruptive infra actions such as reboot unless required for immediate recovery or security work
 
 ## Executed Decisions
 

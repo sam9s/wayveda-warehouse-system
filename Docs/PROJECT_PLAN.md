@@ -7,6 +7,10 @@ It is the planning baseline for delivery and should be kept in sync with `PROJEC
 
 Current mode: planning only. No implementation phase is considered complete unless it is explicitly recorded in `PROJECT_PROGRESS.md`.
 
+Documentation rule:
+
+- All project-generated Markdown documents live under `Docs/`
+
 ## Canonical Inputs
 
 Use the following sources in this precedence order when there is a conflict:
@@ -31,7 +35,8 @@ Use the following sources in this precedence order when there is a conflict:
   - `/root/apps/wayveda-warehouse-system` exists and is synced from `main`
   - backend `.env` exists on the VPS
   - self-hosted GitHub Actions runner is installed and active
-  - `wh.wayveda.cloud` and `db.wayveda.cloud` still do not resolve publicly
+  - `db.wayveda.cloud` resolves publicly and responds over HTTPS
+  - `wh.wayveda.cloud` resolves publicly and currently returns `502` until the app is started on `localhost:4002`
 
 ## Delivery Model
 
@@ -46,8 +51,8 @@ Use the following sources in this precedence order when there is a conflict:
 
 | Phase | Objective | Key Outputs | Status |
 |---|---|---|---|
-| A | VPS infrastructure foundation | Ubuntu prepared, Node.js, PM2, Docker, Supabase, Caddy, DNS, SSL, repo path | Planned |
-| A-CI | CI/CD foundation on same VPS | Self-hosted GitHub Actions runner, deploy workflow, PM2 reload flow, health checks | Planned |
+| A | VPS infrastructure foundation | Ubuntu prepared, Node.js, PM2, Docker, Supabase, Caddy, DNS, SSL, repo path | Completed |
+| A-CI | CI/CD foundation on same VPS | Self-hosted GitHub Actions runner, deploy workflow, PM2 reload flow, health checks | Completed |
 | B | Database and historical data foundation | Tables, views, 12 seeded products, imported movement history, verified balances | Planned |
 | C | Backend API | Express server, auth, product routes, movement routes, analytics routes, health endpoint | Planned |
 | D | Frontend application | React app shell, auth, dashboard, entry forms, analytics, product management | Planned |
@@ -209,12 +214,11 @@ Exit criteria:
 
 - Historical stock-in dates contain ambiguous formats and will need explicit sanity checking during import
 - The repo on GitHub and this local workspace are not identical yet
-- DNS is not configured, so SSL validation cannot begin until Hostinger records are created
+- `wh.wayveda.cloud` will return `502` until the app process exists on port `4002`
 - CI/CD cannot be finalized until repo structure and app build commands are stable
 
 ## Immediate Next Steps
 
-1. Approve these planning documents as the working baseline.
-2. Confirm the deployment branch. Working assumption: `main`.
-3. Decide which local reference assets should live in the GitHub repo versus remain local-only.
-4. Start Phase A implementation from `INFRASTRUCTURE.md`.
+1. Start Phase B database and historical import work.
+2. Create per-phase working documents under `Docs/` as each phase begins.
+3. Expand the bootstrap workflow into the full deploy pipeline once backend and frontend build commands exist.

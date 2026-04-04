@@ -4,7 +4,7 @@
 
 - Date: 2026-04-04
 - Overall project state: Phase A complete, CI/CD bootstrap complete
-- Active focus: infrastructure baseline is live; next work is application build phases
+- Active focus: infrastructure baseline is live; next work is Phase B database and historical import setup
 
 ## Completed So Far
 
@@ -43,6 +43,10 @@
   - `.github/workflows/deploy-sync.yml`
 - Verified the first Actions run completed successfully on `main`.
 - Rebooted the VPS and confirmed services recovered automatically.
+- Verified public DNS and HTTPS:
+  - `wh.wayveda.cloud` resolves to the VPS and returns `502` because the app is not running yet
+  - `db.wayveda.cloud` resolves to the VPS and returns `401`, confirming Caddy, TLS, and Supabase public routing are working
+- Relocated project tracking documents under `Docs/` per project documentation rules.
 
 ## VPS Baseline
 
@@ -73,18 +77,20 @@ Verified on 2026-04-04:
   - `/root/apps/wayveda-warehouse-system` present
   - `/root/supabase/supabase/docker` present
 - DNS:
-  - `wh.wayveda.cloud` does not resolve
-  - `db.wayveda.cloud` does not resolve
+  - `wh.wayveda.cloud` resolves to `187.127.142.230`
+  - `db.wayveda.cloud` resolves to `187.127.142.230`
+  - `wh.wayveda.cloud` currently returns `502` until the app exists on port `4002`
+  - `db.wayveda.cloud` currently returns `401`, which is expected for the Supabase public endpoint check
 
 ## Repo Baseline
 
-- Remote repo is live on GitHub and currently ahead/behind this local workspace in content shape.
-- This local workspace contains planning inputs and source assets that are not yet present in the GitHub repo:
-  - `ALICE_INSTRUCTIONS.md`
-  - `Docs/`
-  - `Images/`
-  - `GWMS_repo/`
-- Existing tracked files also differ from the current remote copy and will need an intentional commit sequence later.
+- Remote repo is live on GitHub and includes the planning baseline, source docs, images, and CI bootstrap workflow.
+- This local workspace currently has a small pending documentation relocation/update that is ready to push.
+- Unrelated tracked file differences still exist and should be reviewed intentionally later:
+  - `README.md`
+  - `START_HERE.md`
+  - `backend/.env.example`
+  - `ecosystem.config.js`
 
 ## Phase Status
 
@@ -100,14 +106,13 @@ Verified on 2026-04-04:
 
 ## Current Risks / Watch Items
 
-- DNS records are not yet configured, which blocks Caddy SSL issuance.
 - Historical Stock In dates contain ambiguous spreadsheet date formats.
 - `max_level`, `qty_per_carton`, and SKU values are still pending from the client.
-- `wh.wayveda.cloud` will continue to return unresolved DNS until Hostinger A records are created.
 - `wh.wayveda.cloud` will return a 502 after DNS is fixed until the app process exists on port `4002`.
+- Future disruptive infra actions should be explicitly confirmed before execution unless urgent recovery is required.
 
 ## Next Planned Actions
 
-1. Create Hostinger DNS A records for `wh` and `db` pointing to `187.127.142.230`.
-2. Begin Phase B database migration and historical import work.
+1. Begin Phase B database migration and historical import work.
+2. Use `Docs/PHASE_B_DATABASE_IMPORT.md` as the working checklist for Phase B execution.
 3. Expand the bootstrap workflow into the full app deployment pipeline once backend/frontend build commands exist.
