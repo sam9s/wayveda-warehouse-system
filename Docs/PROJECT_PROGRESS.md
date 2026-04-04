@@ -3,8 +3,8 @@
 ## Status Snapshot
 
 - Date: 2026-04-04
-- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress
-- Active focus: frontend deployment integration and first live UI verification
+- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment
+- Active focus: permanent-user login verification and operator-path QA on the live frontend
 
 ## Completed So Far
 
@@ -82,6 +82,14 @@
   - analytics filters now support compatibility aliases `from`, `to`, and `period`
   - `rto-analysis` now honors the same period toggle pattern as the other analysis views
 - Verified the frontend builds locally with Vite.
+- Verified live frontend serving on `https://wh.wayveda.cloud`:
+  - public app shell loads at `/`
+  - SPA fallback returns the frontend shell for `/login` and `/inventory-ledger`
+  - `/api/health` remains healthy behind the same Express process
+- Resolved two GitHub Actions deploy issues during Phase D rollout:
+  - the self-hosted runner must set `HOME=/root` and `PM2_HOME=/root/.pm2` so PM2 talks to the persistent root daemon instead of a transient `/etc/.pm2` daemon
+  - post-restart health checks need retry windows so deploy verification does not fail during normal PM2 startup timing
+- Verified GitHub Actions deploy run `#16` succeeds on `main` after those workflow fixes.
 
 ## VPS Baseline
 
@@ -132,10 +140,10 @@ Verified on 2026-04-04:
 | Phase | Status | Notes |
 |---|---|---|
 | A - Infrastructure | Completed | VPS stack is installed and verified, including reboot persistence |
-| A-CI - CI/CD | Completed | Self-hosted runner deploys installs, migrations, PM2 restart, and backend health checks |
+| A-CI - CI/CD | Completed | Self-hosted runner deploys installs, frontend build, migrations, PM2 restart, and app-shell checks |
 | B - Database + Import | Completed | Schema, seed, import, and ledger verification are complete on the VPS |
 | C - Backend API | Completed | Backend is live and auth-backed routes passed the non-destructive smoke test |
-| D - Frontend | In progress | Frontend scaffold and core screens are built locally; live serving integration is being finalized |
+| D - Frontend | In progress | Frontend is deployed publicly; permanent-user login and operator-path verification are still pending |
 | E - Shiprocket | Not started | Credentials not needed yet |
 | F - Testing + Handover | Not started | Depends on prior phases |
 
@@ -149,6 +157,6 @@ Verified on 2026-04-04:
 
 ## Next Planned Actions
 
-1. Serve the built frontend through the backend on the VPS and verify the public app shell at `wh.wayveda.cloud`.
-2. Run the expanded GitHub Actions workflow that now installs/builds the frontend as part of deploy.
-3. Create or confirm a permanent warehouse user so the login screen can be tested end to end.
+1. Create or confirm a permanent warehouse user so the login screen can be tested end to end.
+2. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows in the new frontend.
+3. Refine frontend polish issues found during the first real-user pass before moving deeper into Phase E.

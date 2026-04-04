@@ -117,8 +117,8 @@ Current status:
 
 - Completed on 2026-04-04 with runner name `wayveda-vps`
 - Workflow is in place at `.github/workflows/deploy-sync.yml`
-- Current deploy steps: sync repo, install backend/frontend deps, run backend migrations, build frontend, restart PM2, verify `/api/health`
-- Verified successful GitHub Actions deploy runs after the Phase C workflow expansion
+- Current deploy steps: sync repo, install backend/frontend deps, run backend migrations, build frontend, restart PM2, verify `/api/health`, and verify the frontend shell at `/`
+- Verified successful GitHub Actions deploy runs after the Phase C workflow expansion and the Phase D frontend-serving workflow fixes
 
 ### Phase B - Database, Seed, and Historical Import
 
@@ -197,9 +197,10 @@ Current status:
 
 - In progress on 2026-04-04
 - `frontend/` scaffold exists with React 19 + Vite, protected routing, auth handling, and shared layout/components
-- Core screens are implemented locally: login, dashboard, ledger, Stock In, Dispatch, RTO, analytics, products, and settings
-- Production build passes locally
-- Remaining work in this slice is VPS serving verification and permanent-user login verification
+- Core screens are implemented and deployed: login, dashboard, ledger, Stock In, Dispatch, RTO, analytics, products, and settings
+- Public app shell is now served through the backend at `https://wh.wayveda.cloud`
+- GitHub Actions deploy run `#16` succeeded after fixing runner PM2 context and post-restart probe timing
+- Remaining work in this slice is permanent-user login verification and operator-path QA
 
 ### Phase E - Shiprocket Integration
 

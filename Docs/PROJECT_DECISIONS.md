@@ -24,6 +24,7 @@
 | Host-side DB connection | Use Supavisor session mode on `localhost:5432` with username `postgres.your-tenant-id` | Official Supabase self-hosting docs plus VPS verification on 2026-04-04 | Required for host-side Node `pg` access on this self-hosted stack |
 | Ledger balance formula | `v_inventory_ledger.balance = opening_stock + total_received + total_rto_right - total_dispatched` | WayVeda owner confirmation relayed via Astra on 2026-04-04 | `RTO Wrong` and `RTO Fake` remain visible reporting metrics but do not reduce balance again |
 | Analytics filter contract | Backend accepts `startDate`/`endDate`/`granularity` plus compatibility aliases `from`/`to`/`period` | Phase D implementation decision on 2026-04-04 | Lets the frontend use a shared filter model without breaking the existing API shape |
+| PM2 deploy context | GitHub Actions deploys must set `HOME=/root` and `PM2_HOME=/root/.pm2`, and verify with retry-based health checks | Phase D deploy fix on 2026-04-04 | Prevents Actions from spawning a transient `/etc/.pm2` daemon and failing on normal restart timing |
 
 ## Resolved Document Conflicts
 
@@ -67,3 +68,4 @@ These are active unless explicitly changed:
 - Initial CD workflow exists at `.github/workflows/deploy-sync.yml`
 - Deployment target path on VPS is `/root/apps/wayveda-warehouse-system`
 - Phase B schema, seed, import, and ledger verification are completed on the VPS
+- Frontend build is now served through the backend at `https://wh.wayveda.cloud`

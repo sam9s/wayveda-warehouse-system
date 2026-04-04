@@ -76,10 +76,12 @@ Use these inputs in this order:
   - settings
 - Dispatch already includes both the manual-entry flow and the Shiprocket placeholder tab.
 - The backend analytics contract was extended so all three analysis screens can share the same date-range and period controls.
+- The built frontend is now served publicly through the backend at `https://wh.wayveda.cloud`.
+- GitHub Actions deploy run `#16` verified the expanded deploy workflow after fixing PM2 runner context and restart-check timing.
 - Remaining work in this slice:
-  - serve the built frontend through the backend on the VPS
-  - verify the expanded deploy workflow
   - test the login screen with a permanent warehouse user
+  - run real operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO
+  - refine UI/UX issues found in the first live user pass
 
 ## Exit Criteria
 
