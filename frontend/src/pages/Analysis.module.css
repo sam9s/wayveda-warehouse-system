@@ -1,0 +1,49 @@
+.page {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.toolbarCard,
+.chartCard,
+.tableCard {
+  padding: 1.15rem;
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(14, 28, 34, 0.08);
+  box-shadow: 0 24px 48px rgba(34, 43, 48, 0.06);
+}
+
+.toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.toolbarGroup {
+  display: flex;
+  align-items: end;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.chartCard h3,
+.tableCard h3 {
+  margin: 0 0 1rem;
+  font: 700 1.15rem/1.1 var(--font-heading);
+}
+
+.chartWrap {
+  min-height: 20rem;
+}
+
+.tableCard {
+  overflow: hidden;
+}
+
+@media (max-width: 760px) {
+  .toolbar {
+    align-items: stretch;
+  }
+}

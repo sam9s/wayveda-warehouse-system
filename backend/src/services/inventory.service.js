@@ -4,6 +4,7 @@ const { badRequest } = require("../utils/http-error");
 function buildDateFilters({
   dateColumn = "entry_date",
   endDate,
+  productColumn = "product_id",
   productId,
   startDate,
 }, values) {
@@ -11,7 +12,7 @@ function buildDateFilters({
 
   if (productId) {
     values.push(productId);
-    conditions.push(`product_id = $${values.length}`);
+    conditions.push(`${productColumn} = $${values.length}`);
   }
 
   if (startDate) {
@@ -25,6 +26,15 @@ function buildDateFilters({
   }
 
   return conditions;
+}
+
+function normalizeAnalysisFilters(filters = {}, defaultGranularity = "daily") {
+  return {
+    endDate: filters.endDate || filters.to || null,
+    granularity: filters.granularity || filters.period || defaultGranularity,
+    productId: filters.productId || filters.product_id || null,
+    startDate: filters.startDate || filters.from || null,
+  };
 }
 
 function granularityConfig(granularity) {
@@ -77,9 +87,10 @@ async function getInventoryLedger() {
 }
 
 async function getDispatchAnalysis(filters) {
+  const normalizedFilters = normalizeAnalysisFilters(filters, "daily");
   const values = [];
-  const granularity = granularityConfig(filters.granularity || "daily");
-  const conditions = buildDateFilters(filters, values);
+  const granularity = granularityConfig(normalizedFilters.granularity);
+  const conditions = buildDateFilters(normalizedFilters, values);
   const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
 
   const result = await query(
@@ -102,9 +113,10 @@ async function getDispatchAnalysis(filters) {
 }
 
 async function getInwardAnalysis(filters) {
+  const normalizedFilters = normalizeAnalysisFilters(filters, "daily");
   const values = [];
-  const granularity = granularityConfig(filters.granularity || "daily");
-  const conditions = buildDateFilters(filters, values);
+  const granularity = granularityConfig(normalizedFilters.granularity);
+  const conditions = buildDateFilters(normalizedFilters, values);
   const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
 
   const result = await query(
@@ -128,29 +140,37 @@ async function getInwardAnalysis(filters) {
 }
 
 async function getRtoAnalysis(filters) {
+  const normalizedFilters = normalizeAnalysisFilters(filters, "monthly");
   const values = [];
+  const granularity = granularityConfig(normalizedFilters.granularity);
   const conditions = buildDateFilters(
     {
-      ...filters,
-      dateColumn: "month_start",
+      ...normalizedFilters,
+      dateColumn: "m.entry_date",
+      productColumn: "m.product_id",
     },
     values
   );
-  const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+  const whereClause = conditions.length
+    ? `AND ${conditions.join(" AND ")}`
+    : "";
 
   const result = await query(
     `
       SELECT
-        month_start AS period_start,
-        month AS period_label,
-        product_id,
-        product_name,
-        total_right,
-        total_wrong,
-        total_fake,
-        total_rto
-      FROM v_rto_monthly
+        ${granularity.periodStart} AS period_start,
+        ${granularity.label} AS period_label,
+        m.product_id,
+        p.name::TEXT AS product_name,
+        SUM(m.rto_right)::int AS total_right,
+        SUM(m.rto_wrong)::int AS total_wrong,
+        SUM(m.rto_fake)::int AS total_fake,
+        SUM(m.rto_right + m.rto_wrong + m.rto_fake)::int AS total_rto
+      FROM inventory_movements m
+      JOIN products p ON p.id = m.product_id
+      WHERE m.movement_type = 'rto'
       ${whereClause}
+      GROUP BY ${granularity.groupBy}, m.product_id, p.name
       ORDER BY period_start DESC, product_name
     `,
     values

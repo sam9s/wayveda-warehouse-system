@@ -43,6 +43,18 @@ jobs:
           cd /root/apps/wayveda-warehouse-system/backend
           npm ci
 
+      - name: Install frontend dependencies
+        run: |
+          set -euo pipefail
+          cd /root/apps/wayveda-warehouse-system/frontend
+          npm ci
+
+      - name: Build frontend
+        run: |
+          set -euo pipefail
+          cd /root/apps/wayveda-warehouse-system/frontend
+          npm run build
+
       - name: Run backend migrations
         run: |
           set -euo pipefail
@@ -60,3 +72,8 @@ jobs:
         run: |
           set -euo pipefail
           curl --fail --silent --show-error http://127.0.0.1:4002/api/health
+
+      - name: Verify frontend shell
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error http://127.0.0.1:4002/ | grep -qi "<!doctype html>"

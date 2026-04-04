@@ -16,11 +16,14 @@
 | Analytics model | SQL views compute balances and analytics | `Docs/WayVeda_Project_Spec.md` | Do not recreate spreadsheet logic in JS |
 | Shiprocket scope in Phase 1 | Read-only pull integration | `Docs/WayVeda_Project_Spec.md` | Manual dispatch remains available |
 | CSS approach | CSS Modules | `START_HERE.md` and spec | Match GREST pattern |
+| Frontend UX continuity | Preserve the current Google Script movement UX patterns during Phase D | Astra note in `Docs/TEMP.txt` on 2026-04-04 plus spec Section 9 | Keep movement cards, numbered sections, multi-product add pattern, and movement color coding |
+| Frontend libraries | Use React Router 7, Axios, Lucide React, and Chart.js in Phase D | Astra note in `Docs/TEMP.txt` on 2026-04-04 plus spec | Avoid drifting from the agreed frontend stack |
 | CI/CD model | GitHub Actions self-hosted runner on the same VPS | User clarification on 2026-04-03 | Flow is local -> GitHub -> VPS runner deploy |
 | App port | `4002` | Spec and infrastructure docs | Matches GREST convention |
 | Project documentation location | Project-generated Markdown files live under `Docs/` | User clarification on 2026-04-04 | Avoid creating new project tracking files at repo root |
 | Host-side DB connection | Use Supavisor session mode on `localhost:5432` with username `postgres.your-tenant-id` | Official Supabase self-hosting docs plus VPS verification on 2026-04-04 | Required for host-side Node `pg` access on this self-hosted stack |
 | Ledger balance formula | `v_inventory_ledger.balance = opening_stock + total_received + total_rto_right - total_dispatched` | WayVeda owner confirmation relayed via Astra on 2026-04-04 | `RTO Wrong` and `RTO Fake` remain visible reporting metrics but do not reduce balance again |
+| Analytics filter contract | Backend accepts `startDate`/`endDate`/`granularity` plus compatibility aliases `from`/`to`/`period` | Phase D implementation decision on 2026-04-04 | Lets the frontend use a shared filter model without breaking the existing API shape |
 
 ## Resolved Document Conflicts
 

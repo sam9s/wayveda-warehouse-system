@@ -1,0 +1,54 @@
+.page {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.formulaStrip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1rem;
+  border-radius: 1.15rem;
+  background: rgba(0, 191, 166, 0.1);
+  color: var(--teal-700);
+  flex-wrap: wrap;
+}
+
+.searchField {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.85rem;
+  padding: 0 0.9rem;
+  border-radius: 1rem;
+  background: white;
+  border: 1px solid rgba(14, 28, 34, 0.08);
+}
+
+.searchField input {
+  min-width: 12rem;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
+.productCell strong,
+.productCell span {
+  display: block;
+}
+
+.productCell span {
+  color: var(--ink-600);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 760px) {
+  .searchField {
+    width: 100%;
+  }
+
+  .searchField input {
+    min-width: 0;
+    width: 100%;
+  }
+}

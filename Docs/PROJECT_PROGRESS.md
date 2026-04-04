@@ -3,8 +3,8 @@
 ## Status Snapshot
 
 - Date: 2026-04-04
-- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete
-- Active focus: Phase D frontend planning and implementation
+- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress
+- Active focus: frontend deployment integration and first live UI verification
 
 ## Completed So Far
 
@@ -72,6 +72,16 @@
   - movement validation returned the expected `400` for an invalid dispatch payload
   - verification summary matched the imported foundation data: 12 products, 12 dashboard rows, 12 ledger rows, and 5 recent movements
 - Verified the expanded GitHub Actions deploy workflow succeeds on `main` after the Phase C changes.
+- Started Phase D frontend implementation:
+  - scaffolded `frontend/` with React 19 + Vite
+  - pinned `react-router-dom`, `axios`, `lucide-react`, `chart.js`, and `react-chartjs-2`
+  - built protected routing, auth state, Axios token handling, layout shell, and shared UI primitives
+  - implemented login, dashboard, ledger, Stock In, Dispatch, RTO, analysis, products, and settings pages
+  - preserved the operator UX patterns Astra highlighted: movement cards, numbered sections, multi-product entry, and Dispatch dual-tab shell
+- Extended the backend/frontend contract for Phase D:
+  - analytics filters now support compatibility aliases `from`, `to`, and `period`
+  - `rto-analysis` now honors the same period toggle pattern as the other analysis views
+- Verified the frontend builds locally with Vite.
 
 ## VPS Baseline
 
@@ -122,10 +132,10 @@ Verified on 2026-04-04:
 | Phase | Status | Notes |
 |---|---|---|
 | A - Infrastructure | Completed | VPS stack is installed and verified, including reboot persistence |
-| A-CI - CI/CD | Completed | Self-hosted runner deploys backend installs, migrations, PM2 restart, and health checks |
+| A-CI - CI/CD | Completed | Self-hosted runner deploys installs, migrations, PM2 restart, and backend health checks |
 | B - Database + Import | Completed | Schema, seed, import, and ledger verification are complete on the VPS |
 | C - Backend API | Completed | Backend is live and auth-backed routes passed the non-destructive smoke test |
-| D - Frontend | Not started | Waiting on implementation start |
+| D - Frontend | In progress | Frontend scaffold and core screens are built locally; live serving integration is being finalized |
 | E - Shiprocket | Not started | Credentials not needed yet |
 | F - Testing + Handover | Not started | Depends on prior phases |
 
@@ -135,9 +145,10 @@ Verified on 2026-04-04:
 - Future disruptive infra actions should be explicitly confirmed before execution unless urgent recovery is required.
 - Future backend and analytics work must preserve the owner-approved balance rule for ledger consistency.
 - Successful write-path scenarios will get another pass during frontend integration, but the backend read/auth verification baseline is complete.
+- A permanent app user is still needed for real operator login testing in the new frontend.
 
 ## Next Planned Actions
 
-1. Create the frontend application scaffold and route shell for Phase D.
-2. Build the first operator-facing screens: login, dashboard, and inventory views.
-3. Use the live Phase C API as the contract for frontend integration.
+1. Serve the built frontend through the backend on the VPS and verify the public app shell at `wh.wayveda.cloud`.
+2. Run the expanded GitHub Actions workflow that now installs/builds the frontend as part of deploy.
+3. Create or confirm a permanent warehouse user so the login screen can be tested end to end.

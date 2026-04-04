@@ -1,0 +1,340 @@
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.pageHeader h2,
+.emptyState h3 {
+  margin: 0;
+  font: 700 clamp(1.35rem, 1.5vw, 1.85rem) / 1.02 var(--font-heading);
+  letter-spacing: -0.05em;
+}
+
+.eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--teal-700);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.description {
+  max-width: 46rem;
+  margin: 0.55rem 0 0;
+  color: var(--ink-600);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.statCard {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.1rem;
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(14, 28, 34, 0.08);
+  box-shadow: 0 28px 54px rgba(34, 43, 48, 0.06);
+}
+
+.statCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.statCard p,
+.statCard span {
+  margin: 0;
+  color: var(--ink-600);
+}
+
+.statCard strong {
+  font: 700 clamp(1.8rem, 3vw, 2.5rem) / 1 var(--font-heading);
+  letter-spacing: -0.06em;
+}
+
+.statIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 0.95rem;
+  background: rgba(14, 28, 34, 0.06);
+}
+
+.tonepositive .statIcon {
+  background: rgba(0, 191, 166, 0.14);
+  color: var(--teal-700);
+}
+
+.tonewarning .statIcon {
+  background: rgba(227, 165, 43, 0.14);
+  color: var(--amber-700);
+}
+
+.toneaccent .statIcon {
+  background: rgba(26, 87, 122, 0.14);
+  color: var(--blue-700);
+}
+
+.tonedanger .statIcon {
+  background: rgba(223, 94, 66, 0.14);
+  color: var(--coral-700);
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(14, 28, 34, 0.08);
+  box-shadow: 0 26px 50px rgba(34, 43, 48, 0.06);
+}
+
+.table {
+  width: 100%;
+  min-width: 54rem;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid rgba(14, 28, 34, 0.08);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(247, 245, 239, 0.95);
+  color: var(--ink-700);
+  font-size: 0.79rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.table tbody tr:hover {
+  background: rgba(15, 124, 114, 0.03);
+}
+
+.emptyRow {
+  padding: 2.25rem;
+  text-align: center;
+  color: var(--ink-500);
+}
+
+.alignRight {
+  text-align: right !important;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.pillneutral {
+  background: rgba(14, 28, 34, 0.08);
+  color: var(--ink-700);
+}
+
+.pillpositive {
+  background: rgba(0, 191, 166, 0.12);
+  color: var(--teal-700);
+}
+
+.pillwarning {
+  background: rgba(227, 165, 43, 0.14);
+  color: var(--amber-700);
+}
+
+.pilldanger {
+  background: rgba(223, 94, 66, 0.14);
+  color: var(--coral-700);
+}
+
+.pillaccent {
+  background: rgba(26, 87, 122, 0.14);
+  color: var(--blue-700);
+}
+
+.filterRow {
+  display: flex;
+  align-items: end;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 11rem;
+  color: var(--ink-700);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid rgba(14, 28, 34, 0.12);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink-900);
+  font: inherit;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: 2px solid rgba(0, 191, 166, 0.24);
+  border-color: rgba(0, 191, 166, 0.38);
+}
+
+.toggleRail {
+  display: inline-flex;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: rgba(13, 56, 64, 0.08);
+}
+
+.toggleButton {
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-700);
+  font: 600 0.88rem/1 var(--font-body);
+}
+
+.toggleButtonActive {
+  background: white;
+  color: var(--ink-900);
+  box-shadow: 0 12px 28px rgba(34, 43, 48, 0.08);
+}
+
+.tabs {
+  display: inline-flex;
+  gap: 0.5rem;
+  padding: 0.35rem;
+  border-radius: 1.25rem;
+  background: rgba(13, 56, 64, 0.08);
+}
+
+.tabButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-radius: 1rem;
+  background: transparent;
+  color: var(--ink-700);
+  font: 600 0.94rem/1 var(--font-body);
+}
+
+.tabButton strong {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  background: rgba(14, 28, 34, 0.08);
+  font-size: 0.78rem;
+}
+
+.tabButtonActive {
+  background: white;
+  color: var(--ink-900);
+  box-shadow: 0 12px 28px rgba(34, 43, 48, 0.08);
+}
+
+.emptyState {
+  display: grid;
+  gap: 0.65rem;
+  place-items: center;
+  padding: 2rem;
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px dashed rgba(14, 28, 34, 0.15);
+  text-align: center;
+}
+
+.emptyState p {
+  margin: 0;
+  max-width: 36rem;
+  color: var(--ink-600);
+}
+
+.emptyIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  background: rgba(0, 191, 166, 0.12);
+  color: var(--teal-700);
+}
+
+.fullPageSpinner,
+.inlineSpinner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--ink-700);
+  font-weight: 600;
+}
+
+.fullPageSpinner {
+  min-height: 100vh;
+  justify-content: center;
+}
+
+.spinnerRing {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(15, 124, 114, 0.24);
+  border-top-color: var(--teal-700);
+  border-radius: 999px;
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 780px) {
+  .pageHeader {
+    flex-direction: column;
+  }
+
+  .tabs {
+    width: 100%;
+    overflow-x: auto;
+  }
+}

@@ -61,7 +61,7 @@ Use the following sources in this precedence order when there is a conflict:
 | A-CI | CI/CD foundation on same VPS | Self-hosted GitHub Actions runner, deploy workflow, PM2 reload flow, health checks | Completed |
 | B | Database and historical data foundation | Tables, views, 12 seeded products, imported movement history, verified balances | Completed |
 | C | Backend API | Express server, auth, product routes, movement routes, analytics routes, health endpoint | Completed |
-| D | Frontend application | React app shell, auth, dashboard, entry forms, analytics, product management | Planned |
+| D | Frontend application | React app shell, auth, dashboard, entry forms, analytics, product management | In progress |
 | E | Shiprocket integration | Auth, polling sync, mapping, auto dispatch creation, sync status UI | Planned |
 | F | Testing, production hardening, handover | E2E verification, production deploy validation, rollback path, documentation | Planned |
 
@@ -117,7 +117,7 @@ Current status:
 
 - Completed on 2026-04-04 with runner name `wayveda-vps`
 - Workflow is in place at `.github/workflows/deploy-sync.yml`
-- Current deploy steps: sync repo, run `npm ci`, run `npm run db:migrate`, restart PM2, verify `/api/health`
+- Current deploy steps: sync repo, install backend/frontend deps, run backend migrations, build frontend, restart PM2, verify `/api/health`
 - Verified successful GitHub Actions deploy runs after the Phase C workflow expansion
 
 ### Phase B - Database, Seed, and Historical Import
@@ -193,6 +193,14 @@ Exit criteria:
 - App works on desktop and mobile
 - Form UX preserves the existing warehouse workflow patterns
 
+Current status:
+
+- In progress on 2026-04-04
+- `frontend/` scaffold exists with React 19 + Vite, protected routing, auth handling, and shared layout/components
+- Core screens are implemented locally: login, dashboard, ledger, Stock In, Dispatch, RTO, analytics, products, and settings
+- Production build passes locally
+- Remaining work in this slice is VPS serving verification and permanent-user login verification
+
 ### Phase E - Shiprocket Integration
 
 Scope:
@@ -241,6 +249,6 @@ Exit criteria:
 
 ## Immediate Next Steps
 
-1. Start Phase D frontend implementation.
-2. Scaffold the React application shell, auth flow, and dashboard/inventory screens.
-3. Reuse the live Phase C API contract and keep backend smoke verification available for regression checks.
+1. Verify frontend serving through the backend and VPS deploy workflow.
+2. Confirm a permanent warehouse login for end-to-end UI testing.
+3. Continue Phase D refinement after the first live UI pass.

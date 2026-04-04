@@ -1,0 +1,98 @@
+html {
+  font-size: 16px;
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink-900);
+  font: 400 1rem/1.5 var(--font-body);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.primaryButton,
+.secondaryButton,
+.ghostButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 2.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.primaryButton {
+  background: linear-gradient(135deg, var(--teal-600), var(--teal-700));
+  color: white;
+  box-shadow: var(--shadow-tight);
+}
+
+.primaryButton:hover,
+.secondaryButton:hover,
+.ghostButton:hover {
+  transform: translateY(-1px);
+}
+
+.secondaryButton {
+  background: white;
+  border-color: rgba(14, 28, 34, 0.08);
+  color: var(--ink-900);
+}
+
+.ghostButton {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: rgba(14, 28, 34, 0.08);
+  color: var(--ink-800);
+}
+
+.secondaryCard {
+  background: var(--panel);
+  border: 1px solid rgba(14, 28, 34, 0.08);
+  border-radius: 1.35rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.cardBody {
+  padding: 1.15rem;
+}

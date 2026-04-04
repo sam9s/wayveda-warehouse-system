@@ -1,0 +1,95 @@
+.page {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.quickActions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.actionCard {
+  padding: 1.15rem;
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(14, 28, 34, 0.08);
+  box-shadow: 0 24px 48px rgba(34, 43, 48, 0.06);
+  text-decoration: none;
+}
+
+.actionCard span,
+.actionCard strong {
+  display: block;
+}
+
+.actionCard span {
+  color: var(--teal-700);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.actionCard strong {
+  margin-top: 0.6rem;
+  color: var(--ink-900);
+  font: 700 1.05rem/1.2 var(--font-heading);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--teal-700);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sectionHeader h3 {
+  margin: 0.35rem 0 0;
+  font: 700 1.2rem/1.1 var(--font-heading);
+}
+
+.productCell strong,
+.productCell span {
+  display: block;
+}
+
+.productCell span {
+  color: var(--ink-600);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 1100px) {
+  .statGrid,
+  .quickActions {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .statGrid,
+  .quickActions {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

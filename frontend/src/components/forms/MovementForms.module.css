@@ -1,0 +1,273 @@
+.formShell {
+  display: grid;
+  gap: 1rem;
+}
+
+.section {
+  padding: 1.15rem;
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(14, 28, 34, 0.08);
+  box-shadow: 0 24px 48px rgba(34, 43, 48, 0.06);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.sectionNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgba(15, 124, 114, 0.12);
+  color: var(--teal-700);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.sectionHeader h3 {
+  margin: 0;
+  font: 700 1.05rem/1.1 var(--font-heading);
+}
+
+.sectionHeader p {
+  margin: 0.2rem 0 0;
+  color: var(--ink-600);
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--ink-700);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid rgba(14, 28, 34, 0.12);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--ink-900);
+  font: inherit;
+}
+
+.field textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.typeCardRail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.typeCard {
+  display: flex;
+  gap: 0.85rem;
+  padding: 1rem;
+  border-radius: 1.2rem;
+  text-decoration: none;
+  background: rgba(247, 245, 239, 0.85);
+  border: 1px solid rgba(14, 28, 34, 0.08);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+.typeCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(34, 43, 48, 0.08);
+}
+
+.typeCard strong,
+.typeCard span {
+  display: block;
+}
+
+.typeCard strong {
+  color: var(--ink-900);
+}
+
+.typeCard span {
+  margin-top: 0.3rem;
+  color: var(--ink-600);
+  font-size: 0.92rem;
+}
+
+.typeCardIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 1rem;
+}
+
+.tonestockIn .typeCardIcon {
+  background: rgba(0, 191, 166, 0.12);
+  color: var(--teal-700);
+}
+
+.tonedispatch .typeCardIcon {
+  background: rgba(29, 90, 138, 0.12);
+  color: var(--blue-700);
+}
+
+.tonerto .typeCardIcon {
+  background: rgba(176, 70, 45, 0.12);
+  color: var(--coral-700);
+}
+
+.typeCardActive {
+  box-shadow: inset 0 0 0 1px rgba(0, 191, 166, 0.3);
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.itemBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding-inline: 0.6rem;
+  border-radius: 999px;
+  background: rgba(15, 124, 114, 0.12);
+  color: var(--teal-700);
+  font-weight: 700;
+}
+
+.lineList {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.lineItem {
+  padding: 0.9rem;
+  border-radius: 1rem;
+  background: rgba(247, 245, 239, 0.86);
+  border: 1px solid rgba(14, 28, 34, 0.08);
+}
+
+.lineTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.lineGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.lineGridThree {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.lineActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.textLink {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--blue-700);
+  font-weight: 700;
+}
+
+.bannerError,
+.bannerSuccess,
+.placeholderPanel {
+  padding: 1rem 1.05rem;
+  border-radius: 1rem;
+}
+
+.bannerError {
+  background: rgba(223, 94, 66, 0.12);
+  color: var(--coral-700);
+}
+
+.bannerSuccess {
+  background: rgba(0, 191, 166, 0.12);
+  color: var(--teal-700);
+}
+
+.placeholderPanel {
+  background: rgba(29, 90, 138, 0.08);
+  border: 1px dashed rgba(29, 90, 138, 0.2);
+}
+
+.placeholderPanel h3,
+.placeholderPanel p {
+  margin: 0;
+}
+
+.placeholderPanel p {
+  margin-top: 0.45rem;
+  color: var(--ink-700);
+}
+
+.formActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.supportText {
+  color: var(--ink-600);
+  font-size: 0.9rem;
+}
+
+.submitStockIn {
+  background: linear-gradient(135deg, var(--teal-600), var(--teal-700));
+}
+
+.submitDispatch {
+  background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+}
+
+.submitRto {
+  background: linear-gradient(135deg, var(--coral-600), var(--coral-700));
+}
+
+@media (max-width: 900px) {
+  .typeCardRail,
+  .twoCol,
+  .lineGrid,
+  .lineGridThree {
+    grid-template-columns: 1fr;
+  }
+}
