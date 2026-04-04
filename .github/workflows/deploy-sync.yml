@@ -16,6 +16,9 @@ jobs:
       - linux
       - x64
       - wayveda-vps
+    env:
+      HOME: /root
+      PM2_HOME: /root/.pm2
 
     steps:
       - name: Checkout
@@ -76,4 +79,4 @@ jobs:
       - name: Verify frontend shell
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error http://127.0.0.1:4002/ | grep -qi "<!doctype html>"
+          curl --retry 10 --retry-delay 1 --retry-connrefused --fail --silent --show-error http://127.0.0.1:4002/ | grep -qi "<!doctype html>"
