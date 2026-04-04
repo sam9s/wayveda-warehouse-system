@@ -82,10 +82,10 @@ The warehouse handles three types of stock movements:
 
 ### The Core Inventory Formula
 ```
-Balance = Opening Stock + Total Stock Received + RTO Right − Total Dispatched − (RTO Wrong + RTO Fake)
+Balance = Opening Stock + Total Stock Received + RTO Right − Total Dispatched
 ```
 
-This formula drives the entire ledger. RTO Right adds back to inventory; RTO Wrong and Fake are permanent losses.
+This formula drives the entire ledger. RTO Right adds back to inventory; RTO Wrong and Fake remain reporting classifications and do not reduce balance again because dispatch has already reduced stock.
 
 ### Additional Metrics
 - **Stock %** = Balance ÷ Max Level (configured per product)
@@ -414,9 +414,7 @@ SELECT
     (p.opening_stock 
      + COALESCE(si.total_received, 0) 
      + COALESCE(r.total_rto_right, 0) 
-     - COALESCE(d.total_dispatched, 0) 
-     - COALESCE(r.total_rto_wrong, 0) 
-     - COALESCE(r.total_rto_fake, 0)
+     - COALESCE(d.total_dispatched, 0)
     ) AS balance,
     
     p.max_level,
@@ -426,7 +424,7 @@ SELECT
         WHEN p.max_level IS NULL OR p.max_level = 0 THEN NULL
         ELSE ROUND(
             (p.opening_stock + COALESCE(si.total_received, 0) + COALESCE(r.total_rto_right, 0) 
-             - COALESCE(d.total_dispatched, 0) - COALESCE(r.total_rto_wrong, 0) - COALESCE(r.total_rto_fake, 0))::NUMERIC 
+             - COALESCE(d.total_dispatched, 0))::NUMERIC 
             / p.max_level * 100, 1
         )
     END AS stock_percentage,
@@ -436,7 +434,7 @@ SELECT
         WHEN p.max_level IS NULL THEN NULL
         ELSE GREATEST(0, p.max_level - (
             p.opening_stock + COALESCE(si.total_received, 0) + COALESCE(r.total_rto_right, 0)
-            - COALESCE(d.total_dispatched, 0) - COALESCE(r.total_rto_wrong, 0) - COALESCE(r.total_rto_fake, 0)
+            - COALESCE(d.total_dispatched, 0)
         ))
     END AS reorder_qty,
     

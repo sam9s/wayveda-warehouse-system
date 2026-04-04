@@ -42,7 +42,7 @@ Use the following sources in this precedence order when there is a conflict:
   - 12 canonical products are seeded
   - 326 grouped historical submissions and 1693 movement rows are imported
   - ledger verification passes against the approved workbook targets
-  - balance logic follows the live Google Sheet ledger behavior for continuity
+  - balance logic follows the owner-approved rule: `opening_stock + stock_in + rto_right - dispatched`
 
 ## Delivery Model
 
@@ -228,7 +228,7 @@ Exit criteria:
 - The repo on GitHub and this local workspace are not identical yet
 - `wh.wayveda.cloud` will return `502` until the app process exists on port `4002`
 - CI/CD cannot be finalized until repo structure and app build commands are stable
-- The live Google Sheet ledger uses a balance formula that differs from the originally written spec, so this legacy parity rule must remain explicit during future analytics work
+- The owner-approved balance rule must remain explicit in future analytics and backend work to avoid drifting back to spreadsheet-era logic
 
 ## Immediate Next Steps
 

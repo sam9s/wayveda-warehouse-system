@@ -52,11 +52,12 @@
   - added product seed and historical import tooling
   - seeded all 12 canonical products
   - imported 326 grouped historical submissions / 1693 movement rows
-  - verified ledger balances against the approved live workbook targets
+  - verified ledger balances against the approved targets
 - Corrected VPS backend database access to use the self-hosted Supavisor session-mode username format required for host-side Node access.
-- Captured and resolved a Phase B business-rule conflict:
-  - the live Google Sheet ledger subtracts `RTO Fake` twice in the balance formula
-  - the production SQL ledger now matches the live sheet targets for continuity
+- Captured a Phase B business-rule conflict and resolved it with owner confirmation:
+  - the live Google Sheet ledger had a bug
+  - the earlier written spec formula was also incorrect
+  - the approved balance rule is now `Opening Stock + Stock In + RTO Right - Dispatched`
 
 ## VPS Baseline
 
@@ -119,7 +120,7 @@ Verified on 2026-04-04:
 - `max_level`, `qty_per_carton`, and SKU values are still pending from the client.
 - `wh.wayveda.cloud` will return a 502 after DNS is fixed until the app process exists on port `4002`.
 - Future disruptive infra actions should be explicitly confirmed before execution unless urgent recovery is required.
-- The live ledger parity rule for `RTO Fake` must remain documented during backend and analytics work to avoid reintroducing a balance mismatch.
+- Future backend and analytics work must preserve the owner-approved balance rule for ledger consistency.
 
 ## Next Planned Actions
 

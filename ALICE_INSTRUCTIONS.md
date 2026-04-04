@@ -89,20 +89,28 @@ The file `data/Wayveda_Inventory_Sheet.xlsx` contains 4 tabs with real operation
 
 - Row 0: column headers (Sr. No., Product Name, Stock as on 24/07/25, Stock In, RTO columns, Dispatch, Balance)
 - Rows 2-13: summary totals per product
-- This is the VERIFICATION TARGET. After importing all movements from the other 3 tabs, query v_inventory_ledger and the Balance column must match these values:
+- Final approved balance rule:
 
 ```
-Bum Plumping Cream - 50g:           860
-Intimate Whitening Roll-On - 50ml: 1132
-Chocolate Power Roll-On:           3126
-Strawberry Power Roll-On:           770
-Bhasam Power Capsule:               885
-Power Shots Sachet:                 371
-Hairfall Control Serum - 50ml:      341
-Hairfall Control Shampoo - 200ml:   384
+Balance = Opening Stock + Stock In + RTO Right - Dispatch
+```
+
+`RTO Wrong` and `RTO Fake` remain reporting metrics but do not reduce balance again because dispatch has already reduced stock.
+
+- This is the VERIFICATION TARGET. After importing all movements from the other 3 tabs, query `v_inventory_ledger` and the Balance column must match these values:
+
+```
+Bum Plumping Cream - 50g:           874
+Intimate Whitening Roll-On - 50ml: 1138
+Chocolate Power Roll-On:           3205
+Strawberry Power Roll-On:           988
+Bhasam Power Capsule:               897
+Power Shots Sachet:                 379
+Hairfall Control Serum - 50ml:      343
+Hairfall Control Shampoo - 200ml:   392
 Hairfall Control Tablets - 60N:     282
 Anti-Hairfall Kit:                  393
-Power Roll Oil Unflavoured:         482
+Power Roll Oil Unflavoured:         624
 Power Shot Oil:                      27
 ```
 

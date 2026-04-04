@@ -32,7 +32,7 @@ Use these inputs in this order:
 3. Normalized and seeded the 12-product master list.
 4. Built workbook import tooling for `Stock In`, `Dispatch`, and `RTO`.
 5. Imported and verified the historical data against approved ledger totals.
-6. Recorded the live-ledger formula override needed for parity.
+6. Recorded and corrected the ledger formula after owner confirmation.
 
 ## Validation Targets
 
@@ -54,11 +54,11 @@ Use these inputs in this order:
 - SQL views are created and queryable
 - Product seed data is correct for all 12 products
 - Historical movements are imported successfully
-- Verified balances match the approved ledger targets
+- Verified balances match the owner-approved ledger targets
 
 ## Outputs
 
-- Migrations created: `001` through `004`
+- Migrations created: `001` through `005`
 - Products seeded: `12`
 - Historical grouped submissions imported: `326`
 - Historical movement rows imported: `1693`
@@ -67,5 +67,5 @@ Use these inputs in this order:
 ## Phase B Notes
 
 - Host-side Node database access on this self-hosted Supabase stack required the Supavisor session-mode username format `postgres.your-tenant-id`.
-- The live Google Sheet ledger balances do not match the written spec formula exactly.
-- To preserve operational continuity, `v_inventory_ledger.balance` was aligned to the live ledger targets during Phase B.
+- The live Google Sheet ledger had a balance bug and the earlier written spec formula was also incorrect.
+- Final approved balance rule: `Opening Stock + Stock In + RTO Right - Dispatched`.

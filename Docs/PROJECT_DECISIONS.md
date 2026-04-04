@@ -20,7 +20,7 @@
 | App port | `4002` | Spec and infrastructure docs | Matches GREST convention |
 | Project documentation location | Project-generated Markdown files live under `Docs/` | User clarification on 2026-04-04 | Avoid creating new project tracking files at repo root |
 | Host-side DB connection | Use Supavisor session mode on `localhost:5432` with username `postgres.your-tenant-id` | Official Supabase self-hosting docs plus VPS verification on 2026-04-04 | Required for host-side Node `pg` access on this self-hosted stack |
-| Ledger balance parity | `v_inventory_ledger.balance` must match the live Google Sheet ledger targets | Live workbook verification during Phase B on 2026-04-04 | This currently means `RTO Fake` is effectively deducted twice in the balance formula |
+| Ledger balance formula | `v_inventory_ledger.balance = opening_stock + total_received + total_rto_right - total_dispatched` | WayVeda owner confirmation relayed via Astra on 2026-04-04 | `RTO Wrong` and `RTO Fake` remain visible reporting metrics but do not reduce balance again |
 
 ## Resolved Document Conflicts
 
@@ -31,7 +31,7 @@
 | `Cream` appeared in older product lists | Drop it completely |
 | `Power Roll Oil Ubtan` appeared in older text | Canonical product is `Power Roll Oil Unflavoured` |
 | Older docs implied immediate coding as first task | Current execution starts with planning and then Phase A infrastructure |
-| Written balance formula differed from the live ledger totals | Follow the live ledger totals for operational continuity and document the override explicitly |
+| Written balance formula and live sheet ledger both differed from the approved business rule | Follow the owner-approved balance rule and re-verify the ledger targets |
 
 ## Working Assumptions
 

@@ -93,7 +93,7 @@ const LEDGER_TARGETS = {
     rtoRight: 37,
     rtoWrong: 0,
     rtoFake: 7,
-    balance: 860,
+    balance: 874,
   },
   "Intimate Whitening Roll-On - 50ml": {
     openingStock: 957,
@@ -102,7 +102,7 @@ const LEDGER_TARGETS = {
     rtoRight: 70,
     rtoWrong: 0,
     rtoFake: 3,
-    balance: 1132,
+    balance: 1138,
   },
   "Chocolate Power Roll-On": {
     openingStock: 477,
@@ -111,7 +111,7 @@ const LEDGER_TARGETS = {
     rtoRight: 327,
     rtoWrong: 9,
     rtoFake: 35,
-    balance: 3126,
+    balance: 3205,
   },
   "Strawberry Power Roll-On": {
     openingStock: 544,
@@ -120,7 +120,7 @@ const LEDGER_TARGETS = {
     rtoRight: 1234,
     rtoWrong: 0,
     rtoFake: 109,
-    balance: 770,
+    balance: 988,
   },
   "Bhasam Power Capsule": {
     openingStock: 494,
@@ -129,7 +129,7 @@ const LEDGER_TARGETS = {
     rtoRight: 205,
     rtoWrong: 0,
     rtoFake: 6,
-    balance: 885,
+    balance: 897,
   },
   "Power Shots Sachet": {
     openingStock: 472,
@@ -138,7 +138,7 @@ const LEDGER_TARGETS = {
     rtoRight: 493,
     rtoWrong: 0,
     rtoFake: 4,
-    balance: 371,
+    balance: 379,
   },
   "Hairfall Control Serum - 50ml": {
     openingStock: 366,
@@ -147,7 +147,7 @@ const LEDGER_TARGETS = {
     rtoRight: 3,
     rtoWrong: 0,
     rtoFake: 1,
-    balance: 341,
+    balance: 343,
   },
   "Hairfall Control Shampoo - 200ml": {
     openingStock: 448,
@@ -156,7 +156,7 @@ const LEDGER_TARGETS = {
     rtoRight: 10,
     rtoWrong: 0,
     rtoFake: 4,
-    balance: 384,
+    balance: 392,
   },
   "Hairfall Control Tablets - 60N": {
     openingStock: 399,
@@ -183,7 +183,7 @@ const LEDGER_TARGETS = {
     rtoRight: 1270,
     rtoWrong: 0,
     rtoFake: 71,
-    balance: 482,
+    balance: 624,
   },
   "Power Shot Oil": {
     openingStock: 49,
