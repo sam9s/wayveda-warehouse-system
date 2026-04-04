@@ -36,3 +36,27 @@ jobs:
           git checkout main
           git pull --ff-only origin main
           echo "Deployed commit: $(git rev-parse HEAD)"
+
+      - name: Install backend dependencies
+        run: |
+          set -euo pipefail
+          cd /root/apps/wayveda-warehouse-system/backend
+          npm ci
+
+      - name: Run backend migrations
+        run: |
+          set -euo pipefail
+          cd /root/apps/wayveda-warehouse-system/backend
+          npm run db:migrate
+
+      - name: Restart backend with PM2
+        run: |
+          set -euo pipefail
+          cd /root/apps/wayveda-warehouse-system
+          pm2 startOrRestart ecosystem.config.js --env production
+          pm2 save
+
+      - name: Verify backend health
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error http://127.0.0.1:4002/api/health

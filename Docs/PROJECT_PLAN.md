@@ -36,7 +36,7 @@ Use the following sources in this precedence order when there is a conflict:
   - backend `.env` exists on the VPS and uses Supavisor session-mode credentials for host-side Node access
   - self-hosted GitHub Actions runner is installed and active
   - `db.wayveda.cloud` resolves publicly and responds over HTTPS
-  - `wh.wayveda.cloud` resolves publicly and currently returns `502` until the app is started on `localhost:4002`
+  - `wh.wayveda.cloud` resolves publicly and proxies successfully to the backend on `localhost:4002`
 - VPS Phase B state on 2026-04-04:
   - versioned SQL migrations are in place under `backend/src/db/migrations`
   - 12 canonical products are seeded
@@ -60,7 +60,7 @@ Use the following sources in this precedence order when there is a conflict:
 | A | VPS infrastructure foundation | Ubuntu prepared, Node.js, PM2, Docker, Supabase, Caddy, DNS, SSL, repo path | Completed |
 | A-CI | CI/CD foundation on same VPS | Self-hosted GitHub Actions runner, deploy workflow, PM2 reload flow, health checks | Completed |
 | B | Database and historical data foundation | Tables, views, 12 seeded products, imported movement history, verified balances | Completed |
-| C | Backend API | Express server, auth, product routes, movement routes, analytics routes, health endpoint | Planned |
+| C | Backend API | Express server, auth, product routes, movement routes, analytics routes, health endpoint | In progress |
 | D | Frontend application | React app shell, auth, dashboard, entry forms, analytics, product management | Planned |
 | E | Shiprocket integration | Auth, polling sync, mapping, auto dispatch creation, sync status UI | Planned |
 | F | Testing, production hardening, handover | E2E verification, production deploy validation, rollback path, documentation | Planned |
@@ -116,7 +116,8 @@ Exit criteria:
 Current status:
 
 - Completed on 2026-04-04 with runner name `wayveda-vps`
-- Bootstrap workflow is in place at `.github/workflows/deploy-sync.yml`
+- Workflow is in place at `.github/workflows/deploy-sync.yml`
+- Current deploy steps: sync repo, run `npm ci`, run `npm run db:migrate`, restart PM2, verify `/api/health`
 
 ### Phase B - Database, Seed, and Historical Import
 
@@ -144,7 +145,7 @@ Exit criteria:
 Current status:
 
 - Completed on 2026-04-04
-- Applied migrations `001` through `004`
+- Applied migrations `001` through `005`
 - Imported 326 grouped submissions and 1693 movement rows from the live workbook
 - Verified ledger balances against the approved targets
 
@@ -164,6 +165,14 @@ Exit criteria:
 - All documented API groups are implemented and testable
 - Auth and health checks work reliably
 - Inventory queries read from SQL views, not duplicated JS calculations
+
+Current status:
+
+- In progress on 2026-04-04
+- Backend server is live on the VPS behind Caddy and PM2
+- Public health endpoint is working at `https://wh.wayveda.cloud/api/health`
+- Protected route groups are implemented for auth, products, movements, inventory, and admin
+- Remaining work is authenticated verification and any fixes found during that pass
 
 ### Phase D - Frontend Application
 
@@ -226,12 +235,11 @@ Exit criteria:
 ## Risk Watchlist
 
 - The repo on GitHub and this local workspace are not identical yet
-- `wh.wayveda.cloud` will return `502` until the app process exists on port `4002`
 - CI/CD cannot be finalized until repo structure and app build commands are stable
 - The owner-approved balance rule must remain explicit in future analytics and backend work to avoid drifting back to spreadsheet-era logic
 
 ## Immediate Next Steps
 
-1. Start Phase C backend API implementation.
-2. Use `Docs/PHASE_C_BACKEND_API.md` as the working checklist for backend work.
-3. Expand the bootstrap workflow into the full deploy pipeline once backend/frontend build commands exist.
+1. Run the authenticated backend verification pass and fix any issues it exposes.
+2. Finalize Phase C once the protected routes are verified end to end.
+3. Start Phase D frontend implementation after the backend API is stable.

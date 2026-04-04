@@ -3,8 +3,8 @@
 ## Status Snapshot
 
 - Date: 2026-04-04
-- Overall project state: Phase A complete, CI/CD bootstrap complete, Phase B complete
-- Active focus: backend foundation is ready; next work is Phase C API implementation
+- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C in progress
+- Active focus: live backend verification and closing the remaining Phase C gaps before frontend work
 
 ## Completed So Far
 
@@ -44,7 +44,7 @@
 - Verified the first Actions run completed successfully on `main`.
 - Rebooted the VPS and confirmed services recovered automatically.
 - Verified public DNS and HTTPS:
-  - `wh.wayveda.cloud` resolves to the VPS and returns `502` because the app is not running yet
+  - `wh.wayveda.cloud` resolves to the VPS and now proxies successfully to the backend on port `4002`
   - `db.wayveda.cloud` resolves to the VPS and returns `401`, confirming Caddy, TLS, and Supabase public routing are working
 - Relocated project tracking documents under `Docs/` per project documentation rules.
 - Completed Phase B database work:
@@ -58,6 +58,14 @@
   - the live Google Sheet ledger had a bug
   - the earlier written spec formula was also incorrect
   - the approved balance rule is now `Opening Stock + Stock In + RTO Right - Dispatched`
+- Completed the Phase C backend foundation:
+  - Express app bootstrap and PM2-ready runtime
+  - Supabase-backed auth login, logout, and current-user routes
+  - protected product, movement, inventory, and admin route groups
+  - public health endpoint at `/api/health`
+  - live backend process deployed on the VPS and reachable via `https://wh.wayveda.cloud/api/health`
+- Expanded CI/CD from repo sync only to backend install, migrate, PM2 restart, and health verification on deploy.
+- Added a reusable auth-flow verification script under `backend/src/scripts/verify-auth-flows.js` so protected backend routes can be smoke-tested without manual terminal work.
 
 ## VPS Baseline
 
@@ -90,7 +98,7 @@ Verified on 2026-04-04:
 - DNS:
   - `wh.wayveda.cloud` resolves to `187.127.142.230`
   - `db.wayveda.cloud` resolves to `187.127.142.230`
-  - `wh.wayveda.cloud` currently returns `502` until the app exists on port `4002`
+  - `wh.wayveda.cloud` currently proxies successfully to the backend on `localhost:4002`
   - `db.wayveda.cloud` currently returns `401`, which is expected for the Supabase public endpoint check
 
 ## Repo Baseline
@@ -108,9 +116,9 @@ Verified on 2026-04-04:
 | Phase | Status | Notes |
 |---|---|---|
 | A - Infrastructure | Completed | VPS stack is installed and verified, including reboot persistence |
-| A-CI - CI/CD | Completed | Self-hosted runner and initial deploy-sync workflow are working |
+| A-CI - CI/CD | Completed | Self-hosted runner deploys backend installs, migrations, PM2 restart, and health checks |
 | B - Database + Import | Completed | Schema, seed, import, and ledger verification are complete on the VPS |
-| C - Backend API | Not started | Waiting on implementation start |
+| C - Backend API | In progress | Backend is live; auth-backed route verification is being finalized |
 | D - Frontend | Not started | Waiting on implementation start |
 | E - Shiprocket | Not started | Credentials not needed yet |
 | F - Testing + Handover | Not started | Depends on prior phases |
@@ -118,12 +126,12 @@ Verified on 2026-04-04:
 ## Current Risks / Watch Items
 
 - `max_level`, `qty_per_carton`, and SKU values are still pending from the client.
-- `wh.wayveda.cloud` will return a 502 after DNS is fixed until the app process exists on port `4002`.
 - Future disruptive infra actions should be explicitly confirmed before execution unless urgent recovery is required.
 - Future backend and analytics work must preserve the owner-approved balance rule for ledger consistency.
+- Auth-backed backend routes still need one clean smoke-test pass against a real running session before Phase C can be marked complete.
 
 ## Next Planned Actions
 
-1. Start Phase C backend API implementation.
-2. Use `Docs/PHASE_C_BACKEND_API.md` as the working checklist for backend work.
-3. Expand the bootstrap workflow into the full app deployment pipeline once backend/frontend build commands exist.
+1. Run the reusable auth verification script against the live backend and confirm protected routes end to end.
+2. Close any Phase C issues found during authenticated verification.
+3. Start Phase D frontend implementation once the backend verification pass is clean.

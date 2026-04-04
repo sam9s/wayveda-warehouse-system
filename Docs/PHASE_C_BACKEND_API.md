@@ -4,6 +4,10 @@
 
 Build the production Express API layer on top of the verified Phase B database foundation.
 
+## Status
+
+In progress on 2026-04-04.
+
 ## Scope
 
 - Create the backend app bootstrap and runtime structure
@@ -24,15 +28,20 @@ Use these inputs in this order:
 4. `Docs/PROJECT_PROGRESS.md`
 5. `Docs/PHASE_B_DATABASE_IMPORT.md`
 
-## Planned Work Items
+## Completed Work
 
-1. Create the Express app structure and shared config layer.
-2. Implement database access and service boundaries around the Phase B schema.
-3. Add auth middleware and user-context handling with Supabase.
-4. Build product CRUD routes.
-5. Build movement creation routes with validation by movement type.
-6. Build dashboard, ledger, and analysis read routes from SQL views.
-7. Add a health endpoint and deployment-safe startup command.
+1. Created the Express app structure, environment/config layer, and PM2-ready startup flow.
+2. Implemented shared database access and service boundaries on top of the Phase B schema.
+3. Added Supabase-backed auth login, logout, token verification, and user-context middleware.
+4. Built product, movement, inventory, and admin route groups.
+5. Added a public health endpoint and deployed the backend behind Caddy on the VPS.
+6. Added a reusable auth verification script at `backend/src/scripts/verify-auth-flows.js` for live protected-route smoke testing.
+
+## Current Notes
+
+- Public backend health is live at `https://wh.wayveda.cloud/api/health`
+- Protected route groups are implemented and mounted under `/api`
+- The remaining Phase C step is a clean authenticated verification pass against the live backend, then any fixes it exposes
 
 ## Exit Criteria
 
