@@ -119,6 +119,7 @@ Current status:
 - Workflow is in place at `.github/workflows/deploy-sync.yml`
 - Current deploy steps: sync repo, install backend/frontend deps, run backend migrations, build frontend, restart PM2, verify `/api/health`, and verify the frontend shell at `/`
 - Verified successful GitHub Actions deploy runs after the Phase C workflow expansion and the Phase D frontend-serving workflow fixes
+- Canonical access-control design now lives in `Docs/USER_ACCESS_CONTROL.md`
 
 ### Phase B - Database, Seed, and Historical Import
 
@@ -200,7 +201,7 @@ Current status:
 - Core screens are implemented and deployed: login, dashboard, ledger, Stock In, Dispatch, RTO, analytics, products, and settings
 - Public app shell is now served through the backend at `https://wh.wayveda.cloud`
 - GitHub Actions deploy run `#16` succeeded after fixing runner PM2 context and post-restart probe timing
-- Remaining work in this slice is permanent-user login verification and operator-path QA
+- Remaining work in this slice is permanent `system_admin` login verification and operator-path QA
 
 ### Phase E - Shiprocket Integration
 

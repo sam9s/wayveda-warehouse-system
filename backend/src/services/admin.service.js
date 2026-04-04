@@ -1,7 +1,9 @@
 const { query, withClient } = require("../db/client");
 const { adminSupabase } = require("../config/supabase-client");
 const { writeAuditLog } = require("./audit.service");
-const { badRequest } = require("../utils/http-error");
+const { badRequest, forbidden } = require("../utils/http-error");
+
+const ALLOWED_ROLES = ["system_admin", "admin", "operator", "viewer"];
 
 async function listUsers() {
   const result = await query(`
@@ -39,8 +41,12 @@ async function createUser(payload, currentUser) {
     throw badRequest("email, password, and displayName are required");
   }
 
-  if (!["admin", "operator", "viewer"].includes(role)) {
-    throw badRequest("role must be admin, operator, or viewer");
+  if (!ALLOWED_ROLES.includes(role)) {
+    throw badRequest("role must be system_admin, admin, operator, or viewer");
+  }
+
+  if (role === "system_admin" && currentUser.role !== "system_admin") {
+    throw forbidden("Only a system admin can create another system admin");
   }
 
   const { data, error } = await adminSupabase.auth.admin.createUser({

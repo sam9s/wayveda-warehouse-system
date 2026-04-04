@@ -90,6 +90,11 @@
   - the self-hosted runner must set `HOME=/root` and `PM2_HOME=/root/.pm2` so PM2 talks to the persistent root daemon instead of a transient `/etc/.pm2` daemon
   - post-restart health checks need retry windows so deploy verification does not fail during normal PM2 startup timing
 - Verified GitHub Actions deploy run `#16` succeeds on `main` after those workflow fixes.
+- Defined the user-access foundation for ERP growth:
+  - created `Docs/USER_ACCESS_CONTROL.md`
+  - adopted `system_admin` as the platform-owner role above business `admin`
+  - kept credentials in Supabase Auth and role/state in `public.users`
+  - added a bootstrap CLI for creating permanent application users
 
 ## VPS Baseline
 
@@ -154,9 +159,10 @@ Verified on 2026-04-04:
 - Future backend and analytics work must preserve the owner-approved balance rule for ledger consistency.
 - Successful write-path scenarios will get another pass during frontend integration, but the backend read/auth verification baseline is complete.
 - A permanent app user is still needed for real operator login testing in the new frontend.
+- The user-management lifecycle is documented, but update/deactivate UI and endpoints are still pending.
 
 ## Next Planned Actions
 
-1. Create or confirm a permanent warehouse user so the login screen can be tested end to end.
+1. Create the first permanent `system_admin` account and verify login through the live frontend.
 2. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows in the new frontend.
-3. Refine frontend polish issues found during the first real-user pass before moving deeper into Phase E.
+3. Define the first real WayVeda admin/operator accounts after the bootstrap login is confirmed.

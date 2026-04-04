@@ -123,7 +123,7 @@ export function getNavigationForRole(role = "viewer") {
   return NAVIGATION_GROUPS.map((group) => ({
     ...group,
     items: group.items.filter(
-      (item) => !item.roles || item.roles.includes(role)
+      (item) => !item.roles || role === "system_admin" || item.roles.includes(role)
     ),
   })).filter((group) => group.items.length > 0);
 }

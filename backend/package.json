@@ -12,7 +12,8 @@
     "db:import:history": "node src/db/import-historical-data.js",
     "db:verify:ledger": "node src/db/verify-ledger.js",
     "db:phase-b": "npm run db:migrate && npm run db:seed:products && npm run db:import:history && npm run db:verify:ledger",
-    "verify:auth-flows": "node src/scripts/verify-auth-flows.js"
+    "verify:auth-flows": "node src/scripts/verify-auth-flows.js",
+    "user:create": "node src/scripts/create-user.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",

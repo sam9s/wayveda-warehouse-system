@@ -6,6 +6,10 @@ function authorize(...roles) {
       return next(forbidden("Authenticated user context is missing"));
     }
 
+    if (req.currentUser.role === "system_admin") {
+      return next();
+    }
+
     if (!roles.includes(req.currentUser.role)) {
       return next(
         forbidden(

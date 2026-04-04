@@ -25,6 +25,8 @@
 | Ledger balance formula | `v_inventory_ledger.balance = opening_stock + total_received + total_rto_right - total_dispatched` | WayVeda owner confirmation relayed via Astra on 2026-04-04 | `RTO Wrong` and `RTO Fake` remain visible reporting metrics but do not reduce balance again |
 | Analytics filter contract | Backend accepts `startDate`/`endDate`/`granularity` plus compatibility aliases `from`/`to`/`period` | Phase D implementation decision on 2026-04-04 | Lets the frontend use a shared filter model without breaking the existing API shape |
 | PM2 deploy context | GitHub Actions deploys must set `HOME=/root` and `PM2_HOME=/root/.pm2`, and verify with retry-based health checks | Phase D deploy fix on 2026-04-04 | Prevents Actions from spawning a transient `/etc/.pm2` daemon and failing on normal restart timing |
+| User access model | Credentials live in Supabase Auth, while `public.users` stores role, active state, and profile metadata | User access planning on 2026-04-04 | Raw passwords must never be stored in application tables |
+| Top-level app role | `system_admin` sits above `admin` and is reserved for platform ownership | User access planning on 2026-04-04 | Normal admins cannot create `system_admin` users |
 
 ## Resolved Document Conflicts
 
@@ -69,3 +71,4 @@ These are active unless explicitly changed:
 - Deployment target path on VPS is `/root/apps/wayveda-warehouse-system`
 - Phase B schema, seed, import, and ledger verification are completed on the VPS
 - Frontend build is now served through the backend at `https://wh.wayveda.cloud`
+- Canonical user-access design is documented in `Docs/USER_ACCESS_CONTROL.md`
