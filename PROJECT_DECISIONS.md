@@ -51,3 +51,10 @@ These are active unless explicitly changed:
 - Do not commit live `.env` files
 - Preserve manual dispatch capability even after Shiprocket sync is added
 - Treat the Ledger verification values in `ALICE_INSTRUCTIONS.md` as the import validation target
+
+## Executed Decisions
+
+- `main` is now the active deployment branch in practice
+- GitHub Actions self-hosted runner is installed on the same VPS and registered as `wayveda-vps`
+- Initial CD workflow exists at `.github/workflows/deploy-sync.yml`
+- Deployment target path on VPS is `/root/apps/wayveda-warehouse-system`

@@ -24,13 +24,14 @@ Use the following sources in this precedence order when there is a conflict:
 - Canonical GitHub repo: `https://github.com/sam9s/wayveda-warehouse-system.git`
 - Local workspace was attached to the existing `origin/main` git history on 2026-04-04.
 - Dedicated VPS SSH access is verified using `C:\Users\hp\.ssh\wayveda_vps_ed25519`.
-- VPS is still at a clean pre-Phase-A state:
-  - `git` installed
-  - `node`, `npm`, `pm2`, `docker`, `docker compose`, `caddy` not installed
-  - `ufw` installed but inactive
-  - `/root/apps` exists but is empty
-  - `/root/supabase` does not exist
-  - `wh.wayveda.cloud` and `db.wayveda.cloud` do not resolve yet
+- VPS Phase A state on 2026-04-04:
+  - `git`, `node`, `npm`, `pm2`, `docker`, `docker compose`, `caddy`, and `ufw` installed
+  - `ufw` active with `22`, `80`, and `443` allowed
+  - self-hosted Supabase is running via Docker
+  - `/root/apps/wayveda-warehouse-system` exists and is synced from `main`
+  - backend `.env` exists on the VPS
+  - self-hosted GitHub Actions runner is installed and active
+  - `wh.wayveda.cloud` and `db.wayveda.cloud` still do not resolve publicly
 
 ## Delivery Model
 
@@ -100,6 +101,11 @@ Exit criteria:
 - Runner is installed as a service and survives reboot
 - Push to the deployment branch triggers the workflow automatically
 - Workflow finishes with a verifiable deployment on the VPS
+
+Current status:
+
+- Completed on 2026-04-04 with runner name `wayveda-vps`
+- Bootstrap workflow is in place at `.github/workflows/deploy-sync.yml`
 
 ### Phase B - Database, Seed, and Historical Import
 
