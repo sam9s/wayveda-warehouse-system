@@ -1,0 +1,38 @@
+name: Deploy Sync
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+      - wayveda-vps
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show runner context
+        run: |
+          hostname
+          whoami
+          pwd
+          git rev-parse HEAD
+
+      - name: Sync deployment repo on VPS
+        run: |
+          set -euo pipefail
+          cd /root/apps/wayveda-warehouse-system
+          git fetch origin main
+          git checkout main
+          git pull --ff-only origin main
+          echo "Deployed commit: $(git rev-parse HEAD)"
