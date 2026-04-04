@@ -1,0 +1,12 @@
+const express = require("express");
+const { asyncHandler } = require("../utils/async-handler");
+const authController = require("../controllers/auth.controller");
+const { requireAuth } = require("../middleware/auth");
+
+const router = express.Router();
+
+router.post("/login", asyncHandler(authController.login));
+router.get("/me", requireAuth, asyncHandler(authController.me));
+router.post("/logout", requireAuth, asyncHandler(authController.logout));
+
+module.exports = router;

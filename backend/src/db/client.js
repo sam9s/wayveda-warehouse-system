@@ -1,13 +1,19 @@
 const { Pool } = require("pg");
 const { getEnvOrThrow, loadEnv } = require("../config/env");
 
+let pool;
+
 function createPool() {
+  if (pool) {
+    return pool;
+  }
+
   loadEnv();
 
   const sslMode = (process.env.PGSSLMODE || "").toLowerCase();
-  const pool = new Pool({
+  pool = new Pool({
     connectionString: getEnvOrThrow("DATABASE_URL"),
-    max: Number(process.env.PGPOOL_MAX || 4),
+    max: Number(process.env.PGPOOL_MAX || 10),
     ssl: sslMode === "require" ? { rejectUnauthorized: false } : false,
   });
 
@@ -30,7 +36,24 @@ async function withClient(work) {
   }
 }
 
+async function query(text, params = []) {
+  const pool = createPool();
+  return pool.query(text, params);
+}
+
+async function closePool() {
+  if (!pool) {
+    return;
+  }
+
+  const activePool = pool;
+  pool = undefined;
+  await activePool.end();
+}
+
 module.exports = {
+  closePool,
   createPool,
+  query,
   withClient,
 };
