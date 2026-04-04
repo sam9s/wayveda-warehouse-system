@@ -130,6 +130,19 @@ async function verifyProtectedGet(token, path, expectedStatus, label) {
   return body;
 }
 
+function assertArrayField(body, fieldName, label) {
+  const value = body?.[fieldName];
+  if (!Array.isArray(value)) {
+    throw new Error(`${label} response did not include an array field '${fieldName}': ${JSON.stringify(body)}`);
+  }
+
+  if (value.length === 0) {
+    throw new Error(`${label} returned an empty '${fieldName}' array`);
+  }
+
+  return value;
+}
+
 async function verifyValidationFailure(token) {
   const { body, response } = await requestJson("/api/movements/dispatch", {
     body: JSON.stringify({
@@ -180,17 +193,23 @@ async function main() {
       "Admin users"
     );
 
+    const productRows = assertArrayField(products, "products", "Products");
+    const dashboardRows = assertArrayField(dashboard, "summary", "Dashboard");
+    const ledgerRows = assertArrayField(ledger, "ledger", "Ledger");
+    const movementRows = assertArrayField(movements, "movements", "Movements");
+    const userRows = assertArrayField(users, "users", "Admin users");
+
     await verifyValidationFailure(accessToken);
 
     console.log(
       JSON.stringify(
         {
-          dashboardRows: Array.isArray(dashboard) ? dashboard.length : 0,
-          ledgerRows: Array.isArray(ledger) ? ledger.length : 0,
-          movementRows: Array.isArray(movements) ? movements.length : 0,
-          products: Array.isArray(products) ? products.length : 0,
+          dashboardRows: dashboardRows.length,
+          ledgerRows: ledgerRows.length,
+          movementRows: movementRows.length,
+          products: productRows.length,
           userRole: me?.user?.role,
-          users: Array.isArray(users) ? users.length : 0,
+          users: userRows.length,
         },
         null,
         2
