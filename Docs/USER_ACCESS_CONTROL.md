@@ -237,6 +237,8 @@ Implemented now:
 - authorization middleware now gives `system_admin` full access
 - admin creation logic now blocks non-system-admin users from creating `system_admin`
 - frontend route and navigation logic now recognizes `system_admin`
+- dedicated frontend user-management screen exists for creating `admin`, `operator`, and `viewer` users
+- admin-side creation now applies the standard temporary-password policy and forces first-login password change
 - bootstrap CLI exists for creating the first permanent user:
   - `npm run user:create -- --email <email> --password <password> --display-name <name> --role <role>`
 - password-reset CLI exists for controlled temporary-password resets:
@@ -247,7 +249,6 @@ Still pending in future work:
 - update-user endpoint
 - deactivate / reactivate endpoint
 - password-reset admin flow
-- dedicated frontend user-management screen
 - optional invitation-based onboarding
 
 ## Recommended Operating Model For This Project

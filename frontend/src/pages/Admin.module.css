@@ -15,6 +15,7 @@
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-card);
+  backdrop-filter: blur(16px);
 }
 
 .card h3 {
@@ -42,6 +43,12 @@
   border: 1px solid var(--border-strong);
   border-radius: 1rem;
   background: var(--surface-card-strong);
+}
+
+.field input:focus,
+.field select:focus {
+  outline: 2px solid var(--accent-focus);
+  border-color: var(--accent-focus-border);
 }
 
 .toolbar {
@@ -91,6 +98,8 @@
 
 .statusRow span {
   color: var(--ink-600);
+  max-width: 26rem;
+  text-align: right;
 }
 
 .forceCard {
@@ -127,6 +136,21 @@
 .actionRow {
   display: flex;
   justify-content: flex-start;
+}
+
+.entityCell {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.entityCell strong,
+.entityCell span {
+  display: block;
+}
+
+.entityCell span {
+  color: var(--ink-600);
+  font-size: 0.9rem;
 }
 
 @media (max-width: 980px) {

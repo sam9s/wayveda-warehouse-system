@@ -4,6 +4,7 @@ const { writeAuditLog } = require("./audit.service");
 const { badRequest, forbidden } = require("../utils/http-error");
 
 const ALLOWED_ROLES = ["system_admin", "admin", "operator", "viewer"];
+const DEFAULT_TEMP_PASSWORD = "Wayveda@123";
 
 async function listUsers() {
   const result = await query(`
@@ -37,12 +38,12 @@ async function listUsers() {
 
 async function createUser(payload, currentUser) {
   const email = String(payload.email || "").trim().toLowerCase();
-  const password = String(payload.password || "");
+  const password = String(payload.password || DEFAULT_TEMP_PASSWORD);
   const displayName = String(payload.displayName || "").trim();
   const role = String(payload.role || "operator").trim();
 
-  if (!email || !password || !displayName) {
-    throw badRequest("email, password, and displayName are required");
+  if (!email || !displayName) {
+    throw badRequest("email and displayName are required");
   }
 
   if (!ALLOWED_ROLES.includes(role)) {
@@ -107,6 +108,11 @@ async function createUser(payload, currentUser) {
       action: "create",
       entityId: createdUser.id,
       entityType: "user",
+      metadata: {
+        mustChangePassword: true,
+        temporaryPasswordAssigned: true,
+        usedDefaultPassword: !payload.password,
+      },
       newData: createdUser,
       userId: currentUser.id,
     });

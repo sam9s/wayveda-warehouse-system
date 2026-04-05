@@ -117,6 +117,16 @@
   - `sunilmunjal@digitalchaabi.com`
   - both are `admin`
   - both are flagged for first-login password change
+- Added a dedicated admin-side user-management screen:
+  - admins and system admins can now create business users from the app
+  - the screen lists current users and explains `admin`, `operator`, and `viewer` rights
+  - user creation now applies the standard temporary-password policy automatically
+- Added the shareable go-live handover document:
+  - `Docs/GO_LIVE_CUTOVER.md`
+- Provisioned the additional WayVeda admin account on the VPS:
+  - `shubhamsharma@naturemania.in`
+  - role `admin`
+  - flagged for first-login password change
 
 ## VPS Baseline
 
@@ -170,7 +180,7 @@ Verified on 2026-04-04:
 | A-CI - CI/CD | Completed | Self-hosted runner deploys installs, frontend build, migrations, PM2 restart, and app-shell checks |
 | B - Database + Import | Completed | Schema, seed, import, and ledger verification are complete on the VPS |
 | C - Backend API | Completed | Backend is live and auth-backed routes passed the non-destructive smoke test |
-| D - Frontend | In progress | Frontend is deployed publicly; login, theme switching, first-login password rotation, and password-recovery routes are live, with operator-path verification still pending |
+| D - Frontend | In progress | Frontend is deployed publicly; login, theming, password rotation, password recovery, and user-management UI are live, with operator-path verification still pending |
 | E - Shiprocket | Not started | Credentials not needed yet |
 | F - Testing + Handover | Not started | Depends on prior phases |
 
@@ -180,11 +190,11 @@ Verified on 2026-04-04:
 - Future disruptive infra actions should be explicitly confirmed before execution unless urgent recovery is required.
 - Future backend and analytics work must preserve the owner-approved balance rule for ledger consistency.
 - Successful write-path scenarios will get another pass during frontend integration, but the backend read/auth verification baseline is complete.
-- The user-management lifecycle is documented, but update/deactivate UI and endpoints are still pending.
+- Deactivate/reactivate user management is still pending even though create/list is now live in the app.
 - Recovery email delivery still depends on replacing the placeholder self-hosted SMTP settings with a real outbound mail provider.
 
 ## Next Planned Actions
 
-1. Verify the refreshed login, forgot-password, and reset-password flows in the live environment.
-2. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows using the guide.
-3. Add user-management endpoints and UI for deactivate/reactivate and future role edits.
+1. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows using the guide.
+2. Validate the new admin-side user-management flow in the browser.
+3. Add deactivate/reactivate and future role-edit support to user management.

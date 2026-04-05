@@ -94,6 +94,19 @@ function Settings() {
             </Link>
           </div>
         </section>
+
+        <section className={adminStyles.card}>
+          <h3>User access</h3>
+          <p className={adminStyles.note}>
+            Admin and system-admin users can create new business users, assign
+            access roles, and onboard them with the standard temporary-password policy.
+          </p>
+          <div className={adminStyles.actionRow}>
+            <Link className="primaryButton" to="/admin/users">
+              Open user management
+            </Link>
+          </div>
+        </section>
       </div>
     </div>
   );

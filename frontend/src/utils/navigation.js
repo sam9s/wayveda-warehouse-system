@@ -9,6 +9,7 @@ import {
   RotateCcw,
   Settings,
   Truck,
+  Users,
 } from "lucide-react";
 
 const NAVIGATION_GROUPS = [
@@ -97,6 +98,15 @@ const NAVIGATION_GROUPS = [
   {
     label: "Admin",
     items: [
+      {
+        description: "Create business users and assign application access roles.",
+        eyebrow: "Admin Console",
+        icon: Users,
+        label: "Users",
+        roles: ["admin"],
+        title: "User Management",
+        to: "/admin/users",
+      },
       {
         description: "Maintain product metadata, max levels, and carton defaults.",
         eyebrow: "Admin Console",

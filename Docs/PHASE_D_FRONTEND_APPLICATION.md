@@ -73,6 +73,7 @@ Use these inputs in this order:
   - Stock In, Dispatch, and RTO entry screens
   - dispatch, inward, and RTO analysis screens
   - product management
+  - user management
   - settings
 - Dispatch already includes both the manual-entry flow and the Shiprocket placeholder tab.
 - The backend analytics contract was extended so all three analysis screens can share the same date-range and period controls.
@@ -84,6 +85,7 @@ Use these inputs in this order:
   - first-login forced password change
   - a reusable self-service password-change screen
   - a public forgot-password and reset-password flow
+  - a dedicated admin-side user-management screen for creating users and assigning roles
   - testing guidance in `Docs/USER_TEST_GUIDE.md`
 - First-round live UI polish is also applied:
   - sidebar scrolling is independent from page scrolling again
@@ -95,6 +97,7 @@ Use these inputs in this order:
   - test the browser login, forgot-password, and operator screens with the new guide and real accounts
   - run real operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO
   - replace placeholder SMTP with a real outbound provider so recovery emails are actually deliverable
+  - add user deactivate/reactivate and future role-edit flows
   - refine UI/UX issues found in the first live user pass
 
 ## Exit Criteria

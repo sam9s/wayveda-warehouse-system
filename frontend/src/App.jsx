@@ -20,6 +20,7 @@ const RTO = lazy(() => import("./pages/RTO.jsx"));
 const RTOAnalysis = lazy(() => import("./pages/RTOAnalysis.jsx"));
 const Settings = lazy(() => import("./pages/Settings.jsx"));
 const StockIn = lazy(() => import("./pages/StockIn.jsx"));
+const UserManagement = lazy(() => import("./pages/UserManagement.jsx"));
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             </Route>
 
             <Route element={<RoleRoute allowedRoles={["admin"]} />}>
+              <Route path="/admin/users" element={<UserManagement />} />
               <Route path="/products" element={<ProductManagement />} />
               <Route path="/settings" element={<Settings />} />
             </Route>
