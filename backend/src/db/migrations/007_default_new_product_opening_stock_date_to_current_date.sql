@@ -1,0 +1,2 @@
+ALTER TABLE products
+    ALTER COLUMN opening_stock_date SET DEFAULT CURRENT_DATE;

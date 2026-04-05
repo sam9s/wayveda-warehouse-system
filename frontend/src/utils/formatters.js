@@ -62,8 +62,10 @@ export function formatMovementType(value) {
 
 export function getStatusTone(value) {
   switch (value) {
+    case "Active":
     case "Healthy":
       return "positive";
+    case "Inactive":
     case "Low":
     case "Plan Reorder":
     case "Configure":

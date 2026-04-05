@@ -127,6 +127,10 @@
   - `shubhamsharma@naturemania.in`
   - role `admin`
   - flagged for first-login password change
+- Expanded product management for admins and system admins:
+  - add product flow is now available in the frontend
+  - deactivate/reactivate product controls are now available in the frontend
+  - new products now default their opening-stock date to the current day instead of the historical import baseline
 
 ## VPS Baseline
 
@@ -192,6 +196,7 @@ Verified on 2026-04-04:
 - Successful write-path scenarios will get another pass during frontend integration, but the backend read/auth verification baseline is complete.
 - Deactivate/reactivate user management is still pending even though create/list is now live in the app.
 - Recovery email delivery still depends on replacing the placeholder self-hosted SMTP settings with a real outbound mail provider.
+- Hard-delete product workflow is still intentionally deferred pending `system_admin`-only guard rails and history checks.
 
 ## Next Planned Actions
 

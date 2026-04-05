@@ -169,7 +169,7 @@ async function createProduct(payload, currentUser) {
         )
         VALUES (
           $1, $2, $3, COALESCE($4, 'pcs'),
-          COALESCE($5, 0), COALESCE($6, DATE '2025-07-24'),
+          COALESCE($5, 0), COALESCE($6, CURRENT_DATE),
           $7, $8, COALESCE($9, 0), COALESCE($10, TRUE),
           COALESCE($11::jsonb, '{}'::jsonb)
         )
