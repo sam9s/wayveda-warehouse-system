@@ -636,7 +636,7 @@ async function createSyncLog(syncType, status, metadata = {}) {
         last_synced_at,
         metadata
       )
-      VALUES ($1, $2, 0, NULL, $3::jsonb)
+      VALUES ($1::varchar, $2::varchar, 0, NULL, $3::jsonb)
       RETURNING *
     `,
     [syncType, status, JSON.stringify(metadata)]
@@ -650,9 +650,12 @@ async function updateSyncLog(logId, { errorMessage = null, metadata = {}, record
     `
       UPDATE shiprocket_sync_log
       SET
-        status = $2,
+        status = $2::varchar,
         records_synced = $3,
-        last_synced_at = CASE WHEN $2 IN ('success', 'partial') THEN NOW() ELSE last_synced_at END,
+        last_synced_at = CASE
+          WHEN $2::varchar IN ('success', 'partial') THEN NOW()
+          ELSE last_synced_at
+        END,
         error_message = $4,
         metadata = $5::jsonb,
         updated_at = NOW()
