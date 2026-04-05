@@ -390,7 +390,9 @@ function lineItemName(item) {
 }
 
 function lineItemSku(item) {
-  return String(item.sku || item.item_sku || item.product_sku || "")
+  return String(
+    item.sku || item.item_sku || item.product_sku || item.channel_sku || ""
+  )
     .trim();
 }
 
