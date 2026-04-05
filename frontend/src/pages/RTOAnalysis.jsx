@@ -1,3 +1,4 @@
+import { CalendarDays, CalendarRange, Clock3 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { DataTable } from "../components/common/DataTable.jsx";
@@ -7,6 +8,7 @@ import { LoadingSpinner } from "../components/common/LoadingSpinner.jsx";
 import { PageHeader } from "../components/common/PageHeader.jsx";
 import { PeriodToggle } from "../components/common/PeriodToggle.jsx";
 import { ProductSelector } from "../components/common/ProductSelector.jsx";
+import { StatCard } from "../components/common/StatCard.jsx";
 import { useProducts } from "../hooks/useProducts.js";
 import api from "../utils/api.js";
 import {
@@ -22,6 +24,12 @@ function defaultFromDate() {
   return formatDateForInput(date);
 }
 
+const EMPTY_SUMMARY = {
+  last30Days: { fake: 0, right: 0, totalRto: 0, wrong: 0 },
+  last7Days: { fake: 0, right: 0, totalRto: 0, wrong: 0 },
+  today: { fake: 0, right: 0, totalRto: 0, wrong: 0 },
+};
+
 function RTOAnalysis() {
   const { error: productError, loading: productsLoading, products } = useProducts();
   const [filters, setFilters] = useState({
@@ -34,6 +42,7 @@ function RTOAnalysis() {
     error: "",
     loading: true,
     rows: [],
+    summary: EMPTY_SUMMARY,
   });
 
   useEffect(() => {
@@ -57,6 +66,7 @@ function RTOAnalysis() {
           error: "",
           loading: false,
           rows: data.rows || [],
+          summary: data.summary || EMPTY_SUMMARY,
         });
       })
       .catch((error) => {
@@ -68,6 +78,7 @@ function RTOAnalysis() {
           error: error.response?.data?.message || "Unable to load RTO analysis.",
           loading: false,
           rows: [],
+          summary: EMPTY_SUMMARY,
         });
       });
 
@@ -156,6 +167,50 @@ function RTOAnalysis() {
         <LoadingSpinner label="Refreshing RTO analysis" />
       ) : (
         <>
+          <section className={analysisStyles.summaryGrid}>
+            <StatCard
+              details={[
+                { label: "Right", value: formatNumber(state.summary.today.right) },
+                { label: "Wrong", value: formatNumber(state.summary.today.wrong) },
+                { label: "Fake", value: formatNumber(state.summary.today.fake) },
+              ]}
+              helper="All RTO outcomes recorded today"
+              icon={Clock3}
+              label="RTO Today"
+              tone="warning"
+              value={formatNumber(state.summary.today.totalRto)}
+            />
+            <StatCard
+              details={[
+                { label: "Right", value: formatNumber(state.summary.last7Days.right) },
+                { label: "Wrong", value: formatNumber(state.summary.last7Days.wrong) },
+                { label: "Fake", value: formatNumber(state.summary.last7Days.fake) },
+              ]}
+              helper="Rolling 7-day RTO total"
+              icon={CalendarRange}
+              label="Last 7 Days"
+              tone="warning"
+              value={formatNumber(state.summary.last7Days.totalRto)}
+            />
+            <StatCard
+              details={[
+                { label: "Right", value: formatNumber(state.summary.last30Days.right) },
+                { label: "Wrong", value: formatNumber(state.summary.last30Days.wrong) },
+                { label: "Fake", value: formatNumber(state.summary.last30Days.fake) },
+              ]}
+              helper="Rolling 30-day RTO total"
+              icon={CalendarDays}
+              label="Last 30 Days"
+              tone="warning"
+              value={formatNumber(state.summary.last30Days.totalRto)}
+            />
+          </section>
+
+          <p className={analysisStyles.summaryNote}>
+            RTO cards keep `Right`, `Wrong`, and `Fake` visible for traceability while the
+            headline number shows the total RTO volume for each rolling window.
+          </p>
+
           <section className={analysisStyles.chartCard}>
             <h3>RTO quality by period</h3>
             <div className={analysisStyles.chartWrap}>

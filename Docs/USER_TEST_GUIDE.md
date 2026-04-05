@@ -107,15 +107,19 @@ Verify:
 Open:
 
 - `Dispatch Analysis`
-- `Inward Analysis`
+- `Stock In Analysis`
 - `RTO Analysis`
 
 Verify:
 
 - charts load
+- rolling KPI cards load above the chart
 - date filters work
 - period toggles work
 - tables and summaries refresh when filters change
+- product search narrows the analysis filter quickly
+- `Stock In Analysis` shows quantity as the main KPI and cartons as supporting detail
+- `RTO Analysis` keeps `Right`, `Wrong`, and `Fake` visible in the KPI cards for traceability
 
 ### 4. Settings
 
@@ -289,6 +293,7 @@ Example:
 - user-management UI is live
 - product add, deactivate, reactivate, and `system_admin` delete-readiness are live
 - product selection now uses searchable type-to-filter controls in the main warehouse and analysis flows
+- analysis screens now include rolling KPI cards for today, last 7 days, and last 30 days
 - permanent delete only works for inactive zero-balance products with no movement history
 
 ## Recommended First Test Sequence

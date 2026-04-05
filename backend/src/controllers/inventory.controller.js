@@ -22,18 +22,27 @@ async function ledger(req, res) {
 }
 
 async function dispatchAnalysis(req, res) {
-  const rows = await inventoryService.getDispatchAnalysis(req.query || {});
-  res.status(200).json({ rows });
+  const [rows, summary] = await Promise.all([
+    inventoryService.getDispatchAnalysis(req.query || {}),
+    inventoryService.getDispatchAnalysisSummary(req.query || {}),
+  ]);
+  res.status(200).json({ rows, summary });
 }
 
 async function rtoAnalysis(req, res) {
-  const rows = await inventoryService.getRtoAnalysis(req.query || {});
-  res.status(200).json({ rows });
+  const [rows, summary] = await Promise.all([
+    inventoryService.getRtoAnalysis(req.query || {}),
+    inventoryService.getRtoAnalysisSummary(req.query || {}),
+  ]);
+  res.status(200).json({ rows, summary });
 }
 
 async function inwardAnalysis(req, res) {
-  const rows = await inventoryService.getInwardAnalysis(req.query || {});
-  res.status(200).json({ rows });
+  const [rows, summary] = await Promise.all([
+    inventoryService.getInwardAnalysis(req.query || {}),
+    inventoryService.getInwardAnalysisSummary(req.query || {}),
+  ]);
+  res.status(200).json({ rows, summary });
 }
 
 module.exports = {

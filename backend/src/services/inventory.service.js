@@ -37,6 +37,42 @@ function normalizeAnalysisFilters(filters = {}, defaultGranularity = "daily") {
   };
 }
 
+const ROLLING_WINDOWS = [
+  {
+    key: "today",
+    sqlCondition: (dateColumn) => `${dateColumn} = CURRENT_DATE`,
+  },
+  {
+    key: "last7Days",
+    sqlCondition: (dateColumn) =>
+      `${dateColumn} >= CURRENT_DATE - INTERVAL '6 days' AND ${dateColumn} <= CURRENT_DATE`,
+  },
+  {
+    key: "last30Days",
+    sqlCondition: (dateColumn) =>
+      `${dateColumn} >= CURRENT_DATE - INTERVAL '29 days' AND ${dateColumn} <= CURRENT_DATE`,
+  },
+];
+
+function buildRollingWindowSelects(metrics, dateColumn = "entry_date") {
+  return ROLLING_WINDOWS.flatMap((window) =>
+    metrics.map(
+      (metric) =>
+        `COALESCE(SUM(${metric.expression}) FILTER (WHERE ${window.sqlCondition(dateColumn)}), 0)::int AS ${window.key}_${metric.key}`
+    )
+  ).join(",\n        ");
+}
+
+function mapRollingWindowSummary(row, metricKeys) {
+  return ROLLING_WINDOWS.reduce((summary, window) => {
+    summary[window.key] = metricKeys.reduce((windowMetrics, metricKey) => {
+      windowMetrics[metricKey] = Number(row?.[`${window.key}_${metricKey}`] || 0);
+      return windowMetrics;
+    }, {});
+    return summary;
+  }, {});
+}
+
 function granularityConfig(granularity) {
   switch (granularity) {
     case "daily":
@@ -112,6 +148,35 @@ async function getDispatchAnalysis(filters) {
   return result.rows;
 }
 
+async function getDispatchAnalysisSummary(filters) {
+  const normalizedFilters = normalizeAnalysisFilters(filters, "daily");
+  const values = [];
+  const conditions = buildDateFilters(
+    {
+      productId: normalizedFilters.productId,
+      startDate: null,
+      endDate: null,
+    },
+    values
+  );
+  const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+
+  const result = await query(
+    `
+      SELECT
+        ${buildRollingWindowSelects(
+          [{ expression: "qty_dispatched", key: "quantity" }],
+          "entry_date"
+        )}
+      FROM v_dispatch_daily
+      ${whereClause}
+    `,
+    values
+  );
+
+  return mapRollingWindowSummary(result.rows[0], ["quantity"]);
+}
+
 async function getInwardAnalysis(filters) {
   const normalizedFilters = normalizeAnalysisFilters(filters, "daily");
   const values = [];
@@ -137,6 +202,38 @@ async function getInwardAnalysis(filters) {
   );
 
   return result.rows;
+}
+
+async function getInwardAnalysisSummary(filters) {
+  const normalizedFilters = normalizeAnalysisFilters(filters, "daily");
+  const values = [];
+  const conditions = buildDateFilters(
+    {
+      productId: normalizedFilters.productId,
+      startDate: null,
+      endDate: null,
+    },
+    values
+  );
+  const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+
+  const result = await query(
+    `
+      SELECT
+        ${buildRollingWindowSelects(
+          [
+            { expression: "qty_received", key: "quantity" },
+            { expression: "COALESCE(cartons_received, 0)", key: "cartons" },
+          ],
+          "entry_date"
+        )}
+      FROM v_inward_daily
+      ${whereClause}
+    `,
+    values
+  );
+
+  return mapRollingWindowSummary(result.rows[0], ["quantity", "cartons"]);
 }
 
 async function getRtoAnalysis(filters) {
@@ -179,10 +276,52 @@ async function getRtoAnalysis(filters) {
   return result.rows;
 }
 
+async function getRtoAnalysisSummary(filters) {
+  const normalizedFilters = normalizeAnalysisFilters(filters, "monthly");
+  const values = [];
+  const conditions = buildDateFilters(
+    {
+      ...normalizedFilters,
+      endDate: null,
+      startDate: null,
+      dateColumn: "m.entry_date",
+      productColumn: "m.product_id",
+    },
+    values
+  );
+  const whereClause = conditions.length
+    ? `AND ${conditions.join(" AND ")}`
+    : "";
+
+  const result = await query(
+    `
+      SELECT
+        ${buildRollingWindowSelects(
+          [
+            { expression: "m.rto_right + m.rto_wrong + m.rto_fake", key: "totalRto" },
+            { expression: "m.rto_right", key: "right" },
+            { expression: "m.rto_wrong", key: "wrong" },
+            { expression: "m.rto_fake", key: "fake" },
+          ],
+          "m.entry_date"
+        )}
+      FROM inventory_movements m
+      WHERE m.movement_type = 'rto'
+      ${whereClause}
+    `,
+    values
+  );
+
+  return mapRollingWindowSummary(result.rows[0], ["totalRto", "right", "wrong", "fake"]);
+}
+
 module.exports = {
   getDashboardSummary,
   getDispatchAnalysis,
+  getDispatchAnalysisSummary,
   getInventoryLedger,
   getInwardAnalysis,
+  getInwardAnalysisSummary,
   getRtoAnalysis,
+  getRtoAnalysisSummary,
 };

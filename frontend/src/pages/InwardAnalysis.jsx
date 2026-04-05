@@ -1,3 +1,4 @@
+import { CalendarDays, CalendarRange, Clock3 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { DataTable } from "../components/common/DataTable.jsx";
@@ -7,6 +8,7 @@ import { LoadingSpinner } from "../components/common/LoadingSpinner.jsx";
 import { PageHeader } from "../components/common/PageHeader.jsx";
 import { PeriodToggle } from "../components/common/PeriodToggle.jsx";
 import { ProductSelector } from "../components/common/ProductSelector.jsx";
+import { StatCard } from "../components/common/StatCard.jsx";
 import { useProducts } from "../hooks/useProducts.js";
 import api from "../utils/api.js";
 import {
@@ -22,6 +24,12 @@ function defaultFromDate() {
   return formatDateForInput(date);
 }
 
+const EMPTY_SUMMARY = {
+  last30Days: { cartons: 0, quantity: 0 },
+  last7Days: { cartons: 0, quantity: 0 },
+  today: { cartons: 0, quantity: 0 },
+};
+
 function InwardAnalysis() {
   const { error: productError, loading: productsLoading, products } = useProducts();
   const [filters, setFilters] = useState({
@@ -34,6 +42,7 @@ function InwardAnalysis() {
     error: "",
     loading: true,
     rows: [],
+    summary: EMPTY_SUMMARY,
   });
 
   useEffect(() => {
@@ -57,6 +66,7 @@ function InwardAnalysis() {
           error: "",
           loading: false,
           rows: data.rows || [],
+          summary: data.summary || EMPTY_SUMMARY,
         });
       })
       .catch((error) => {
@@ -65,9 +75,10 @@ function InwardAnalysis() {
         }
 
         setState({
-          error: error.response?.data?.message || "Unable to load inward analysis.",
+          error: error.response?.data?.message || "Unable to load stock in analysis.",
           loading: false,
           rows: [],
+          summary: EMPTY_SUMMARY,
         });
       });
 
@@ -77,7 +88,7 @@ function InwardAnalysis() {
   }, [filters]);
 
   if (productsLoading) {
-    return <LoadingSpinner label="Loading analysis" />;
+    return <LoadingSpinner label="Loading stock in analysis" />;
   }
 
   if (productError) {
@@ -119,9 +130,9 @@ function InwardAnalysis() {
   return (
     <div className={analysisStyles.page}>
       <PageHeader
-        description="Monitor inward stock trends by quantity and cartons received."
+        description="Monitor stock-in trends by quantity and cartons received."
         eyebrow="Analysis"
-        title="Inward Analysis"
+        title="Stock In Analysis"
       />
 
       <section className={analysisStyles.toolbarCard}>
@@ -153,18 +164,65 @@ function InwardAnalysis() {
       </section>
 
       {state.loading ? (
-        <LoadingSpinner label="Refreshing inward analysis" />
+        <LoadingSpinner label="Refreshing stock in analysis" />
       ) : (
         <>
+          <section className={analysisStyles.summaryGrid}>
+            <StatCard
+              details={[
+                {
+                  label: "Cartons",
+                  value: formatNumber(state.summary.today.cartons),
+                },
+              ]}
+              helper="Received today only"
+              icon={Clock3}
+              label="Stock In Today"
+              tone="positive"
+              value={formatNumber(state.summary.today.quantity)}
+            />
+            <StatCard
+              details={[
+                {
+                  label: "Cartons",
+                  value: formatNumber(state.summary.last7Days.cartons),
+                },
+              ]}
+              helper="Rolling 7-day stock-in quantity"
+              icon={CalendarRange}
+              label="Last 7 Days"
+              tone="positive"
+              value={formatNumber(state.summary.last7Days.quantity)}
+            />
+            <StatCard
+              details={[
+                {
+                  label: "Cartons",
+                  value: formatNumber(state.summary.last30Days.cartons),
+                },
+              ]}
+              helper="Rolling 30-day stock-in quantity"
+              icon={CalendarDays}
+              label="Last 30 Days"
+              tone="positive"
+              value={formatNumber(state.summary.last30Days.quantity)}
+            />
+          </section>
+
+          <p className={analysisStyles.summaryNote}>
+            Rolling totals always end on today and respect the selected product filter.
+            Quantity is primary; cartons stay visible for warehouse traceability.
+          </p>
+
           <section className={analysisStyles.chartCard}>
-            <h3>Inward trend by period</h3>
+            <h3>Stock in trend by period</h3>
             <div className={analysisStyles.chartWrap}>
               <Line data={chartData} />
             </div>
           </section>
 
           <section className={analysisStyles.tableCard}>
-            <h3>Inward records</h3>
+            <h3>Stock in records</h3>
             <DataTable
               columns={[
                 {

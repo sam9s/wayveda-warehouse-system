@@ -3,8 +3,8 @@
 ## Status Snapshot
 
 - Date: 2026-04-05
-- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment, password rotation, theme support, password-recovery flow, and searchable product-selection UX
-- Active focus: live UI/UX refinement from operator feedback, searchable product selection, and operator-path QA on the live frontend
+- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment, password rotation, theme support, password-recovery flow, searchable product-selection UX, and rolling analysis KPI cards
+- Active focus: live UI/UX refinement from operator feedback, analysis KPI visibility, and operator-path QA on the live frontend
 
 ## Completed So Far
 
@@ -146,6 +146,11 @@
   - Dispatch Analysis, Inward Analysis, and RTO Analysis product filters now use the same searchable selector
   - the permanent-delete workflow now uses its own dedicated searchable product selector inside a full-width danger card
   - the shared selector searches by product name, SKU, and category, with typed narrowing designed for larger catalogs
+- Expanded the analysis experience for better operational readability:
+  - Dispatch Analysis now includes backend-backed rolling KPI totals for today, last 7 days, and last 30 days
+  - Inward Analysis has been relabeled to `Stock In Analysis` and now includes rolling KPI totals for quantity and cartons
+  - RTO Analysis now includes backend-backed rolling KPI totals for today, last 7 days, and last 30 days, with separate `Right`, `Wrong`, and `Fake` breakdowns kept visible for traceability
+  - rolling KPI cards are intentionally separate from the chart date-range and daily/weekly/monthly trend controls
 
 ## VPS Baseline
 
@@ -216,6 +221,6 @@ Verified on 2026-04-04:
 
 ## Next Planned Actions
 
-1. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, RTO, and analysis flows using the guide and the new searchable selectors.
-2. Validate the new dedicated permanent-delete danger card with a temporary zero-stock SKU.
+1. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, RTO, and all three analysis screens using the guide and the new KPI cards.
+2. Validate role-based UI visibility with dedicated QA admin/operator/viewer accounts that do not require first-login password change.
 3. Add deactivate/reactivate and future role-edit support to user management.

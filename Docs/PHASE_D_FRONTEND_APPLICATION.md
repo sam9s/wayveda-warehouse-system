@@ -89,6 +89,7 @@ Use these inputs in this order:
   - expanded product management with add, deactivate, and reactivate flows
   - a `system_admin`-only delete-readiness and permanent-delete path for eligible no-history products
   - a shared type-to-search product selector for movement forms, analysis filters, and permanent delete
+  - rolling analysis KPI cards for today, last 7 days, and last 30 days
   - testing guidance in `Docs/USER_TEST_GUIDE.md`
 - First-round live UI polish is also applied:
   - sidebar scrolling is independent from page scrolling again
@@ -97,6 +98,8 @@ Use these inputs in this order:
   - login hero typography has been reduced so the auth screen sits more cleanly on one page
   - product search now scales beyond the original 12-SKU catalog by searching name, SKU, and category instead of relying on long dropdown scrolling
   - permanent delete is now isolated in its own full-width danger card with an explicit product selector, separate from the normal edit form
+  - `Inward Analysis` is now labeled `Stock In Analysis` to match warehouse language already used elsewhere in the product
+  - analysis screens now separate rolling KPI totals from the date-range trend graph so users can read both current windows and historical trends without confusion
 - Two real WayVeda business-admin accounts have been provisioned and flagged for first-login password change.
 - Remaining work in this slice:
   - test the browser login, forgot-password, and operator screens with the new guide and real accounts
