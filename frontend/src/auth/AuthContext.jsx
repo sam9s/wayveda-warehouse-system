@@ -158,6 +158,16 @@ export function AuthProvider({ children }) {
     return data.user;
   }
 
+  async function requestPasswordReset(payload) {
+    const { data } = await api.post("/auth/forgot-password", payload);
+    return data;
+  }
+
+  async function resetPassword(payload) {
+    const { data } = await api.post("/auth/reset-password", payload);
+    return data;
+  }
+
   async function logout() {
     try {
       await api.post("/auth/logout", {});
@@ -183,6 +193,8 @@ export function AuthProvider({ children }) {
         isAuthenticated: authState.status === "authenticated",
         login,
         logout,
+        requestPasswordReset,
+        resetPassword,
         status: authState.status,
         user: authState.user,
       }}

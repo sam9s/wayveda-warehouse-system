@@ -83,16 +83,19 @@ Use these inputs in this order:
   - theme switching in the sidebar
   - first-login forced password change
   - a reusable self-service password-change screen
+  - a public forgot-password and reset-password flow
   - testing guidance in `Docs/USER_TEST_GUIDE.md`
 - Two real WayVeda business-admin accounts have been provisioned and flagged for first-login password change.
 - Remaining work in this slice:
-  - test the browser login flow and operator screens with the new guide and real accounts
+  - test the browser login, forgot-password, and operator screens with the new guide and real accounts
   - run real operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO
+  - replace placeholder SMTP with a real outbound provider so recovery emails are actually deliverable
   - refine UI/UX issues found in the first live user pass
 
 ## Exit Criteria
 
 - Operators can log in successfully
+- Password recovery can be initiated and completed through the public auth screens
 - Core warehouse flows are usable on desktop and mobile
 - Dashboard and ledger views read live data from the backend
 - Analysis screens use a shared filter pattern

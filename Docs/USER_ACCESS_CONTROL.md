@@ -211,6 +211,12 @@ Passwords should be rotated through Supabase Auth administrative flows.
 
 They must not be rotated by editing database records directly.
 
+Supported paths now are:
+
+- first-login self-service password change from `/change-password`
+- account recovery via `Forgot password?` on the login screen
+- controlled admin reset through the CLI for bootstrap/support cases
+
 ### 5. Deletion
 
 Hard deletion should be rare and reserved for:

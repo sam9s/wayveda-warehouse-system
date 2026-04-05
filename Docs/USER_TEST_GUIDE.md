@@ -31,6 +31,7 @@ Do not submit random warehouse entries just for testing.
 
 - use your new password going forward
 - you can change your password again from the `Password` button in the top-right header
+- if you forget your password, use `Forgot password?` on the login screen to request a recovery link
 
 ## Theme Selector
 

@@ -2,9 +2,9 @@
 
 ## Status Snapshot
 
-- Date: 2026-04-04
-- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment, password rotation, and theme support
-- Active focus: operator-path QA on the live frontend and initial real-user feedback
+- Date: 2026-04-05
+- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment, password rotation, theme support, and password-recovery flow
+- Active focus: login/polish fixes from first live feedback and operator-path QA on the live frontend
 
 ## Completed So Far
 
@@ -103,6 +103,11 @@
   - added a forced first-login password-change flow
   - added the self-service `/change-password` route and screen
   - updated Settings to expose password status and theme state
+- Refined the authentication entry flow from the first live user pass:
+  - reset the bootstrap `system_admin` account back into forced first-login password setup
+  - redesigned the login screen with business-facing copy and theme-consistent presentation
+  - added public `forgot-password` and `reset-password` screens
+  - added backend password-recovery endpoints for reset-link issuance and password replacement
 - Added a safe end-user guide at `Docs/USER_TEST_GUIDE.md` so browser testing can begin without guesswork.
 - Provisioned the first real WayVeda admin users on the VPS:
   - `ank@meda.partners`
@@ -162,7 +167,7 @@ Verified on 2026-04-04:
 | A-CI - CI/CD | Completed | Self-hosted runner deploys installs, frontend build, migrations, PM2 restart, and app-shell checks |
 | B - Database + Import | Completed | Schema, seed, import, and ledger verification are complete on the VPS |
 | C - Backend API | Completed | Backend is live and auth-backed routes passed the non-destructive smoke test |
-| D - Frontend | In progress | Frontend is deployed publicly; login, theme switching, and first-login password rotation are live, with operator-path verification still pending |
+| D - Frontend | In progress | Frontend is deployed publicly; login, theme switching, first-login password rotation, and password-recovery routes are live, with operator-path verification still pending |
 | E - Shiprocket | Not started | Credentials not needed yet |
 | F - Testing + Handover | Not started | Depends on prior phases |
 
@@ -173,9 +178,10 @@ Verified on 2026-04-04:
 - Future backend and analytics work must preserve the owner-approved balance rule for ledger consistency.
 - Successful write-path scenarios will get another pass during frontend integration, but the backend read/auth verification baseline is complete.
 - The user-management lifecycle is documented, but update/deactivate UI and endpoints are still pending.
+- Recovery email delivery still depends on replacing the placeholder self-hosted SMTP settings with a real outbound mail provider.
 
 ## Next Planned Actions
 
-1. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows using the new guide.
-2. Collect first-round UI/UX feedback after real use with the system-admin and business-admin accounts.
+1. Verify the refreshed login, forgot-password, and reset-password flows in the live environment.
+2. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows using the guide.
 3. Add user-management endpoints and UI for deactivate/reactivate and future role edits.

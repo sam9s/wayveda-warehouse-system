@@ -9,11 +9,13 @@ const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
 const ChangePassword = lazy(() => import("./pages/ChangePassword.jsx"));
 const Dispatch = lazy(() => import("./pages/Dispatch.jsx"));
 const DispatchAnalysis = lazy(() => import("./pages/DispatchAnalysis.jsx"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword.jsx"));
 const InventoryLedger = lazy(() => import("./pages/InventoryLedger.jsx"));
 const InwardAnalysis = lazy(() => import("./pages/InwardAnalysis.jsx"));
 const Login = lazy(() => import("./pages/Login.jsx"));
 const NotFound = lazy(() => import("./pages/NotFound.jsx"));
 const ProductManagement = lazy(() => import("./pages/ProductManagement.jsx"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword.jsx"));
 const RTO = lazy(() => import("./pages/RTO.jsx"));
 const RTOAnalysis = lazy(() => import("./pages/RTOAnalysis.jsx"));
 const Settings = lazy(() => import("./pages/Settings.jsx"));
@@ -24,6 +26,8 @@ function App() {
     <Suspense fallback={<LoadingSpinner label="Loading screen" page />}>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>

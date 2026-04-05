@@ -1,6 +1,13 @@
-import { KeyRound, ShieldCheck, Warehouse } from "lucide-react";
+import {
+  ArrowRight,
+  Boxes,
+  ClipboardCheck,
+  ShieldCheck,
+  Truck,
+  Warehouse,
+} from "lucide-react";
 import { useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext.jsx";
 import loginStyles from "./Login.module.css";
 
@@ -41,6 +48,9 @@ function Login() {
     }
   }
 
+  const bannerMessage = location.state?.message || "";
+  const bannerTone = location.state?.tone === "error" ? "error" : "success";
+
   return (
     <div className={loginStyles.page}>
       <section className={loginStyles.heroPanel}>
@@ -55,46 +65,83 @@ function Login() {
         </div>
 
         <div className={loginStyles.heroCopy}>
-          <h1>Inventory flows that warehouse staff can read in seconds.</h1>
+          <p className={loginStyles.heroEyebrow}>WayVeda Warehouse System</p>
+          <h1>Secure access to live warehouse operations.</h1>
           <p>
-            Login gives you access to the same stock, dispatch, and RTO backbone
-            already verified in Phase C.
+            Use your approved WayVeda account to monitor stock position, record
+            stock inwards, manage dispatches, and reconcile returns from one
+            operational workspace.
           </p>
         </div>
 
         <div className={loginStyles.calloutGrid}>
           <article className={loginStyles.calloutCard}>
-            <ShieldCheck size={18} />
+            <Boxes size={18} />
             <div>
-              <strong>Role-aware access</strong>
-              <span>Operator and admin screens stay separated.</span>
+              <strong>Live inventory position</strong>
+              <span>Track current stock, movement history, and balance accuracy.</span>
             </div>
           </article>
           <article className={loginStyles.calloutCard}>
-            <KeyRound size={18} />
+            <Truck size={18} />
             <div>
-              <strong>Backend-authenticated</strong>
-              <span>Sessions are issued by the live Express + Supabase stack.</span>
+              <strong>Dispatch and return control</strong>
+              <span>Keep dispatch, RTO, and inward records aligned in one flow.</span>
             </div>
           </article>
+          <article className={loginStyles.calloutCard}>
+            <ClipboardCheck size={18} />
+            <div>
+              <strong>Daily operational visibility</strong>
+              <span>Review dashboard summaries, ledger movement, and analysis screens.</span>
+            </div>
+          </article>
+          <article className={loginStyles.calloutCard}>
+            <ShieldCheck size={18} />
+            <div>
+              <strong>Role-based access</strong>
+              <span>Only provisioned users can work inside the live WayVeda environment.</span>
+            </div>
+          </article>
+        </div>
+
+        <div className={loginStyles.heroNote}>
+          <span className={loginStyles.heroNoteLabel}>Operational Notice</span>
+          <p>
+            This login is for authorized WayVeda warehouse and admin users only.
+            Inventory actions in the application affect live operational records.
+          </p>
         </div>
       </section>
 
       <section className={loginStyles.formPanel}>
         <div className={loginStyles.formCard}>
           <p className={loginStyles.eyebrow}>Sign In</p>
-          <h2>Enter your warehouse account</h2>
+          <h2>Use your WayVeda account</h2>
           <p className={loginStyles.subline}>
-            Use an active WayVeda inventory account to continue. Temporary
-            passwords will be rotated on first login.
+            Enter your approved email address and password to continue to the
+            warehouse workspace.
           </p>
+
+          {bannerMessage ? (
+            <div
+              className={
+                bannerTone === "error"
+                  ? loginStyles.errorBanner
+                  : loginStyles.successBanner
+              }
+            >
+              {bannerMessage}
+            </div>
+          ) : null}
 
           <form className={loginStyles.form} onSubmit={handleSubmit}>
             <label>
               <span>Email</span>
               <input
+                autoComplete="email"
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="warehouse@wayveda.com"
+                placeholder="name@wayveda.com"
                 type="email"
                 value={email}
               />
@@ -103,6 +150,7 @@ function Login() {
             <label>
               <span>Password</span>
               <input
+                autoComplete="current-password"
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Enter your password"
                 type="password"
@@ -110,12 +158,30 @@ function Login() {
               />
             </label>
 
+            <div className={loginStyles.linkRow}>
+              <span className={loginStyles.helperText}>
+                Temporary passwords must be changed after first login.
+              </span>
+              <Link className={loginStyles.inlineLink} to="/forgot-password">
+                Forgot password?
+              </Link>
+            </div>
+
             {error ? <div className={loginStyles.errorBanner}>{error}</div> : null}
 
             <button className="primaryButton" disabled={isSubmitting} type="submit">
-              {isSubmitting ? "Signing in..." : "Open Warehouse"}
+              {isSubmitting ? "Signing in..." : "Sign In"}
             </button>
           </form>
+
+          <div className={loginStyles.supportRow}>
+            <span>Need access to the system?</span>
+            <span>Contact the WayVeda system administrator.</span>
+          </div>
+
+          <Link className={loginStyles.secondaryAction} to="/forgot-password">
+            Recover account access <ArrowRight size={16} />
+          </Link>
         </div>
       </section>
     </div>

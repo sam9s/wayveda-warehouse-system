@@ -1,4 +1,5 @@
 const { query, withClient } = require("../db/client");
+const { appConfig } = require("../config/app-config");
 const { adminSupabase, publicSupabase } = require("../config/supabase-client");
 const {
   badRequest,
@@ -271,6 +272,104 @@ async function changePassword(currentUser, { currentPassword, newPassword }) {
   };
 }
 
+async function requestPasswordReset({ email }) {
+  if (!email) {
+    throw badRequest("Email is required");
+  }
+
+  const { error } = await publicSupabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${appConfig.publicAppUrl}/reset-password`,
+  });
+
+  if (error) {
+    throw badRequest(error.message);
+  }
+
+  return {
+    message:
+      "If an active WayVeda account exists for that email, password reset instructions have been sent.",
+    success: true,
+  };
+}
+
+async function resetPassword({ accessToken, newPassword }) {
+  if (!accessToken) {
+    throw unauthorized("Recovery link is invalid or expired");
+  }
+
+  validateNewPassword(newPassword);
+
+  const { data, error } = await publicSupabase.auth.getUser(accessToken);
+  if (error || !data?.user) {
+    throw unauthorized(error?.message || "Recovery link is invalid or expired");
+  }
+
+  const { error: passwordUpdateError } =
+    await adminSupabase.auth.admin.updateUserById(data.user.id, {
+      password: newPassword,
+    });
+
+  if (passwordUpdateError) {
+    throw badRequest(passwordUpdateError.message);
+  }
+
+  const updatedAppUser = await withClient(async (client) => {
+    const result = await client.query(
+      `
+        UPDATE users
+        SET
+          must_change_password = FALSE,
+          password_changed_at = NOW(),
+          updated_at = NOW()
+        WHERE id = $1
+        RETURNING
+          id,
+          display_name,
+          role,
+          is_active,
+          must_change_password,
+          password_changed_at,
+          created_at
+      `,
+      [data.user.id]
+    );
+
+    await client.query(
+      `
+        INSERT INTO audit_log (
+          user_id,
+          action,
+          entity_type,
+          entity_id,
+          metadata
+        )
+        VALUES ($1, $2, $3, $4, $5::jsonb)
+      `,
+      [
+        data.user.id,
+        "password_reset",
+        "user",
+        data.user.id,
+        JSON.stringify({
+          source: "recovery-link",
+        }),
+      ]
+    );
+
+    return mapAppUser(result.rows[0]);
+  });
+
+  await adminSupabase.auth.admin.signOut(accessToken, "local").catch(() => {
+    // Recovery-session cleanup failure should not block the password reset.
+  });
+
+  return {
+    message: "Password reset successful. Sign in with your new password.",
+    success: true,
+    user: buildCurrentUser(data.user, updatedAppUser),
+  };
+}
+
 async function logout(accessToken, scope = "global") {
   if (!accessToken) {
     throw unauthorized("Missing access token");
@@ -289,5 +388,7 @@ module.exports = {
   getAppUserById,
   login,
   logout,
+  requestPasswordReset,
+  resetPassword,
   verifyAccessToken,
 };

@@ -29,6 +29,7 @@
 | Top-level app role | `system_admin` sits above `admin` and is reserved for platform ownership | User access planning on 2026-04-04 | Normal admins cannot create `system_admin` users |
 | First-login password policy | Bootstrap and reset passwords are temporary and must be changed on first login | User request on 2026-04-05 plus Phase D implementation | Enforced by `users.must_change_password` and the `/change-password` route |
 | Frontend theming model | Theme selection is user-side, persisted locally, and applied through CSS variable sets | User request on 2026-04-05 plus Phase D implementation | Current themes are `teal`, `blue`, and `cream` |
+| Password recovery model | Public auth screens issue Supabase recovery links and complete password reset through backend-controlled update flow | User request on 2026-04-05 plus Phase D implementation | Real email delivery still depends on VPS SMTP configuration |
 
 ## Resolved Document Conflicts
 
