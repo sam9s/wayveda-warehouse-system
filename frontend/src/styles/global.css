@@ -78,12 +78,14 @@ img {
   background: var(--surface-card-strong);
   border-color: var(--border-subtle);
   color: var(--ink-900);
+  backdrop-filter: blur(14px);
 }
 
 .ghostButton {
   background: var(--surface-ghost, rgba(255, 255, 255, 0.4));
   border-color: var(--border-subtle);
   color: var(--ink-800);
+  backdrop-filter: blur(14px);
 }
 
 .secondaryCard {
@@ -91,6 +93,7 @@ img {
   border: 1px solid var(--border-subtle);
   border-radius: 1.35rem;
   box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(16px);
 }
 
 .cardBody {

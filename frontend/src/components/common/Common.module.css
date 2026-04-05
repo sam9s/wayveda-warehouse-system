@@ -43,6 +43,7 @@
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(16px);
 }
 
 .statCardTop {
@@ -99,6 +100,7 @@
   background: var(--surface-card);
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(16px);
 }
 
 .table {
@@ -232,6 +234,7 @@
   background: var(--surface-card-strong);
   color: var(--ink-900);
   box-shadow: var(--shadow-tight);
+  backdrop-filter: blur(14px);
 }
 
 .tabs {
@@ -269,6 +272,7 @@
   background: var(--surface-card-strong);
   color: var(--ink-900);
   box-shadow: var(--shadow-tight);
+  backdrop-filter: blur(14px);
 }
 
 .emptyState {
@@ -280,6 +284,7 @@
   background: var(--surface-card-soft);
   border: 1px dashed var(--border-dashed);
   text-align: center;
+  backdrop-filter: blur(16px);
 }
 
 .emptyState p {
