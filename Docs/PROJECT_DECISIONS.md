@@ -27,6 +27,8 @@
 | PM2 deploy context | GitHub Actions deploys must set `HOME=/root` and `PM2_HOME=/root/.pm2`, and verify with retry-based health checks | Phase D deploy fix on 2026-04-04 | Prevents Actions from spawning a transient `/etc/.pm2` daemon and failing on normal restart timing |
 | User access model | Credentials live in Supabase Auth, while `public.users` stores role, active state, and profile metadata | User access planning on 2026-04-04 | Raw passwords must never be stored in application tables |
 | Top-level app role | `system_admin` sits above `admin` and is reserved for platform ownership | User access planning on 2026-04-04 | Normal admins cannot create `system_admin` users |
+| First-login password policy | Bootstrap and reset passwords are temporary and must be changed on first login | User request on 2026-04-05 plus Phase D implementation | Enforced by `users.must_change_password` and the `/change-password` route |
+| Frontend theming model | Theme selection is user-side, persisted locally, and applied through CSS variable sets | User request on 2026-04-05 plus Phase D implementation | Current themes are `teal`, `blue`, and `cream` |
 
 ## Resolved Document Conflicts
 
@@ -72,3 +74,4 @@ These are active unless explicitly changed:
 - Phase B schema, seed, import, and ledger verification are completed on the VPS
 - Frontend build is now served through the backend at `https://wh.wayveda.cloud`
 - Canonical user-access design is documented in `Docs/USER_ACCESS_CONTROL.md`
+- End-user testing guide is documented in `Docs/USER_TEST_GUIDE.md`

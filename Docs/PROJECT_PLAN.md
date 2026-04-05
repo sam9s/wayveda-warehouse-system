@@ -202,7 +202,9 @@ Current status:
 - Public app shell is now served through the backend at `https://wh.wayveda.cloud`
 - GitHub Actions deploy run `#16` succeeded after fixing runner PM2 context and post-restart probe timing
 - Permanent `system_admin` bootstrap is complete and verified against the live API
-- Remaining work in this slice is operator-path QA and first business-user provisioning
+- Theme switching and forced first-login password change are now live
+- The first two real WayVeda `admin` users have been provisioned
+- Remaining work in this slice is operator-path QA and first real-user feedback
 
 ### Phase E - Shiprocket Integration
 

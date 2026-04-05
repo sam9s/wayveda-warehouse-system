@@ -3,8 +3,8 @@
 ## Status Snapshot
 
 - Date: 2026-04-04
-- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment
-- Active focus: permanent-user login verification and operator-path QA on the live frontend
+- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment, password rotation, and theme support
+- Active focus: operator-path QA on the live frontend and initial real-user feedback
 
 ## Completed So Far
 
@@ -98,6 +98,17 @@
 - Created and verified the first permanent bootstrap account:
   - one `system_admin` user now exists on the live VPS
   - `/api/auth/login`, `/api/auth/me`, and `/api/admin/users` all passed with that account
+- Expanded the live frontend foundation:
+  - added a persistent theme selector with `teal`, `blue`, and `cream` options
+  - added a forced first-login password-change flow
+  - added the self-service `/change-password` route and screen
+  - updated Settings to expose password status and theme state
+- Added a safe end-user guide at `Docs/USER_TEST_GUIDE.md` so browser testing can begin without guesswork.
+- Provisioned the first real WayVeda admin users on the VPS:
+  - `ank@meda.partners`
+  - `sunilmunjal@digitalchaabi.com`
+  - both are `admin`
+  - both are flagged for first-login password change
 
 ## VPS Baseline
 
@@ -151,7 +162,7 @@ Verified on 2026-04-04:
 | A-CI - CI/CD | Completed | Self-hosted runner deploys installs, frontend build, migrations, PM2 restart, and app-shell checks |
 | B - Database + Import | Completed | Schema, seed, import, and ledger verification are complete on the VPS |
 | C - Backend API | Completed | Backend is live and auth-backed routes passed the non-destructive smoke test |
-| D - Frontend | In progress | Frontend is deployed publicly; permanent-user login and operator-path verification are still pending |
+| D - Frontend | In progress | Frontend is deployed publicly; login, theme switching, and first-login password rotation are live, with operator-path verification still pending |
 | E - Shiprocket | Not started | Credentials not needed yet |
 | F - Testing + Handover | Not started | Depends on prior phases |
 
@@ -165,6 +176,6 @@ Verified on 2026-04-04:
 
 ## Next Planned Actions
 
-1. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows with the verified `system_admin` account.
-2. Define the first real WayVeda admin/operator accounts after the bootstrap login is confirmed.
+1. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows using the new guide.
+2. Collect first-round UI/UX feedback after real use with the system-admin and business-admin accounts.
 3. Add user-management endpoints and UI for deactivate/reactivate and future role edits.

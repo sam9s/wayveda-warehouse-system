@@ -79,8 +79,14 @@ Use these inputs in this order:
 - The built frontend is now served publicly through the backend at `https://wh.wayveda.cloud`.
 - GitHub Actions deploy run `#16` verified the expanded deploy workflow after fixing PM2 runner context and restart-check timing.
 - The first permanent `system_admin` account has been created and verified against the live API.
+- The live app now includes:
+  - theme switching in the sidebar
+  - first-login forced password change
+  - a reusable self-service password-change screen
+  - testing guidance in `Docs/USER_TEST_GUIDE.md`
+- Two real WayVeda business-admin accounts have been provisioned and flagged for first-login password change.
 - Remaining work in this slice:
-  - test the browser login flow and operator screens with the permanent `system_admin` account
+  - test the browser login flow and operator screens with the new guide and real accounts
   - run real operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO
   - refine UI/UX issues found in the first live user pass
 
