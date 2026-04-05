@@ -30,7 +30,7 @@
 | First-login password policy | Bootstrap and reset passwords are temporary and must be changed on first login | User request on 2026-04-05 plus Phase D implementation | Enforced by `users.must_change_password` and the `/change-password` route |
 | Frontend theming model | Theme selection is user-side, persisted locally, and applied through CSS variable sets | User request on 2026-04-05 plus Phase D implementation | Current themes are `teal`, `blue`, and `cream` |
 | Password recovery model | Public auth screens issue Supabase recovery links and complete password reset through backend-controlled update flow | User request on 2026-04-05 plus Phase D implementation | Real email delivery still depends on VPS SMTP configuration |
-| Product lifecycle controls | Product UI supports add, edit, deactivate, and reactivate; hard delete is deferred to a future guarded `system_admin` workflow | User discussion on 2026-04-05 plus Phase D implementation | Deactivation preserves movement history and keeps the ledger auditable |
+| Product lifecycle controls | Product UI supports add, edit, deactivate, reactivate, and `system_admin` delete-readiness; permanent delete is allowed only for inactive zero-balance products with no movement history | User discussion on 2026-04-05 plus Phase D implementation | See `Docs/PRODUCT_LIFECYCLE_POLICY.md` for the operating rule |
 
 ## Resolved Document Conflicts
 

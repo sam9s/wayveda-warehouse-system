@@ -131,6 +131,11 @@
   - add product flow is now available in the frontend
   - deactivate/reactivate product controls are now available in the frontend
   - new products now default their opening-stock date to the current day instead of the historical import baseline
+- Added guarded permanent-delete controls for `system_admin`:
+  - created `Docs/PRODUCT_LIFECYCLE_POLICY.md` as the canonical operating reference
+  - added product delete-readiness checks to the frontend and backend
+  - permanent delete now only proceeds for inactive products with zero balance and zero movement history
+  - products with movement history are explicitly blocked and marked for future guided cleanup instead
 
 ## VPS Baseline
 
@@ -196,7 +201,7 @@ Verified on 2026-04-04:
 - Successful write-path scenarios will get another pass during frontend integration, but the backend read/auth verification baseline is complete.
 - Deactivate/reactivate user management is still pending even though create/list is now live in the app.
 - Recovery email delivery still depends on replacing the placeholder self-hosted SMTP settings with a real outbound mail provider.
-- Hard-delete product workflow is still intentionally deferred pending `system_admin`-only guard rails and history checks.
+- Guided cleanup for products with historical movements is still pending and intentionally separate from the direct delete path.
 
 ## Next Planned Actions
 

@@ -57,6 +57,10 @@ User lifecycle and privileged changes must be auditable. `audit_log` is already 
 - future settings changes
 - privileged product or inventory adjustments
 
+Related reference:
+
+- see `Docs/PRODUCT_LIFECYCLE_POLICY.md` for the full product add/deactivate/reactivate/delete policy
+
 ## Role Model
 
 ### `system_admin`
@@ -134,6 +138,8 @@ Permissions:
 | Dispatch Entry | Yes | Yes | Yes | No |
 | RTO Entry | Yes | Yes | Yes | No |
 | Product Management | Yes | Yes | No | No |
+| Product Delete Readiness Check | Yes | No | No | No |
+| Permanent Product Delete | Yes | No | No | No |
 | Settings | Yes | Yes | No | No |
 | List Users | Yes | Yes | No | No |
 | Create `viewer` | Yes | Yes | No | No |
@@ -239,6 +245,8 @@ Implemented now:
 - frontend route and navigation logic now recognizes `system_admin`
 - dedicated frontend user-management screen exists for creating `admin`, `operator`, and `viewer` users
 - admin-side creation now applies the standard temporary-password policy and forces first-login password change
+- product management now supports add, deactivate, and reactivate in the frontend
+- `system_admin` now has a dedicated product delete-readiness flow for guarded permanent delete
 - bootstrap CLI exists for creating the first permanent user:
   - `npm run user:create -- --email <email> --password <password> --display-name <name> --role <role>`
 - password-reset CLI exists for controlled temporary-password resets:

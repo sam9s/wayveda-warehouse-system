@@ -4,11 +4,18 @@ import { EmptyState } from "../components/common/EmptyState.jsx";
 import { LoadingSpinner } from "../components/common/LoadingSpinner.jsx";
 import { PageHeader } from "../components/common/PageHeader.jsx";
 import { StatusPill } from "../components/common/StatusPill.jsx";
+import { useAuth } from "../auth/AuthContext.jsx";
 import api from "../utils/api.js";
 import { formatDateForInput, formatNumber } from "../utils/formatters.js";
 import adminStyles from "./Admin.module.css";
 
 const DRAFT_PRODUCT_ID = "__new__";
+const EMPTY_DELETE_STATE = {
+  error: "",
+  loading: false,
+  readiness: null,
+  working: false,
+};
 
 function sortProducts(products) {
   return [...products].sort((left, right) => {
@@ -65,10 +72,25 @@ function normalizeProductForm(product) {
   };
 }
 
+function formatDeleteStatus(status) {
+  switch (status) {
+    case "safe":
+      return "Ready for delete";
+    case "guided_cleanup_required":
+      return "Guided cleanup required";
+    case "blocked":
+      return "Blocked";
+    default:
+      return "Not checked";
+  }
+}
+
 function ProductManagement() {
+  const { user } = useAuth();
   const [products, setProducts] = useState([]);
   const [selectedId, setSelectedId] = useState("");
   const [form, setForm] = useState(null);
+  const [deleteState, setDeleteState] = useState(EMPTY_DELETE_STATE);
   const [state, setState] = useState({
     error: "",
     loading: true,
@@ -142,6 +164,7 @@ function ProductManagement() {
   }
 
   const isCreating = selectedId === DRAFT_PRODUCT_ID;
+  const isSystemAdmin = user?.role === "system_admin";
   const selectedProduct = isCreating
     ? null
     : products.find((product) => product.id === selectedId) || null;
@@ -156,11 +179,13 @@ function ProductManagement() {
 
   function selectExistingProduct(productId) {
     resetMessages();
+    setDeleteState(EMPTY_DELETE_STATE);
     setSelectedId(productId);
   }
 
   function startCreateFlow() {
     resetMessages();
+    setDeleteState(EMPTY_DELETE_STATE);
     setSelectedId(DRAFT_PRODUCT_ID);
     setForm(createEmptyProductForm(products));
   }
@@ -194,6 +219,7 @@ function ProductManagement() {
         setProducts(nextProducts);
         setSelectedId(data.product.id);
         setForm(normalizeProductForm(data.product));
+        setDeleteState(EMPTY_DELETE_STATE);
         setState({
           error: "",
           loading: false,
@@ -209,6 +235,7 @@ function ProductManagement() {
       );
       setProducts(nextProducts);
       setForm(normalizeProductForm(data.product));
+      setDeleteState(EMPTY_DELETE_STATE);
       setState({
         error: "",
         loading: false,
@@ -243,6 +270,7 @@ function ProductManagement() {
       );
       setProducts(nextProducts);
       setForm(normalizeProductForm(data.product));
+      setDeleteState(EMPTY_DELETE_STATE);
       setState({
         error: "",
         loading: false,
@@ -279,6 +307,7 @@ function ProductManagement() {
       );
       setProducts(nextProducts);
       setForm(normalizeProductForm(data.product));
+      setDeleteState(EMPTY_DELETE_STATE);
       setState({
         error: "",
         loading: false,
@@ -291,6 +320,86 @@ function ProductManagement() {
         error: error.response?.data?.message || "Unable to reactivate product.",
         working: false,
       }));
+    }
+  }
+
+  async function handleDeleteReadinessCheck() {
+    if (!selectedId || isCreating || !isSystemAdmin) {
+      return;
+    }
+
+    setDeleteState((currentState) => ({
+      ...currentState,
+      error: "",
+      loading: true,
+    }));
+
+    try {
+      const { data } = await api.get(`/products/${selectedId}/delete-readiness`);
+      setDeleteState({
+        error: "",
+        loading: false,
+        readiness: data.readiness,
+        working: false,
+      });
+    } catch (error) {
+      setDeleteState({
+        error:
+          error.response?.data?.error?.message || "Unable to run delete readiness check.",
+        loading: false,
+        readiness: error.response?.data?.error?.details || null,
+        working: false,
+      });
+    }
+  }
+
+  async function handlePermanentDelete() {
+    if (!selectedId || isCreating || !isSystemAdmin || !deleteState.readiness?.canHardDelete) {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Permanently delete ${selectedProduct?.name || "this product"}? This cannot be undone.`
+    );
+    if (!confirmed) {
+      return;
+    }
+
+    setDeleteState((currentState) => ({
+      ...currentState,
+      error: "",
+      working: true,
+    }));
+
+    try {
+      await api.delete(`/products/${selectedId}/permanent`);
+      const remainingProducts = sortProducts(
+        products.filter((product) => product.id !== selectedId)
+      );
+      const nextSelectedProduct = remainingProducts[0] || null;
+
+      setProducts(remainingProducts);
+      setSelectedId(nextSelectedProduct?.id || DRAFT_PRODUCT_ID);
+      setForm(
+        nextSelectedProduct
+          ? normalizeProductForm(nextSelectedProduct)
+          : createEmptyProductForm(remainingProducts)
+      );
+      setDeleteState(EMPTY_DELETE_STATE);
+      setState({
+        error: "",
+        loading: false,
+        success: "Product permanently deleted.",
+        working: false,
+      });
+    } catch (error) {
+      setDeleteState({
+        error:
+          error.response?.data?.error?.message || "Unable to delete product permanently.",
+        loading: false,
+        readiness: error.response?.data?.error?.details || deleteState.readiness,
+        working: false,
+      });
     }
   }
 
@@ -366,8 +475,8 @@ function ProductManagement() {
             <div>
               <h3>{isCreating ? "Add product" : "Edit selected product"}</h3>
               <p className={adminStyles.note}>
-                Hard delete is intentionally not exposed here. Use deactivate/reactivate to
-                preserve auditability.
+                Permanent delete is guarded behind a system-admin readiness check. Use
+                deactivate/reactivate for normal lifecycle control.
               </p>
             </div>
             {!isCreating && selectedProduct ? (
@@ -544,14 +653,108 @@ function ProductManagement() {
             </form>
           ) : null}
 
-          <div className={adminStyles.helperCard}>
-            <strong>Planned hard-delete rule</strong>
-            <p>
-              Hard delete will be reserved for <code>system_admin</code> and only after the
-              system proves the SKU has no linked movement history, or after a guided cleanup
-              process explicitly removes and re-reconciles that history.
-            </p>
-          </div>
+          {isSystemAdmin && !isCreating && selectedProduct ? (
+            <div className={adminStyles.helperCard}>
+              <div className={adminStyles.toolbar}>
+                <div>
+                  <strong>Permanent delete readiness</strong>
+                  <p className={adminStyles.note}>
+                    Reserved for <code>system_admin</code>. Run the check before any permanent
+                    delete attempt.
+                  </p>
+                </div>
+                <div className={adminStyles.toolbarActions}>
+                  <button
+                    className="secondaryButton"
+                    disabled={deleteState.loading || deleteState.working}
+                    onClick={handleDeleteReadinessCheck}
+                    type="button"
+                  >
+                    {deleteState.loading ? "Checking..." : "Run Delete Readiness Check"}
+                  </button>
+                </div>
+              </div>
+
+              {deleteState.error ? (
+                <div className={adminStyles.error}>{deleteState.error}</div>
+              ) : null}
+
+              {deleteState.readiness ? (
+                <>
+                  <div className={adminStyles.statusGrid}>
+                    <div className={adminStyles.statusRow}>
+                      <strong>Status</strong>
+                      <span>
+                        <StatusPill
+                          value={formatDeleteStatus(deleteState.readiness.status)}
+                        />
+                      </span>
+                    </div>
+                    <div className={adminStyles.statusRow}>
+                      <strong>Current balance</strong>
+                      <span>{formatNumber(deleteState.readiness.summary.balance, "0")}</span>
+                    </div>
+                    <div className={adminStyles.statusRow}>
+                      <strong>Movement rows</strong>
+                      <span>
+                        {formatNumber(deleteState.readiness.summary.movementCount, "0")}
+                      </span>
+                    </div>
+                    <div className={adminStyles.statusRow}>
+                      <strong>Rule summary</strong>
+                      <span>{deleteState.readiness.guidance}</span>
+                    </div>
+                  </div>
+
+                  <div className={adminStyles.checkList}>
+                    {deleteState.readiness.checks.map((check) => (
+                      <div className={adminStyles.checkRow} key={check.key}>
+                        <strong>{check.label}</strong>
+                        <span>{check.passed ? "Pass" : "Fail"}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {deleteState.readiness.reasons?.length ? (
+                    <ul className={adminStyles.reasonList}>
+                      {deleteState.readiness.reasons.map((reason) => (
+                        <li key={reason}>{reason}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+
+                  {deleteState.readiness.canHardDelete ? (
+                    <div className={adminStyles.actionCluster}>
+                      <button
+                        className="primaryButton"
+                        disabled={deleteState.working}
+                        onClick={handlePermanentDelete}
+                        type="button"
+                      >
+                        {deleteState.working
+                          ? "Deleting..."
+                          : "Delete Product Permanently"}
+                      </button>
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <p className={adminStyles.note}>
+                  Best test path: create a zero-stock SKU, deactivate it, run the readiness
+                  check, then confirm permanent delete.
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className={adminStyles.helperCard}>
+              <strong>Permanent delete rule</strong>
+              <p>
+                Permanent delete is reserved for <code>system_admin</code> and only after a
+                readiness check confirms the SKU is inactive, has zero balance, and has no
+                movement history.
+              </p>
+            </div>
+          )}
         </section>
       </div>
     </div>

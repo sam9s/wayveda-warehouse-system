@@ -35,10 +35,25 @@ async function deleteProduct(req, res) {
   res.status(200).json({ product });
 }
 
+async function getDeleteReadiness(req, res) {
+  const readiness = await productsService.getProductDeleteReadiness(req.params.id);
+  res.status(200).json({ readiness });
+}
+
+async function hardDeleteProduct(req, res) {
+  const result = await productsService.hardDeleteProduct(
+    req.params.id,
+    req.currentUser
+  );
+  res.status(200).json(result);
+}
+
 module.exports = {
   createProduct,
   deleteProduct,
   getProduct,
+  getDeleteReadiness,
+  hardDeleteProduct,
   listProducts,
   updateProduct,
 };

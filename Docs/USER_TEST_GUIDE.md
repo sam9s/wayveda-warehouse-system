@@ -9,7 +9,7 @@ Important:
 - this system is connected to live inventory data
 - read-only checks are safe
 - write actions like `Stock In`, `Dispatch`, and `RTO` create real movement records
-- there is no delete or undo screen yet
+- there is no general movement delete or undo screen
 
 Do not submit random warehouse entries just for testing.
 
@@ -128,6 +128,26 @@ Recommended method:
 
 Do not perform repeated trial-and-error submissions.
 
+## Product Lifecycle Testing
+
+If you test product management, treat it as master-data testing, not movement testing.
+
+Safe product-lifecycle test path:
+
+1. create one temporary zero-stock product
+2. verify it appears in product management
+3. deactivate it
+4. verify it disappears from active product selectors
+5. if you are logged in as `system_admin`, run delete readiness
+6. if the status is `Ready for delete`, permanently delete it
+
+Important:
+
+- deactivation does not alter inventory movements
+- deactivation is an active-visibility switch
+- inactive products disappear from active selectors and active operational views
+- permanent delete is only for `system_admin` and only when the readiness check passes
+
 ## Movement Screen Test Checklist
 
 ### Stock In
@@ -190,6 +210,8 @@ Should be able to:
 - use all movement entry screens
 - access product management
 - access settings
+- run product delete-readiness
+- permanently delete only eligible products
 
 ### `admin`
 
@@ -238,9 +260,10 @@ Example:
 - first-login password change is enforced
 - theme selector is available
 - forgot-password screens are live, but external recovery-email delivery still depends on final SMTP setup
-- no delete/undo UI exists yet
-- user-management UI is not built yet
-- WayVeda operator/viewer user creation is still pending
+- no general movement delete/undo UI exists yet
+- user-management UI is live
+- product add, deactivate, reactivate, and `system_admin` delete-readiness are live
+- permanent delete only works for inactive zero-balance products with no movement history
 
 ## Recommended First Test Sequence
 

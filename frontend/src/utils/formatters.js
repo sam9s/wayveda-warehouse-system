@@ -64,17 +64,20 @@ export function getStatusTone(value) {
   switch (value) {
     case "Active":
     case "Healthy":
+    case "Ready for delete":
       return "positive";
     case "Inactive":
     case "Low":
     case "Plan Reorder":
     case "Configure":
     case "Set Max Level":
+    case "Guided cleanup required":
       return "warning";
     case "Critical":
     case "Out of Stock":
     case "Reorder Now":
     case "URGENT":
+    case "Blocked":
       return "danger";
     default:
       return "neutral";

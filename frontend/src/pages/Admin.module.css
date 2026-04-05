@@ -192,6 +192,42 @@
   color: var(--ink-700);
 }
 
+.checkList {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.checkRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 1rem;
+  background: var(--surface-card-strong);
+  border: 1px solid var(--border-subtle);
+}
+
+.checkRow strong,
+.checkRow span {
+  display: block;
+}
+
+.checkRow span {
+  color: var(--ink-700);
+  font-weight: 700;
+}
+
+.reasonList {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  color: var(--ink-700);
+}
+
+.reasonList li + li {
+  margin-top: 0.45rem;
+}
+
 @media (max-width: 980px) {
   .grid {
     grid-template-columns: 1fr;
