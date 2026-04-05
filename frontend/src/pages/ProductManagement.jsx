@@ -190,6 +190,10 @@ function ProductManagement() {
     setForm(createEmptyProductForm(products));
   }
 
+  function resetDeleteFlow() {
+    setDeleteState(EMPTY_DELETE_STATE);
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     setState((currentState) => ({
@@ -435,11 +439,18 @@ function ProductManagement() {
                 key: "name",
                 render: (row) => (
                   <button
-                    className="ghostButton"
+                    className={
+                      row.id === selectedId
+                        ? `secondaryButton ${adminStyles.selectedProductButton}`
+                        : "ghostButton"
+                    }
                     onClick={() => selectExistingProduct(row.id)}
                     type="button"
                   >
-                    {row.name}
+                    <span className={adminStyles.selectedProductName}>{row.name}</span>
+                    {row.id === selectedId ? (
+                      <span className={adminStyles.selectedHint}>Selected</span>
+                    ) : null}
                   </button>
                 ),
               },
@@ -475,9 +486,15 @@ function ProductManagement() {
             <div>
               <h3>{isCreating ? "Add product" : "Edit selected product"}</h3>
               <p className={adminStyles.note}>
-                Permanent delete is guarded behind a system-admin readiness check. Use
-                deactivate/reactivate for normal lifecycle control.
+                {isSystemAdmin
+                  ? "Permanent delete is guarded behind a system-admin readiness check. Use deactivate/reactivate for normal lifecycle control."
+                  : "Use add, edit, deactivate, and reactivate for normal product lifecycle control."}
               </p>
+              {!isCreating && selectedProduct ? (
+                <p className={adminStyles.selectionLabel}>
+                  Selected product: <strong>{selectedProduct.name}</strong>
+                </p>
+              ) : null}
             </div>
             {!isCreating && selectedProduct ? (
               <StatusPill value={selectedProduct.isActive ? "Active" : "Inactive"} />
@@ -654,7 +671,7 @@ function ProductManagement() {
           ) : null}
 
           {isSystemAdmin && !isCreating && selectedProduct ? (
-            <div className={adminStyles.helperCard}>
+            <div className={`${adminStyles.helperCard} ${adminStyles.dangerPanel}`}>
               <div className={adminStyles.toolbar}>
                 <div>
                   <strong>Permanent delete readiness</strong>
@@ -662,16 +679,29 @@ function ProductManagement() {
                     Reserved for <code>system_admin</code>. Run the check before any permanent
                     delete attempt.
                   </p>
+                  <p className={adminStyles.selectionLabel}>
+                    Delete target: <strong>{selectedProduct.name}</strong>
+                  </p>
                 </div>
                 <div className={adminStyles.toolbarActions}>
                   <button
-                    className="secondaryButton"
+                    className={`primaryButton ${adminStyles.dangerButton}`}
                     disabled={deleteState.loading || deleteState.working}
                     onClick={handleDeleteReadinessCheck}
                     type="button"
                   >
-                    {deleteState.loading ? "Checking..." : "Run Delete Readiness Check"}
+                    {deleteState.loading ? "Checking..." : "Check Permanent Delete"}
                   </button>
+                  {deleteState.readiness || deleteState.error ? (
+                    <button
+                      className="ghostButton"
+                      disabled={deleteState.loading || deleteState.working}
+                      onClick={resetDeleteFlow}
+                      type="button"
+                    >
+                      Reset
+                    </button>
+                  ) : null}
                 </div>
               </div>
 
@@ -723,10 +753,21 @@ function ProductManagement() {
                     </ul>
                   ) : null}
 
+                  {deleteState.readiness.nextSteps?.length ? (
+                    <div className={adminStyles.nextStepCard}>
+                      <strong>Next steps</strong>
+                      <ul className={adminStyles.reasonList}>
+                        {deleteState.readiness.nextSteps.map((step) => (
+                          <li key={step}>{step}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+
                   {deleteState.readiness.canHardDelete ? (
                     <div className={adminStyles.actionCluster}>
                       <button
-                        className="primaryButton"
+                        className={`primaryButton ${adminStyles.dangerButton}`}
                         disabled={deleteState.working}
                         onClick={handlePermanentDelete}
                         type="button"

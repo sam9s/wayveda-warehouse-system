@@ -107,6 +107,17 @@ The readiness check evaluates three core rules:
 2. The current balance must be zero.
 3. The product must have no movement history.
 
+Current UI flow:
+
+1. open `Product Management`
+2. select the product from the list
+3. if you are logged in as `system_admin`, open the permanent-delete panel for that selected product
+4. run the readiness check
+5. review status, reasons, and next steps
+6. only if the status is `Ready for delete`, use the permanent delete action and confirm the popup
+
+Normal admins do not see the permanent-delete workflow.
+
 ### Readiness Statuses
 
 #### `Ready for delete`

@@ -158,17 +158,25 @@ function buildDeleteReadiness(product, movementSummary) {
   ];
 
   const reasons = [];
+  const nextSteps = [];
   if (product.isActive) {
     reasons.push("Deactivate the product before attempting permanent delete.");
+    nextSteps.push("Deactivate the product and then rerun the readiness check.");
   }
   if (summary.balance !== 0) {
     reasons.push(
       `Current balance is ${summary.balance}. Inventory must be reduced to zero first.`
     );
+    nextSteps.push(
+      "Clear the live balance first through a supervised stock cleanup or transfer workflow."
+    );
   }
   if (summary.movementCount > 0) {
     reasons.push(
       "Movement history exists. Direct delete would break auditability and requires guided cleanup."
+    );
+    nextSteps.push(
+      "Do not delete directly. Use the future guided cleanup workflow for historical SKUs."
     );
   }
 
@@ -196,6 +204,7 @@ function buildDeleteReadiness(product, movementSummary) {
         : status === "guided_cleanup_required"
           ? "This SKU cannot be deleted directly. It is inactive and empty, but historical movements still exist and must be handled through a guided cleanup workflow."
           : "This SKU is not ready for permanent delete. Complete the blocking steps first.",
+    nextSteps,
     product,
     reasons,
     status,

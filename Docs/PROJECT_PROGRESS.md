@@ -136,6 +136,11 @@
   - added product delete-readiness checks to the frontend and backend
   - permanent delete now only proceeds for inactive products with zero balance and zero movement history
   - products with movement history are explicitly blocked and marked for future guided cleanup instead
+- Refined the product delete UX from the first system-admin pass:
+  - delete workflow is now visually separated as a danger action
+  - selected product is explicitly highlighted in the product list and edit panel
+  - normal admins do not see the permanent-delete controls
+  - the delete panel now includes reset and next-step guidance when a product is blocked
 
 ## VPS Baseline
 
