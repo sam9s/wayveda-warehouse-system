@@ -58,7 +58,7 @@ function buildRollingWindowSelects(metrics, dateColumn = "entry_date") {
   return ROLLING_WINDOWS.flatMap((window) =>
     metrics.map(
       (metric) =>
-        `COALESCE(SUM(${metric.expression}) FILTER (WHERE ${window.sqlCondition(dateColumn)}), 0)::int AS ${window.key}_${metric.key}`
+        `COALESCE(SUM(${metric.expression}) FILTER (WHERE ${window.sqlCondition(dateColumn)}), 0)::int AS "${window.key}_${metric.key}"`
     )
   ).join(",\n        ");
 }

@@ -170,37 +170,43 @@ function RTOAnalysis() {
           <section className={analysisStyles.summaryGrid}>
             <StatCard
               details={[
+                { label: "Total", value: formatNumber(state.summary.today.totalRto) },
                 { label: "Right", value: formatNumber(state.summary.today.right) },
                 { label: "Wrong", value: formatNumber(state.summary.today.wrong) },
                 { label: "Fake", value: formatNumber(state.summary.today.fake) },
               ]}
               helper="All RTO outcomes recorded today"
               icon={Clock3}
-              label="RTO Today"
+              label="RTO Today Total"
               tone="warning"
               value={formatNumber(state.summary.today.totalRto)}
             />
             <StatCard
               details={[
+                { label: "Total", value: formatNumber(state.summary.last7Days.totalRto) },
                 { label: "Right", value: formatNumber(state.summary.last7Days.right) },
                 { label: "Wrong", value: formatNumber(state.summary.last7Days.wrong) },
                 { label: "Fake", value: formatNumber(state.summary.last7Days.fake) },
               ]}
               helper="Rolling 7-day RTO total"
               icon={CalendarRange}
-              label="Last 7 Days"
+              label="Last 7 Days Total"
               tone="warning"
               value={formatNumber(state.summary.last7Days.totalRto)}
             />
             <StatCard
               details={[
+                {
+                  label: "Total",
+                  value: formatNumber(state.summary.last30Days.totalRto),
+                },
                 { label: "Right", value: formatNumber(state.summary.last30Days.right) },
                 { label: "Wrong", value: formatNumber(state.summary.last30Days.wrong) },
                 { label: "Fake", value: formatNumber(state.summary.last30Days.fake) },
               ]}
               helper="Rolling 30-day RTO total"
               icon={CalendarDays}
-              label="Last 30 Days"
+              label="Last 30 Days Total"
               tone="warning"
               value={formatNumber(state.summary.last30Days.totalRto)}
             />
