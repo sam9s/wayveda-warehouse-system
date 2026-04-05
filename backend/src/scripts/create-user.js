@@ -49,8 +49,18 @@ async function main() {
   const appUser = await withClient(async (client) => {
     const result = await client.query(
       `
-        INSERT INTO users (id, display_name, role, is_active)
-        VALUES ($1, $2, $3, TRUE)
+        INSERT INTO users (
+          id,
+          display_name,
+          role,
+          is_active,
+          must_change_password,
+          password_changed_at
+        )
+        VALUES (
+          $1, $2, $3, TRUE, $4,
+          CASE WHEN $4 THEN NULL ELSE NOW() END
+        )
         ON CONFLICT (id) DO UPDATE SET
           display_name = EXCLUDED.display_name,
           role = EXCLUDED.role,

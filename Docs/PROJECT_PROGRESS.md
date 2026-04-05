@@ -151,6 +151,8 @@
   - Inward Analysis has been relabeled to `Stock In Analysis` and now includes rolling KPI totals for quantity and cartons
   - RTO Analysis now includes backend-backed rolling KPI totals for today, last 7 days, and last 30 days, with separate `Right`, `Wrong`, and `Fake` breakdowns kept visible for traceability
   - rolling KPI cards are intentionally separate from the chart date-range and daily/weekly/monthly trend controls
+- Fixed the bootstrap user script so `--no-force-password-change` now works correctly on first-time user creation, not only on conflict updates.
+- Provisioned dedicated QA role-check accounts on the live VPS for `admin`, `operator`, and `viewer` visibility testing without forced password change.
 
 ## VPS Baseline
 

@@ -91,6 +91,7 @@ Use these inputs in this order:
   - a shared type-to-search product selector for movement forms, analysis filters, and permanent delete
   - rolling analysis KPI cards for today, last 7 days, and last 30 days
   - testing guidance in `Docs/USER_TEST_GUIDE.md`
+  - dedicated non-forced QA role accounts provisioned on the VPS for admin/operator/viewer visibility checks
 - First-round live UI polish is also applied:
   - sidebar scrolling is independent from page scrolling again
   - theme selection is now a compact inline control instead of a large card
@@ -100,6 +101,7 @@ Use these inputs in this order:
   - permanent delete is now isolated in its own full-width danger card with an explicit product selector, separate from the normal edit form
   - `Inward Analysis` is now labeled `Stock In Analysis` to match warehouse language already used elsewhere in the product
   - analysis screens now separate rolling KPI totals from the date-range trend graph so users can read both current windows and historical trends without confusion
+  - role-based testing is now practical without password-reset friction because dedicated QA accounts do not force first-login password change
 - Two real WayVeda business-admin accounts have been provisioned and flagged for first-login password change.
 - Remaining work in this slice:
   - test the browser login, forgot-password, and operator screens with the new guide and real accounts
