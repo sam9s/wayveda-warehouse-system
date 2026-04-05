@@ -4,6 +4,12 @@
 
 This document records the current differences between the provided workbook and the live WayVeda application so business review does not rely on memory or chat history.
 
+This is the internal workbook-versus-app reference.
+
+Shiprocket-specific product-name ambiguities are now tracked separately in:
+
+- `Docs/SHIPROCKET_MAPPING_GAP_ANALYSIS.html`
+
 Workbook reviewed:
 
 - `Docs/Wayveda_by_MeDa_v2_FINAL.xlsx`
@@ -187,6 +193,7 @@ This is an intentional product design difference, not an omission.
 - any approved `qty_per_carton` defaults
 - confirmation on whether workbook-style dispatch summary fields should be surfaced in dashboard and ledger
 - confirmation on whether warehouse fault percentage should be promoted in `RTO Analysis`
+- confirmation on Shiprocket ambiguous product-name mappings via `Docs/SHIPROCKET_MAPPING_GAP_ANALYSIS.html`
 
 ## Recommended Next Actions
 

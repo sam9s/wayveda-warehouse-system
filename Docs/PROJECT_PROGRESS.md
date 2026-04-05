@@ -184,6 +184,10 @@
   - `Docs/USER_TEST_GUIDE.md`
   - `Docs/PROJECT_PLAN.md`
   - `Docs/PROJECT_DECISIONS.md`
+- Added plain-English documentation to support business review and client communication:
+  - `Docs/SYSTEM_LOGIC_EXPLAINED.md`
+  - `Docs/SHIPROCKET_MAPPING_GAP_ANALYSIS.html`
+  - updated `Docs/GAP_ANALYSIS_WORKBOOK_VS_APP.md` to separate internal workbook gaps from the client-facing Shiprocket mapping gap
 
 ## VPS Baseline
 
