@@ -87,7 +87,6 @@ function Dashboard() {
     <div className={dashboardStyles.page}>
       <PageHeader
         description="Track stock health, configuration gaps, and the most recent warehouse activity."
-        eyebrow="Phase D"
         title="Warehouse Dashboard"
       />
 
