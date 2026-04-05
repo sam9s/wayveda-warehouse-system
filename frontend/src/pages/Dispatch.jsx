@@ -26,7 +26,7 @@ const EMPTY_SHIPROCKET_STATUS = {
   configured: false,
   defaults: {
     lookbackDays: 30,
-    maxPages: 5,
+    maxPages: 20,
     pageSize: 50,
   },
   latestSync: null,

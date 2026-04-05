@@ -4,7 +4,16 @@ const { query, withClient } = require("../db/client");
 const { writeAuditLog } = require("./audit.service");
 const { badRequest, serviceUnavailable } = require("../utils/http-error");
 
-const DISPATCH_STATUSES = new Set(["SHIPPED", "DELIVERED"]);
+const DISPATCH_STATUSES = new Set([
+  "SHIPPED",
+  "PICKED UP",
+  "IN TRANSIT",
+  "IN TRANSIT EN ROUTE",
+  "IN TRANSIT AT DESTINATION HUB",
+  "OUT FOR DELIVERY",
+  "REACHED AT DESTINATION HUB",
+  "DELIVERED",
+]);
 
 function normalizeDate(value) {
   if (!value) {

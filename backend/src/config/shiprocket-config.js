@@ -34,7 +34,7 @@ function normalizeBaseUrl(value) {
 const shiprocketConfig = {
   baseUrl: normalizeBaseUrl(readOptional("SHIPROCKET_BASE_URL")),
   email: readOptional("SHIPROCKET_EMAIL"),
-  maxPages: readPositiveInteger("SHIPROCKET_SYNC_MAX_PAGES", 5),
+  maxPages: readPositiveInteger("SHIPROCKET_SYNC_MAX_PAGES", 20),
   pageSize: readPositiveInteger("SHIPROCKET_SYNC_PAGE_SIZE", 50),
   password: readOptional("SHIPROCKET_PASSWORD"),
   syncLookbackDays: readPositiveInteger("SHIPROCKET_SYNC_LOOKBACK_DAYS", 30),
