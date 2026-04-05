@@ -6,6 +6,7 @@ import { LoadingSpinner } from "./components/common/LoadingSpinner.jsx";
 import { AppLayout } from "./components/layout/AppLayout.jsx";
 
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
+const ChangePassword = lazy(() => import("./pages/ChangePassword.jsx"));
 const Dispatch = lazy(() => import("./pages/Dispatch.jsx"));
 const DispatchAnalysis = lazy(() => import("./pages/DispatchAnalysis.jsx"));
 const InventoryLedger = lazy(() => import("./pages/InventoryLedger.jsx"));
@@ -27,6 +28,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route index element={<Navigate replace to="/dashboard" />} />
+            <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/inventory/ledger" element={<InventoryLedger />} />
             <Route

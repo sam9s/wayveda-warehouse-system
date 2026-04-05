@@ -144,6 +144,20 @@ export function AuthProvider({ children }) {
     return data.user;
   }
 
+  async function changePassword(payload) {
+    const { data } = await api.post("/auth/change-password", payload);
+
+    startTransition(() => {
+      setAuthState((currentState) => ({
+        ...currentState,
+        status: "authenticated",
+        user: data.user,
+      }));
+    });
+
+    return data.user;
+  }
+
   async function logout() {
     try {
       await api.post("/auth/logout", {});
@@ -165,6 +179,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         accessToken: authState.session?.accessToken || null,
+        changePassword,
         isAuthenticated: authState.status === "authenticated",
         login,
         logout,

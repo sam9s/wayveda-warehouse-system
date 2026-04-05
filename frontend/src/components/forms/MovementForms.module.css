@@ -6,9 +6,9 @@
 .section {
   padding: 1.15rem;
   border-radius: 1.35rem;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(14, 28, 34, 0.08);
-  box-shadow: 0 24px 48px rgba(34, 43, 48, 0.06);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
 }
 
 .sectionHeader {
@@ -60,9 +60,9 @@
 .field textarea {
   width: 100%;
   padding: 0.82rem 0.9rem;
-  border: 1px solid rgba(14, 28, 34, 0.12);
+  border: 1px solid var(--border-strong);
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.94);
+  background: var(--surface-card);
   color: var(--ink-900);
   font: inherit;
 }
@@ -84,8 +84,8 @@
   padding: 1rem;
   border-radius: 1.2rem;
   text-decoration: none;
-  background: rgba(247, 245, 239, 0.85);
-  border: 1px solid rgba(14, 28, 34, 0.08);
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
   transition:
     transform 160ms ease,
     box-shadow 160ms ease,
@@ -94,7 +94,7 @@
 
 .typeCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 34px rgba(34, 43, 48, 0.08);
+  box-shadow: var(--shadow-tight);
 }
 
 .typeCard strong,
@@ -137,7 +137,7 @@
 }
 
 .typeCardActive {
-  box-shadow: inset 0 0 0 1px rgba(0, 191, 166, 0.3);
+  box-shadow: inset 0 0 0 1px var(--accent-outline);
 }
 
 .itemHeader {
@@ -169,8 +169,8 @@
 .lineItem {
   padding: 0.9rem;
   border-radius: 1rem;
-  background: rgba(247, 245, 239, 0.86);
-  border: 1px solid rgba(14, 28, 34, 0.08);
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
 }
 
 .lineTop {
@@ -219,8 +219,8 @@
 }
 
 .bannerSuccess {
-  background: rgba(0, 191, 166, 0.12);
-  color: var(--teal-700);
+  background: var(--accent-soft);
+  color: var(--accent-700);
 }
 
 .placeholderPanel {

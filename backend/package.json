@@ -13,7 +13,8 @@
     "db:verify:ledger": "node src/db/verify-ledger.js",
     "db:phase-b": "npm run db:migrate && npm run db:seed:products && npm run db:import:history && npm run db:verify:ledger",
     "verify:auth-flows": "node src/scripts/verify-auth-flows.js",
-    "user:create": "node src/scripts/create-user.js"
+    "user:create": "node src/scripts/create-user.js",
+    "user:set-password": "node src/scripts/set-user-password.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",

@@ -27,6 +27,7 @@ async function main() {
   const password = requireOption("--password", "password");
   const displayName = requireOption("--display-name", "display name");
   const role = (readOption("--role") || "operator").toLowerCase();
+  const mustChangePassword = !process.argv.includes("--no-force-password-change");
 
   if (!ALLOWED_ROLES.has(role)) {
     throw new Error("Role must be one of: system_admin, admin, operator, viewer");
@@ -54,10 +55,20 @@ async function main() {
           display_name = EXCLUDED.display_name,
           role = EXCLUDED.role,
           is_active = TRUE,
+          must_change_password = $4,
+          password_changed_at = CASE WHEN $4 THEN NULL ELSE NOW() END,
           updated_at = NOW()
-        RETURNING id, display_name, role, is_active, created_at, updated_at
+        RETURNING
+          id,
+          display_name,
+          role,
+          is_active,
+          must_change_password,
+          password_changed_at,
+          created_at,
+          updated_at
       `,
-      [data.user.id, displayName, role]
+      [data.user.id, displayName, role, mustChangePassword]
     );
 
     await writeAuditLog(client, {
@@ -70,13 +81,15 @@ async function main() {
         email,
         id: result.rows[0].id,
         isActive: result.rows[0].is_active,
+        mustChangePassword: result.rows[0].must_change_password,
+        passwordChangedAt: result.rows[0].password_changed_at,
         role: result.rows[0].role,
         updatedAt: result.rows[0].updated_at,
       },
       metadata: {
+        mustChangePassword,
         source: "bootstrap-script",
       },
-      userId: result.rows[0].id,
     });
 
     return result.rows[0];
@@ -87,6 +100,7 @@ async function main() {
       {
         email,
         id: appUser.id,
+        mustChangePassword: appUser.must_change_password,
         role: appUser.role,
       },
       null,

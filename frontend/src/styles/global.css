@@ -63,7 +63,7 @@ img {
 }
 
 .primaryButton {
-  background: linear-gradient(135deg, var(--teal-600), var(--teal-700));
+  background: linear-gradient(135deg, var(--accent-600), var(--accent-700));
   color: white;
   box-shadow: var(--shadow-tight);
 }
@@ -75,20 +75,20 @@ img {
 }
 
 .secondaryButton {
-  background: white;
-  border-color: rgba(14, 28, 34, 0.08);
+  background: var(--surface-card-strong);
+  border-color: var(--border-subtle);
   color: var(--ink-900);
 }
 
 .ghostButton {
-  background: rgba(255, 255, 255, 0.4);
-  border-color: rgba(14, 28, 34, 0.08);
+  background: var(--surface-ghost, rgba(255, 255, 255, 0.4));
+  border-color: var(--border-subtle);
   color: var(--ink-800);
 }
 
 .secondaryCard {
   background: var(--panel);
-  border: 1px solid rgba(14, 28, 34, 0.08);
+  border: 1px solid var(--border-subtle);
   border-radius: 1.35rem;
   box-shadow: var(--shadow-soft);
 }

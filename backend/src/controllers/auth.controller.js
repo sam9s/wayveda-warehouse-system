@@ -11,12 +11,18 @@ async function me(req, res) {
   });
 }
 
+async function changePassword(req, res) {
+  const result = await authService.changePassword(req.currentUser, req.body || {});
+  res.status(200).json(result);
+}
+
 async function logout(req, res) {
   const result = await authService.logout(req.accessToken, req.body?.scope);
   res.status(200).json(result);
 }
 
 module.exports = {
+  changePassword,
   login,
   logout,
   me,

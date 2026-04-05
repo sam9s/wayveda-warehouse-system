@@ -1,5 +1,5 @@
 import { Menu, ShieldCheck } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext.jsx";
 import { formatDate } from "../../utils/formatters.js";
 import { getPageMetadata } from "../../utils/navigation.js";
@@ -35,6 +35,9 @@ export function Header({ onToggleNavigation }) {
           <ShieldCheck size={16} />
           <span>{user?.appUser?.displayName || user?.email}</span>
         </div>
+        <Link className="secondaryButton" to="/change-password">
+          Password
+        </Link>
         <button className="ghostButton" onClick={logout} type="button">
           Log out
         </button>

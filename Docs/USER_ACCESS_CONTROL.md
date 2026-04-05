@@ -233,6 +233,8 @@ Implemented now:
 - frontend route and navigation logic now recognizes `system_admin`
 - bootstrap CLI exists for creating the first permanent user:
   - `npm run user:create -- --email <email> --password <password> --display-name <name> --role <role>`
+- password-reset CLI exists for controlled temporary-password resets:
+  - `npm run user:set-password -- --email <email> --password <password>`
 
 Still pending in future work:
 

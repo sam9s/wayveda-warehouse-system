@@ -4,7 +4,7 @@ import { useAuth } from "./AuthContext.jsx";
 
 export function ProtectedRoute() {
   const location = useLocation();
-  const { isAuthenticated, status } = useAuth();
+  const { isAuthenticated, status, user } = useAuth();
 
   if (status === "restoring") {
     return <LoadingSpinner label="Restoring your session" page />;
@@ -12,6 +12,10 @@ export function ProtectedRoute() {
 
   if (!isAuthenticated) {
     return <Navigate replace state={{ from: location }} to="/login" />;
+  }
+
+  if (user?.mustChangePassword && location.pathname !== "/change-password") {
+    return <Navigate replace to="/change-password" />;
   }
 
   return <Outlet />;

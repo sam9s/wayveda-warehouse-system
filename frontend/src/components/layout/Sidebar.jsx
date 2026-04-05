@@ -1,11 +1,13 @@
 import { Box, Warehouse } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext.jsx";
+import { useTheme } from "../../theme/ThemeContext.jsx";
 import { getNavigationForRole } from "../../utils/navigation.js";
 import layoutStyles from "./Layout.module.css";
 
 export function Sidebar({ isOpen, onNavigate }) {
   const { user } = useAuth();
+  const { setTheme, theme, themes } = useTheme();
   const navigationGroups = getNavigationForRole(user?.role);
 
   return (
@@ -26,6 +28,27 @@ export function Sidebar({ isOpen, onNavigate }) {
           <div>
             <p className={layoutStyles.brandName}>WayVeda</p>
             <p className={layoutStyles.brandSubline}>Warehouse Operations</p>
+          </div>
+        </div>
+
+        <div className={layoutStyles.themePanel}>
+          <p className={layoutStyles.themeLabel}>Theme</p>
+          <div className={layoutStyles.themeRail}>
+            {themes.map((themeOption) => (
+              <button
+                className={`${layoutStyles.themeButton} ${
+                  theme === themeOption.id ? layoutStyles.themeButtonActive : ""
+                }`}
+                key={themeOption.id}
+                onClick={() => setTheme(themeOption.id)}
+                type="button"
+              >
+                <span
+                  className={`${layoutStyles.themeSwatch} ${layoutStyles[`themeSwatch${themeOption.id}`]}`}
+                />
+                <span>{themeOption.label}</span>
+              </button>
+            ))}
           </div>
         </div>
 

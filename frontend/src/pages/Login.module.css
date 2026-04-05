@@ -2,9 +2,7 @@
   min-height: 100vh;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(22rem, 0.9fr);
-  background:
-    radial-gradient(circle at top left, rgba(0, 191, 166, 0.18), transparent 34%),
-    linear-gradient(135deg, #eef5f2 0%, #f7f3e8 58%, #f1eee7 100%);
+  background: var(--login-background);
 }
 
 .heroPanel,
@@ -30,7 +28,7 @@
   width: 3rem;
   height: 3rem;
   border-radius: 1rem;
-  background: linear-gradient(135deg, var(--teal-600), var(--teal-700));
+  background: var(--brand-gradient);
   color: white;
 }
 
@@ -74,8 +72,8 @@
   gap: 0.85rem;
   padding: 1rem;
   border-radius: 1.25rem;
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(14, 28, 34, 0.08);
+  background: var(--surface-wash);
+  border: 1px solid var(--border-subtle);
 }
 
 .calloutCard strong,
@@ -91,21 +89,21 @@
 .formPanel {
   display: grid;
   place-items: center;
-  background: rgba(13, 56, 64, 0.04);
+  background: var(--accent-faint);
 }
 
 .formCard {
   width: min(100%, 29rem);
   padding: 1.5rem;
   border-radius: 1.5rem;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(14, 28, 34, 0.08);
-  box-shadow: 0 28px 60px rgba(34, 43, 48, 0.12);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-panel);
 }
 
 .eyebrow {
   margin: 0;
-  color: var(--teal-700);
+  color: var(--accent-700);
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -140,9 +138,9 @@
 .form input {
   width: 100%;
   padding: 0.95rem 1rem;
-  border: 1px solid rgba(14, 28, 34, 0.12);
+  border: 1px solid var(--border-strong);
   border-radius: 1rem;
-  background: white;
+  background: var(--surface-card-strong);
 }
 
 .errorBanner {

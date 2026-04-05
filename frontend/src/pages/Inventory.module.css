@@ -9,8 +9,8 @@
   gap: 0.6rem;
   padding: 0.95rem 1rem;
   border-radius: 1.15rem;
-  background: rgba(0, 191, 166, 0.1);
-  color: var(--teal-700);
+  background: var(--accent-soft);
+  color: var(--accent-700);
   flex-wrap: wrap;
 }
 
@@ -21,8 +21,8 @@
   min-height: 2.85rem;
   padding: 0 0.9rem;
   border-radius: 1rem;
-  background: white;
-  border: 1px solid rgba(14, 28, 34, 0.08);
+  background: var(--surface-card-strong);
+  border: 1px solid var(--border-subtle);
 }
 
 .searchField input {

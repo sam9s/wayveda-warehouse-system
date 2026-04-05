@@ -27,8 +27,13 @@ function Login() {
     setIsSubmitting(true);
 
     try {
-      await login({ email, password });
-      navigate(location.state?.from?.pathname || "/dashboard", { replace: true });
+      const nextUser = await login({ email, password });
+      navigate(
+        nextUser?.mustChangePassword
+          ? "/change-password"
+          : location.state?.from?.pathname || "/dashboard",
+        { replace: true }
+      );
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Unable to sign in.");
     } finally {
@@ -80,7 +85,8 @@ function Login() {
           <p className={loginStyles.eyebrow}>Sign In</p>
           <h2>Enter your warehouse account</h2>
           <p className={loginStyles.subline}>
-            Use an active WayVeda inventory account to continue.
+            Use an active WayVeda inventory account to continue. Temporary
+            passwords will be rotated on first login.
           </p>
 
           <form className={loginStyles.form} onSubmit={handleSubmit}>

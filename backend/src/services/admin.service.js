@@ -13,6 +13,8 @@ async function listUsers() {
       u.display_name,
       u.role,
       u.is_active,
+      u.must_change_password,
+      u.password_changed_at,
       u.created_at,
       u.updated_at
     FROM users u
@@ -26,6 +28,8 @@ async function listUsers() {
     email: row.email,
     id: row.id,
     isActive: row.is_active,
+    mustChangePassword: row.must_change_password,
+    passwordChangedAt: row.password_changed_at,
     role: row.role,
     updatedAt: row.updated_at,
   }));
@@ -71,8 +75,18 @@ async function createUser(payload, currentUser) {
           display_name = EXCLUDED.display_name,
           role = EXCLUDED.role,
           is_active = TRUE,
+          must_change_password = TRUE,
+          password_changed_at = NULL,
           updated_at = NOW()
-        RETURNING id, display_name, role, is_active, created_at, updated_at
+        RETURNING
+          id,
+          display_name,
+          role,
+          is_active,
+          must_change_password,
+          password_changed_at,
+          created_at,
+          updated_at
       `,
       [data.user.id, displayName, role]
     );
@@ -83,6 +97,8 @@ async function createUser(payload, currentUser) {
       email,
       id: result.rows[0].id,
       isActive: result.rows[0].is_active,
+      mustChangePassword: result.rows[0].must_change_password,
+      passwordChangedAt: result.rows[0].password_changed_at,
       role: result.rows[0].role,
       updatedAt: result.rows[0].updated_at,
     };

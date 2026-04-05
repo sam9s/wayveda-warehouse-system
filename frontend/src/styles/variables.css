@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap");
 
-:root {
+:root,
+:root[data-theme="teal"] {
   --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
   --font-heading: "Sora", "Segoe UI", sans-serif;
 
@@ -14,15 +15,138 @@
   --panel: rgba(255, 255, 255, 0.92);
   --panel-strong: #ffffff;
 
-  --teal-700: #0f7c72;
-  --teal-600: #00bfa6;
-  --blue-700: #1d5a8a;
-  --blue-600: #287cc0;
-  --coral-700: #b0462d;
-  --coral-600: #df5e42;
+  --accent-700: #0f7c72;
+  --accent-600: #00bfa6;
+  --accent-soft: rgba(0, 191, 166, 0.12);
+  --accent-faint: rgba(0, 191, 166, 0.08);
+  --accent-hover: rgba(15, 124, 114, 0.03);
+  --accent-outline: rgba(0, 191, 166, 0.3);
+  --accent-focus: rgba(0, 191, 166, 0.24);
+  --accent-focus-border: rgba(0, 191, 166, 0.38);
+
+  --stock-700: #0f7c72;
+  --stock-600: #00bfa6;
+  --teal-700: var(--stock-700);
+  --teal-600: var(--stock-600);
+  --dispatch-700: #1d5a8a;
+  --dispatch-600: #287cc0;
+  --rto-700: #b0462d;
+  --rto-600: #df5e42;
   --amber-700: #9b6b0d;
   --amber-600: #d99b12;
+  --blue-700: var(--dispatch-700);
+  --blue-600: var(--dispatch-600);
+  --coral-700: var(--rto-700);
+  --coral-600: var(--rto-600);
+
+  --surface-card: rgba(255, 255, 255, 0.94);
+  --surface-card-strong: #ffffff;
+  --surface-card-soft: rgba(255, 255, 255, 0.88);
+  --surface-muted: rgba(247, 245, 239, 0.92);
+  --surface-alt: rgba(13, 56, 64, 0.08);
+  --surface-ghost: rgba(255, 255, 255, 0.4);
+  --surface-overlay: rgba(11, 20, 24, 0.34);
+  --surface-wash: rgba(255, 255, 255, 0.82);
+  --surface-hover: var(--accent-hover);
+
+  --border-subtle: rgba(14, 28, 34, 0.08);
+  --border-strong: rgba(14, 28, 34, 0.12);
+  --border-dashed: rgba(14, 28, 34, 0.15);
 
   --shadow-soft: 0 24px 50px rgba(34, 43, 48, 0.08);
   --shadow-tight: 0 12px 26px rgba(34, 43, 48, 0.08);
+  --shadow-card: 0 24px 48px rgba(34, 43, 48, 0.06);
+  --shadow-panel: 0 28px 60px rgba(34, 43, 48, 0.12);
+
+  --shell-background:
+    radial-gradient(circle at top left, rgba(0, 191, 166, 0.16), transparent 32%),
+    radial-gradient(circle at top right, rgba(18, 72, 107, 0.14), transparent 28%),
+    linear-gradient(180deg, #f7f5ef 0%, #f3efe5 100%);
+  --login-background:
+    radial-gradient(circle at top left, rgba(0, 191, 166, 0.18), transparent 34%),
+    linear-gradient(135deg, #eef5f2 0%, #f7f3e8 58%, #f1eee7 100%);
+  --sidebar-background:
+    linear-gradient(180deg, rgba(10, 46, 53, 0.97) 0%, rgba(8, 37, 44, 0.95) 100%);
+  --sidebar-border: rgba(226, 221, 207, 0.12);
+  --sidebar-text: #ffffff;
+  --sidebar-muted: rgba(242, 239, 229, 0.72);
+  --sidebar-label: rgba(242, 239, 229, 0.55);
+  --sidebar-hover: rgba(255, 255, 255, 0.08);
+  --sidebar-active-bg:
+    linear-gradient(135deg, rgba(0, 191, 166, 0.24), rgba(0, 191, 166, 0.08));
+  --sidebar-active-ring: rgba(0, 191, 166, 0.24);
+  --sidebar-footer-background: rgba(255, 255, 255, 0.06);
+  --sidebar-caption: #9ae6d9;
+  --brand-gradient: linear-gradient(135deg, var(--accent-600), var(--accent-700));
+  --brand-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+
+  --header-background: rgba(247, 245, 239, 0.84);
+  --header-date-background: rgba(15, 124, 114, 0.08);
+  --header-date-text: #0b5f57;
+
+  --theme-teal-swatch: linear-gradient(135deg, #00bfa6 0%, #0f7c72 100%);
+  --theme-blue-swatch: linear-gradient(135deg, #559fe0 0%, #1d5a8a 100%);
+  --theme-cream-swatch: linear-gradient(135deg, #ead7b4 0%, #b08c4f 100%);
+}
+
+:root[data-theme="blue"] {
+  --accent-700: #225f93;
+  --accent-600: #4598da;
+  --accent-soft: rgba(69, 152, 218, 0.12);
+  --accent-faint: rgba(69, 152, 218, 0.08);
+  --accent-hover: rgba(34, 95, 147, 0.04);
+  --accent-outline: rgba(69, 152, 218, 0.28);
+  --accent-focus: rgba(69, 152, 218, 0.24);
+  --accent-focus-border: rgba(69, 152, 218, 0.38);
+
+  --shell-background:
+    radial-gradient(circle at top left, rgba(69, 152, 218, 0.18), transparent 32%),
+    radial-gradient(circle at top right, rgba(34, 95, 147, 0.18), transparent 26%),
+    linear-gradient(180deg, #f0f6fb 0%, #ebf1f8 100%);
+  --login-background:
+    radial-gradient(circle at top left, rgba(69, 152, 218, 0.2), transparent 35%),
+    linear-gradient(135deg, #edf5fd 0%, #f6f3ec 55%, #eef2f8 100%);
+  --sidebar-background:
+    linear-gradient(180deg, rgba(17, 42, 74, 0.98) 0%, rgba(13, 31, 56, 0.96) 100%);
+  --sidebar-active-bg:
+    linear-gradient(135deg, rgba(69, 152, 218, 0.3), rgba(69, 152, 218, 0.1));
+  --sidebar-active-ring: rgba(69, 152, 218, 0.26);
+  --sidebar-caption: #a8d6ff;
+
+  --header-background: rgba(240, 246, 251, 0.86);
+  --header-date-background: rgba(34, 95, 147, 0.1);
+  --header-date-text: #194a72;
+
+  --theme-blue-swatch: linear-gradient(135deg, #68aee9 0%, #225f93 100%);
+}
+
+:root[data-theme="cream"] {
+  --accent-700: #8d6a34;
+  --accent-600: #c79a56;
+  --accent-soft: rgba(199, 154, 86, 0.14);
+  --accent-faint: rgba(199, 154, 86, 0.08);
+  --accent-hover: rgba(141, 106, 52, 0.04);
+  --accent-outline: rgba(199, 154, 86, 0.28);
+  --accent-focus: rgba(199, 154, 86, 0.24);
+  --accent-focus-border: rgba(199, 154, 86, 0.38);
+
+  --shell-background:
+    radial-gradient(circle at top left, rgba(199, 154, 86, 0.16), transparent 30%),
+    radial-gradient(circle at top right, rgba(130, 110, 74, 0.14), transparent 24%),
+    linear-gradient(180deg, #faf5ea 0%, #f4ecdd 100%);
+  --login-background:
+    radial-gradient(circle at top left, rgba(199, 154, 86, 0.18), transparent 35%),
+    linear-gradient(135deg, #faf4e7 0%, #fffaf2 45%, #f2eadc 100%);
+  --sidebar-background:
+    linear-gradient(180deg, rgba(53, 40, 32, 0.97) 0%, rgba(34, 27, 22, 0.95) 100%);
+  --sidebar-active-bg:
+    linear-gradient(135deg, rgba(199, 154, 86, 0.28), rgba(199, 154, 86, 0.1));
+  --sidebar-active-ring: rgba(199, 154, 86, 0.24);
+  --sidebar-caption: #f1d5a0;
+
+  --header-background: rgba(250, 245, 234, 0.88);
+  --header-date-background: rgba(141, 106, 52, 0.1);
+  --header-date-text: #6f5329;
+
+  --theme-cream-swatch: linear-gradient(135deg, #f0ddbc 0%, #b88f4f 100%);
 }
