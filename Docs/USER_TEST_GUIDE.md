@@ -237,6 +237,7 @@ Example:
 - live login is working
 - first-login password change is enforced
 - theme selector is available
+- forgot-password screens are live, but external recovery-email delivery still depends on final SMTP setup
 - no delete/undo UI exists yet
 - user-management UI is not built yet
 - WayVeda operator/viewer user creation is still pending

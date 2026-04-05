@@ -23,10 +23,15 @@ function notFound(message = "Not Found") {
   return new HttpError(404, message);
 }
 
+function serviceUnavailable(message = "Service Unavailable") {
+  return new HttpError(503, message);
+}
+
 module.exports = {
   HttpError,
   badRequest,
   forbidden,
   notFound,
+  serviceUnavailable,
   unauthorized,
 };

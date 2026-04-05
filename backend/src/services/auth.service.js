@@ -4,6 +4,7 @@ const { adminSupabase, publicSupabase } = require("../config/supabase-client");
 const {
   badRequest,
   forbidden,
+  serviceUnavailable,
   unauthorized,
 } = require("../utils/http-error");
 
@@ -282,7 +283,9 @@ async function requestPasswordReset({ email }) {
   });
 
   if (error) {
-    throw badRequest(error.message);
+    throw serviceUnavailable(
+      "Password recovery email is not available right now. Contact the system administrator for a temporary reset."
+    );
   }
 
   return {
