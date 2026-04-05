@@ -62,6 +62,10 @@
     radial-gradient(circle at top left, rgba(0, 191, 166, 0.16), transparent 32%),
     radial-gradient(circle at top right, rgba(18, 72, 107, 0.14), transparent 28%),
     linear-gradient(180deg, #f7f5ef 0%, #f3efe5 100%);
+  --content-background:
+    radial-gradient(circle at top right, rgba(0, 191, 166, 0.16), transparent 24%),
+    radial-gradient(circle at left 18%, rgba(18, 72, 107, 0.08), transparent 26%),
+    linear-gradient(180deg, #f8f4ea 0%, #f2eee2 100%);
   --login-background:
     radial-gradient(circle at top left, rgba(0, 191, 166, 0.18), transparent 34%),
     linear-gradient(135deg, #eef5f2 0%, #f7f3e8 58%, #f1eee7 100%);
@@ -103,6 +107,10 @@
     radial-gradient(circle at top left, rgba(69, 152, 218, 0.18), transparent 32%),
     radial-gradient(circle at top right, rgba(34, 95, 147, 0.18), transparent 26%),
     linear-gradient(180deg, #f0f6fb 0%, #ebf1f8 100%);
+  --content-background:
+    radial-gradient(circle at top right, rgba(69, 152, 218, 0.2), transparent 22%),
+    radial-gradient(circle at left 18%, rgba(34, 95, 147, 0.08), transparent 24%),
+    linear-gradient(180deg, #eff5fb 0%, #e8eef6 100%);
   --login-background:
     radial-gradient(circle at top left, rgba(69, 152, 218, 0.2), transparent 35%),
     linear-gradient(135deg, #edf5fd 0%, #f6f3ec 55%, #eef2f8 100%);
@@ -134,6 +142,10 @@
     radial-gradient(circle at top left, rgba(199, 154, 86, 0.16), transparent 30%),
     radial-gradient(circle at top right, rgba(130, 110, 74, 0.14), transparent 24%),
     linear-gradient(180deg, #faf5ea 0%, #f4ecdd 100%);
+  --content-background:
+    radial-gradient(circle at top right, rgba(199, 154, 86, 0.18), transparent 23%),
+    radial-gradient(circle at left 18%, rgba(130, 110, 74, 0.08), transparent 24%),
+    linear-gradient(180deg, #fbf4e6 0%, #f1e7d6 100%);
   --login-background:
     radial-gradient(circle at top left, rgba(199, 154, 86, 0.18), transparent 35%),
     linear-gradient(135deg, #faf4e7 0%, #fffaf2 45%, #f2eadc 100%);

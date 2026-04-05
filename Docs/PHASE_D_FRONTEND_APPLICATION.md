@@ -85,6 +85,11 @@ Use these inputs in this order:
   - a reusable self-service password-change screen
   - a public forgot-password and reset-password flow
   - testing guidance in `Docs/USER_TEST_GUIDE.md`
+- First-round live UI polish is also applied:
+  - sidebar scrolling is independent from page scrolling again
+  - theme selection is now a compact inline control instead of a large card
+  - the workspace content area now reflects the selected theme more clearly
+  - login hero typography has been reduced so the auth screen sits more cleanly on one page
 - Two real WayVeda business-admin accounts have been provisioned and flagged for first-login password change.
 - Remaining work in this slice:
   - test the browser login, forgot-password, and operator screens with the new guide and real accounts

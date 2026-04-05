@@ -108,6 +108,9 @@
   - redesigned the login screen with business-facing copy and theme-consistent presentation
   - added public `forgot-password` and `reset-password` screens
   - added backend password-recovery endpoints for reset-link issuance and password replacement
+  - tightened the login-screen typography so the auth screen fits more cleanly without oversized hero copy
+  - restored independent sidebar scrolling and reduced the theme selector to a compact inline control
+  - applied stronger theme-specific workspace backgrounds to the main content area, not just the sidebar
 - Added a safe end-user guide at `Docs/USER_TEST_GUIDE.md` so browser testing can begin without guesswork.
 - Provisioned the first real WayVeda admin users on the VPS:
   - `ank@meda.partners`
