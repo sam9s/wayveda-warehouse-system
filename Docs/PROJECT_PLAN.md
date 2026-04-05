@@ -257,6 +257,6 @@ Exit criteria:
 
 ## Immediate Next Steps
 
-1. Verify frontend serving through the backend and VPS deploy workflow.
-2. Confirm a permanent warehouse login for end-to-end UI testing.
-3. Continue Phase D refinement after the first live UI pass.
+1. Wait for Ankush's confirmed `max_level` values before treating stock-health and reorder outputs as business-final.
+2. Continue Phase D UAT on flows that do not depend on `max_level`.
+3. Begin Phase E planning and integration prep using `Docs/PHASE_E_SHIPROCKET_INTEGRATION.md`.

@@ -167,6 +167,9 @@
   - `Watch list` = `Watch`
   - `Critical attention` = `Low Stock + Critical`
 - Corrected the ledger/dashboard edge case where `max_level = 0` must behave like `Set Max Level`, not like a valid configured target.
+- Documented the workbook-to-app comparison and current business gaps in `Docs/GAP_ANALYSIS_WORKBOOK_VS_APP.md`.
+- Started formal Phase E planning in `Docs/PHASE_E_SHIPROCKET_INTEGRATION.md`.
+- Added a reusable cream-theme reference pack for cross-project reuse under `Docs/ThemeReference/CreamTheme/`.
 
 ## VPS Baseline
 
@@ -234,9 +237,10 @@ Verified on 2026-04-04:
 - Recovery email delivery still depends on replacing the placeholder self-hosted SMTP settings with a real outbound mail provider.
 - Guided cleanup for products with historical movements is still pending and intentionally separate from the direct delete path.
 - Broader record-level search across large ledgers and admin tables is still a future enhancement beyond the new product-selector search layer.
+- Workbook-parity dashboard fields such as `Order Qty`, `Last Month Dispatch`, and `This Month Dispatch` are still pending product review.
 
 ## Next Planned Actions
 
-1. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, RTO, and all three analysis screens using the guide and the new KPI cards.
-2. Validate role-based UI visibility with dedicated QA admin/operator/viewer accounts that do not require first-login password change.
-3. Add deactivate/reactivate and future role-edit support to user management.
+1. Wait for Ankush's response on `max_level` values and dashboard/reorder sign-off.
+2. Continue Phase D UAT on role, movement, ledger, and analysis flows that do not depend on `max_level`.
+3. Use `Docs/PHASE_E_SHIPROCKET_INTEGRATION.md` as the planning baseline for Shiprocket work.
