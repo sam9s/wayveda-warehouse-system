@@ -3,8 +3,8 @@
 ## Status Snapshot
 
 - Date: 2026-04-05
-- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment, password rotation, theme support, password-recovery flow, searchable product-selection UX, and rolling analysis KPI cards
-- Active focus: live UI/UX refinement from operator feedback, analysis KPI visibility, and operator-path QA on the live frontend
+- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment and active UAT, and Phase E started with the first Shiprocket integration slice
+- Active focus: live UAT feedback, Shiprocket credential activation, and first live dispatch-sync verification
 
 ## Completed So Far
 
@@ -170,6 +170,20 @@
 - Documented the workbook-to-app comparison and current business gaps in `Docs/GAP_ANALYSIS_WORKBOOK_VS_APP.md`.
 - Started formal Phase E planning in `Docs/PHASE_E_SHIPROCKET_INTEGRATION.md`.
 - Added a reusable cream-theme reference pack for cross-project reuse under `Docs/ThemeReference/CreamTheme/`.
+- Started Phase E implementation:
+  - added backend Shiprocket config and auth wrapper
+  - added dispatch sync service with logging to `shiprocket_sync_log`
+  - added product alias mapping for first-pass Shiprocket name matching
+  - added API endpoints for Shiprocket status, recent synced dispatch rows, and admin-triggered sync
+  - added CLI command `npm run shiprocket:sync`
+  - replaced the Dispatch Shiprocket placeholder with a live sync shell showing connection state, sync controls, recent logs, and read-only synced rows
+- Recorded the Phase E operating warning:
+  - in the current slice, do not manually enter the same order and then sync that same order from Shiprocket
+- Updated documentation for the live Phase E slice and the required VPS credential path:
+  - `Docs/PHASE_E_SHIPROCKET_INTEGRATION.md`
+  - `Docs/USER_TEST_GUIDE.md`
+  - `Docs/PROJECT_PLAN.md`
+  - `Docs/PROJECT_DECISIONS.md`
 
 ## VPS Baseline
 

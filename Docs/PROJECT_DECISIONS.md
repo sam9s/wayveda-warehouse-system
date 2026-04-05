@@ -32,6 +32,7 @@
 | Password recovery model | Public auth screens issue Supabase recovery links and complete password reset through backend-controlled update flow | User request on 2026-04-05 plus Phase D implementation | Real email delivery still depends on VPS SMTP configuration |
 | Product lifecycle controls | Product UI supports add, edit, deactivate, reactivate, and `system_admin` delete-readiness; permanent delete is allowed only for inactive zero-balance products with no movement history | User discussion on 2026-04-05 plus Phase D implementation | See `Docs/PRODUCT_LIFECYCLE_POLICY.md` for the operating rule |
 | Dashboard stock-health model | Dashboard status follows Ankush's workbook formula: `Set Max Level`, `Above Target`, `On Track`, `Watch`, `Low Stock`, `Critical` | User confirmation on 2026-04-05 plus workbook review | `Healthy stock` aggregates `Above Target + On Track`; `Critical attention` aggregates `Low Stock + Critical` |
+| Phase E first slice | Start with admin-triggered Shiprocket sync, read-only synced table, and sync-log visibility before any cron/webhook automation | User approval on 2026-04-05 plus Phase E implementation | Keeps Shiprocket optional while proving auth, mapping, and dedupe safely |
 
 ## Resolved Document Conflicts
 
@@ -65,6 +66,7 @@ These are active unless explicitly changed:
 - Never use any SSH keys other than `C:\Users\hp\.ssh\wayveda_vps_ed25519` for this project
 - Do not commit live `.env` files
 - Preserve manual dispatch capability even after Shiprocket sync is added
+- Do not manually enter the same customer order and also sync that same order from Shiprocket in the current Phase E slice
 - Treat the Ledger verification values in `ALICE_INSTRUCTIONS.md` as the import validation target
 - Confirm before future disruptive infra actions such as reboot unless required for immediate recovery or security work
 

@@ -209,10 +209,15 @@ Open `Dispatch`.
 Check:
 
 - `Manual Entry` tab works
-- `Shiprocket Synced` placeholder tab is visible
+- `Shiprocket Synced` tab loads
+- Shiprocket connection state is visible
+- recent sync log is visible
+- synced dispatch table is visible if rows already exist
+- `Sync now` appears only for `admin` / `system_admin`
 - multi-product flow works
 - product search narrows quickly while you type
 - validation prevents empty submissions
+- do not manually enter the same order and then sync it again from Shiprocket in the current Phase E slice
 
 Expected behavior after a real submit:
 
@@ -302,6 +307,7 @@ Example:
 - product selection now uses searchable type-to-filter controls in the main warehouse and analysis flows
 - analysis screens now include rolling KPI cards for today, last 7 days, and last 30 days
 - permanent delete only works for inactive zero-balance products with no movement history
+- Shiprocket Phase E first slice is live in the Dispatch screen, but real sync still depends on server credentials and mapping verification
 
 ## Recommended First Test Sequence
 

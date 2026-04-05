@@ -47,7 +47,7 @@ const NAVIGATION_GROUPS = [
         to: "/stock-in",
       },
       {
-        description: "Manual dispatch entry and Shiprocket sync shell.",
+        description: "Manual dispatch entry plus read-only Shiprocket sync review.",
         eyebrow: "Movement Entry",
         icon: Truck,
         label: "Dispatch",

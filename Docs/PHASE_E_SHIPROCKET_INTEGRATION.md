@@ -2,7 +2,7 @@
 
 ## Objective
 
-Plan the Shiprocket integration as a logistics-side dispatch sync layer without disturbing the approved warehouse ledger foundation.
+Implement the first Shiprocket integration slice as a logistics-side dispatch sync layer without disturbing the approved warehouse ledger foundation.
 
 ## Dependency Note
 
@@ -14,7 +14,7 @@ Why:
 - Shiprocket affects dispatch-sync convenience and logistics visibility
 - Shiprocket is not the inventory baseline source
 
-So Phase E planning can proceed while `max_level` is still pending.
+So Phase E implementation can proceed while `max_level` is still pending.
 
 ## Canonical Role of Shiprocket
 
@@ -64,13 +64,66 @@ Shiprocket should only help with:
 - show imported rows as read-only logistics records
 - keep `Manual Entry` fully usable in parallel
 
-## Required Inputs Before Implementation
+## Current Phase E Status
+
+Completed in the first Phase E slice:
+
+- backend Shiprocket config loader
+- Shiprocket auth wrapper
+- dispatch sync service
+- sync logging in `shiprocket_sync_log`
+- product-alias mapping config
+- `GET /api/shiprocket/status`
+- `GET /api/shiprocket/dispatches`
+- `POST /api/shiprocket/sync`
+- CLI sync command: `npm run shiprocket:sync`
+- live `Dispatch > Shiprocket Synced` tab with:
+  - connection state
+  - sync status
+  - manual `Sync now` control for admins
+  - read-only synced dispatch table
+  - recent sync-log table
+
+Still pending before Phase E can be called complete:
+
+- real Shiprocket credentials
+- first successful live auth + sync test
+- mapping review against real Shiprocket catalog names
+- final decision on periodic sync / cron timing
+- webhook shell or webhook implementation
+
+## Required Inputs Before First Live Sync
 
 - Shiprocket API credentials
-- agreed sync cadence
-- product-name mapping rules
-- status fields WayVeda actually wants visible in the synced table
-- whether webhook handling is in Phase E initial build or only reserved
+- product-name mapping confirmation from real Shiprocket payloads
+- agreed sync cadence if we enable periodic sync after the first manual test
+
+## Credential Placement
+
+Tracked template:
+
+- `backend/.env.example`
+
+Live server env file:
+
+- `/root/apps/wayveda-warehouse-system/backend/.env`
+
+Shiprocket keys to add there:
+
+```env
+SHIPROCKET_EMAIL=your-shiprocket-api-email
+SHIPROCKET_PASSWORD=your-shiprocket-api-password
+SHIPROCKET_BASE_URL=https://apiv2.shiprocket.in/v1/external
+```
+
+Optional sync tuning keys:
+
+```env
+SHIPROCKET_SYNC_LOOKBACK_DAYS=30
+SHIPROCKET_SYNC_MAX_PAGES=5
+SHIPROCKET_SYNC_PAGE_SIZE=50
+SHIPROCKET_TIMEOUT_MS=20000
+```
 
 ## Proposed Phase E Data Rules
 
@@ -81,6 +134,7 @@ Shiprocket must never become the only dispatch path.
 If Shiprocket is unavailable:
 
 - users must still be able to create manual dispatch entries
+- users can keep working without Shiprocket entirely
 
 ### 2. Dedupe
 
@@ -89,6 +143,11 @@ Every synced dispatch must be deduplicated by external order identity, not by ti
 Primary candidate:
 
 - `shiprocket_order_id`
+
+Operational warning:
+
+- do not manually enter the same customer order and then sync that same order from Shiprocket
+- the current Phase E slice deduplicates Shiprocket rows against prior Shiprocket imports, not against manually entered dispatches with no external order ID
 
 ### 3. Source Flagging
 
@@ -114,13 +173,12 @@ If a Shiprocket product name cannot be matched confidently:
 
 ## Suggested Phase E Work Breakdown
 
-1. Confirm credentials and mapping assumptions.
-2. Build backend Shiprocket config and auth service.
-3. Build sync log service and status endpoint.
-4. Build dispatch pull sync with dedupe.
-5. Build unmapped-product reporting.
-6. Replace Dispatch page placeholder with synced read-only table.
-7. Verify manual fallback still works.
+1. Add live credentials to the VPS backend `.env`.
+2. Run first admin-triggered sync from the Dispatch screen.
+3. Review unmapped products and extend `shiprocket-product-map.js` as needed.
+4. Confirm the synced table fields against WayVeda expectations.
+5. Decide whether to enable periodic sync after the first live pass.
+6. Decide whether webhook work stays reserved or moves into the next slice.
 
 ## Exit Criteria
 
@@ -130,6 +188,7 @@ If a Shiprocket product name cannot be matched confidently:
 - duplicate sync runs do not duplicate dispatch rows
 - unmapped products are surfaced clearly
 - manual dispatch still works at all times
+- operators can review synced rows without admin rights
 
 ## Risks
 
@@ -139,10 +198,10 @@ If a Shiprocket product name cannot be matched confidently:
 
 ## Recommendation
 
-Phase E planning should proceed now.
+Phase E has now started in a safe first slice.
 
-Actual Phase E implementation should wait until:
+The immediate next action is:
 
-- credentials are available
-- mapping expectations are confirmed
-- WayVeda agrees what the synced Dispatch tab must show
+1. add the real Shiprocket credentials to `/root/apps/wayveda-warehouse-system/backend/.env`
+2. trigger the first live sync from `Dispatch > Shiprocket Synced`
+3. review mapping and sync results before enabling any scheduled job

@@ -62,7 +62,7 @@ Use the following sources in this precedence order when there is a conflict:
 | B | Database and historical data foundation | Tables, views, 12 seeded products, imported movement history, verified balances | Completed |
 | C | Backend API | Express server, auth, product routes, movement routes, analytics routes, health endpoint | Completed |
 | D | Frontend application | React app shell, auth, dashboard, entry forms, analytics, product management | In progress |
-| E | Shiprocket integration | Auth, polling sync, mapping, auto dispatch creation, sync status UI | Planned |
+| E | Shiprocket integration | Auth, polling sync, mapping, auto dispatch creation, sync status UI | In progress |
 | F | Testing, production hardening, handover | E2E verification, production deploy validation, rollback path, documentation | Planned |
 
 ## Phase Details
@@ -214,7 +214,7 @@ Current status:
 Scope:
 
 - Shiprocket authentication and token handling
-- Periodic sync job
+- Manual sync job and reserved path for periodic sync
 - Product name mapping
 - Auto-generated dispatch entries with `source='shiprocket'`
 - Sync status reporting
@@ -223,6 +223,23 @@ Exit criteria:
 
 - Dispatch sync runs successfully with real credentials
 - Manual dispatch remains available as fallback
+
+Current status:
+
+- In progress on 2026-04-05
+- Backend Phase E slice is now implemented:
+  - Shiprocket config and auth wrapper
+  - admin-triggered dispatch sync service
+  - sync logging via `shiprocket_sync_log`
+  - product alias map for first-pass matching
+  - API endpoints: `/api/shiprocket/status`, `/api/shiprocket/dispatches`, `/api/shiprocket/sync`
+- Frontend Dispatch screen now includes a live `Shiprocket Synced` tab:
+  - connection status
+  - admin `Sync now` action
+  - read-only synced dispatch table
+  - recent sync-log table
+- First live sync is still blocked pending real credentials in the VPS backend `.env`
+- Scheduled sync and webhook decisions remain deferred until the first live manual sync is verified
 
 ### Phase F - Testing, Hardening, and Handover
 
@@ -259,4 +276,4 @@ Exit criteria:
 
 1. Wait for Ankush's confirmed `max_level` values before treating stock-health and reorder outputs as business-final.
 2. Continue Phase D UAT on flows that do not depend on `max_level`.
-3. Begin Phase E planning and integration prep using `Docs/PHASE_E_SHIPROCKET_INTEGRATION.md`.
+3. Add the live Shiprocket credentials to the VPS backend `.env` and run the first manual sync from the Dispatch screen.
