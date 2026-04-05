@@ -86,6 +86,13 @@ Verify:
 
 - the page loads without errors
 - all summary cards load
+- dashboard health statuses follow the workbook model:
+  - `Set Max Level`
+  - `Above Target`
+  - `On Track`
+  - `Watch`
+  - `Low Stock`
+  - `Critical`
 - quick-action cards render correctly
 - product rows appear
 - values look reasonable against the known inventory context

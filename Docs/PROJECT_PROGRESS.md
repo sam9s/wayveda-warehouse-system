@@ -155,6 +155,18 @@
 - Updated app-entry behavior so a full page refresh always resets authenticated users back to `Dashboard`, and analysis screens now default to `Daily` when opened fresh, including `RTO Analysis`.
 - Fixed the bootstrap user script so `--no-force-password-change` now works correctly on first-time user creation, not only on conflict updates.
 - Provisioned dedicated QA role-check accounts on the live VPS for `admin`, `operator`, and `viewer` visibility testing without forced password change.
+- Aligned dashboard stock-health logic to Ankush's workbook formula:
+  - `Set Max Level`
+  - `Above Target`
+  - `On Track`
+  - `Watch`
+  - `Low Stock`
+  - `Critical`
+- Updated the dashboard KPI cards so:
+  - `Healthy stock` = `Above Target + On Track`
+  - `Watch list` = `Watch`
+  - `Critical attention` = `Low Stock + Critical`
+- Corrected the ledger/dashboard edge case where `max_level = 0` must behave like `Set Max Level`, not like a valid configured target.
 
 ## VPS Baseline
 

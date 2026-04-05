@@ -2,6 +2,7 @@ import {
   AlertTriangle,
   Boxes,
   CheckCircle2,
+  Eye,
   Link2,
   PackageSearch,
 } from "lucide-react";
@@ -75,13 +76,20 @@ function Dashboard() {
     );
   }
 
-  const criticalCount = state.rows.filter((row) =>
-    ["Critical", "Out of Stock"].includes(row.status)
-  ).length;
-  const healthyCount = state.rows.filter((row) => row.status === "Healthy").length;
-  const needsConfigCount = state.rows.filter(
-    (row) => row.status === "Set Max Level"
-  ).length;
+  const statusCounts = state.rows.reduce((counts, row) => {
+    const status = row.status || "Unknown";
+    counts[status] = (counts[status] || 0) + 1;
+    return counts;
+  }, {});
+
+  const aboveTargetCount = statusCounts["Above Target"] || 0;
+  const onTrackCount = statusCounts["On Track"] || 0;
+  const watchCount = statusCounts.Watch || 0;
+  const lowStockCount = statusCounts["Low Stock"] || 0;
+  const criticalStatusCount = statusCounts.Critical || 0;
+  const healthyCount = aboveTargetCount + onTrackCount;
+  const criticalCount = lowStockCount + criticalStatusCount;
+  const needsConfigCount = statusCounts["Set Max Level"] || 0;
 
   return (
     <div className={dashboardStyles.page}>
@@ -99,14 +107,29 @@ function Dashboard() {
           value={formatNumber(state.rows.length)}
         />
         <StatCard
-          helper="Products with low or empty inventory"
+          details={[
+            { label: "Low Stock", value: formatNumber(lowStockCount) },
+            { label: "Critical", value: formatNumber(criticalStatusCount) },
+          ]}
+          helper="Products below the 50% inventory threshold"
           icon={AlertTriangle}
           label="Critical attention"
           tone="danger"
           value={formatNumber(criticalCount)}
         />
         <StatCard
-          helper="Products already above the health threshold"
+          helper="Products between 50% and 75% of max level"
+          icon={Eye}
+          label="Watch list"
+          tone="warning"
+          value={formatNumber(watchCount)}
+        />
+        <StatCard
+          details={[
+            { label: "Above Target", value: formatNumber(aboveTargetCount) },
+            { label: "On Track", value: formatNumber(onTrackCount) },
+          ]}
+          helper="Products at or above the 75% health target"
           icon={CheckCircle2}
           label="Healthy stock"
           tone="positive"
@@ -171,7 +194,7 @@ function Dashboard() {
                 header: "Latest Entry",
                 key: "latest_entry_date",
                 render: (row) =>
-                  `${formatDate(row.latest_entry_date)} · ${formatMovementType(
+                  `${formatDate(row.latest_entry_date)} | ${formatMovementType(
                     row.latest_entry_type
                   )}`,
               },

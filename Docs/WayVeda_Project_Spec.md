@@ -477,16 +477,16 @@ SELECT
     product_name, category, balance, max_level, stock_percentage, reorder_qty,
     latest_entry_date, latest_entry_type, rto_rate_pct, warehouse_fault_pct,
     CASE
-        WHEN max_level IS NULL THEN 'Set Max Level'
-        WHEN balance <= 0 THEN 'Out of Stock'
-        WHEN stock_percentage < 20 THEN 'Critical'
-        WHEN stock_percentage < 50 THEN 'Low'
-        ELSE 'Healthy'
+        WHEN max_level IS NULL OR max_level = 0 THEN 'Set Max Level'
+        WHEN stock_percentage > 100 THEN 'Above Target'
+        WHEN stock_percentage >= 75 THEN 'On Track'
+        WHEN stock_percentage >= 50 THEN 'Watch'
+        WHEN stock_percentage >= 25 THEN 'Low Stock'
+        ELSE 'Critical'
     END AS status,
     CASE
-        WHEN max_level IS NULL THEN 'Configure'
-        WHEN balance <= 0 THEN 'URGENT'
-        WHEN stock_percentage < 20 THEN 'Reorder Now'
+        WHEN max_level IS NULL OR max_level = 0 THEN 'Configure'
+        WHEN stock_percentage < 25 THEN 'Order Now'
         WHEN stock_percentage < 50 THEN 'Plan Reorder'
         ELSE 'OK'
     END AS alert
@@ -654,9 +654,9 @@ const PRODUCT_MAP = {
 Replaces the "Dashboard" tab from the Google Sheet.
 
 **Content:**
-- Summary stat cards: Total SKUs, Total Balance, Products Below Reorder, RTO Rate
+- Summary stat cards: Active Products, Critical Attention, Watch List, Healthy Stock, Needs Configuration
 - Product health table: Product Name | Balance | Last/This Month Dispatch | Reorder Qty | Status | Alert
-- Color-coded status: Green (Healthy), Yellow (Low), Red (Critical), Gray (Set Max Level)
+- Color-coded status: Green (`Above Target`, `On Track`), Yellow (`Watch`, `Set Max Level`), Red (`Low Stock`, `Critical`)
 - Quick links to Stock In, Dispatch, RTO entry forms
 
 ### Screen 3: Inventory Ledger

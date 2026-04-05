@@ -63,18 +63,23 @@ export function formatMovementType(value) {
 export function getStatusTone(value) {
   switch (value) {
     case "Active":
+    case "Above Target":
     case "Healthy":
+    case "On Track":
     case "Ready for delete":
       return "positive";
     case "Inactive":
     case "Low":
+    case "Watch":
     case "Plan Reorder":
     case "Configure":
     case "Set Max Level":
     case "Guided cleanup required":
       return "warning";
     case "Critical":
+    case "Low Stock":
     case "Out of Stock":
+    case "Order Now":
     case "Reorder Now":
     case "URGENT":
     case "Blocked":
@@ -91,6 +96,7 @@ export function getAlertTone(value) {
     case "Plan Reorder":
     case "Configure":
       return "warning";
+    case "Order Now":
     case "Reorder Now":
     case "URGENT":
       return "danger";
