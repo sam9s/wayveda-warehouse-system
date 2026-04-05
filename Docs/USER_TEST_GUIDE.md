@@ -303,8 +303,10 @@ Follow this order:
 1. login
 2. change temporary password
 3. switch themes and refresh once
+   - after refresh, the app should reopen on `Dashboard`
 4. review dashboard
 5. review ledger and CSV export
 6. review all three analysis screens
+   - each analysis page should open with `Daily` selected by default
 7. review settings
 8. only then decide whether to do one controlled write-path test

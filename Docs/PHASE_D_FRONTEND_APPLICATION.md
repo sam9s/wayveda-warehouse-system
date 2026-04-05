@@ -102,6 +102,7 @@ Use these inputs in this order:
   - `Inward Analysis` is now labeled `Stock In Analysis` to match warehouse language already used elsewhere in the product
   - analysis screens now separate rolling KPI totals from the date-range trend graph so users can read both current windows and historical trends without confusion
   - role-based testing is now practical without password-reset friction because dedicated QA accounts do not force first-login password change
+  - authenticated refresh behavior now resets the app shell to `Dashboard`, and fresh analysis visits default to the `Daily` period view
 - Two real WayVeda business-admin accounts have been provisioned and flagged for first-login password change.
 - Remaining work in this slice:
   - test the browser login, forgot-password, and operator screens with the new guide and real accounts

@@ -34,7 +34,7 @@ function RTOAnalysis() {
   const { error: productError, loading: productsLoading, products } = useProducts();
   const [filters, setFilters] = useState({
     from: defaultFromDate(),
-    period: "monthly",
+    period: "daily",
     productId: "",
     to: formatDateForInput(),
   });

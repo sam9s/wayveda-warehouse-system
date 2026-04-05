@@ -12,7 +12,7 @@ import { useAuth } from "../auth/AuthContext.jsx";
 import loginStyles from "./Login.module.css";
 
 function Login() {
-  const { isAuthenticated, login, status } = useAuth();
+  const { isAuthenticated, login, status, user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -25,7 +25,7 @@ function Login() {
   }
 
   if (isAuthenticated) {
-    return <Navigate replace to={location.state?.from?.pathname || "/dashboard"} />;
+    return <Navigate replace to={user?.mustChangePassword ? "/change-password" : "/dashboard"} />;
   }
 
   async function handleSubmit(event) {
@@ -35,12 +35,9 @@ function Login() {
 
     try {
       const nextUser = await login({ email, password });
-      navigate(
-        nextUser?.mustChangePassword
-          ? "/change-password"
-          : location.state?.from?.pathname || "/dashboard",
-        { replace: true }
-      );
+      navigate(nextUser?.mustChangePassword ? "/change-password" : "/dashboard", {
+        replace: true,
+      });
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Unable to sign in.");
     } finally {
