@@ -110,11 +110,11 @@ The readiness check evaluates three core rules:
 Current UI flow:
 
 1. open `Product Management`
-2. select the product from the list
-3. if you are logged in as `system_admin`, open the permanent-delete panel for that selected product
+2. if you are logged in as `system_admin`, go to the separate permanent-delete danger card
+3. search for and select the exact product inside that delete card
 4. run the readiness check
 5. review status, reasons, and next steps
-6. only if the status is `Ready for delete`, use the permanent delete action and confirm the popup
+6. only if the status is `Ready for delete`, use `Confirm Delete` and accept the popup
 
 Normal admins do not see the permanent-delete workflow.
 
@@ -193,8 +193,9 @@ The safest current test is:
 1. Create a temporary product with zero opening stock.
 2. Save it.
 3. Deactivate it.
-4. Run delete readiness.
-5. Confirm the status is `Ready for delete`.
-6. Permanently delete it.
+4. Use the separate permanent-delete danger card to search for that product.
+5. Run delete readiness.
+6. Confirm the status is `Ready for delete`.
+7. Permanently delete it.
 
 This tests the full guarded path without affecting real inventory history.

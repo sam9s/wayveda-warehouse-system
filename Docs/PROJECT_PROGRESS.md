@@ -3,8 +3,8 @@
 ## Status Snapshot
 
 - Date: 2026-04-05
-- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment, password rotation, theme support, and password-recovery flow
-- Active focus: login/polish fixes from first live feedback and operator-path QA on the live frontend
+- Overall project state: Phase A complete, CI/CD operational, Phase B complete, Phase C complete, Phase D in progress with live frontend deployment, password rotation, theme support, password-recovery flow, and searchable product-selection UX
+- Active focus: live UI/UX refinement from operator feedback, searchable product selection, and operator-path QA on the live frontend
 
 ## Completed So Far
 
@@ -141,6 +141,11 @@
   - selected product is explicitly highlighted in the product list and edit panel
   - normal admins do not see the permanent-delete controls
   - the delete panel now includes reset and next-step guidance when a product is blocked
+- Added scalable searchable product selectors across the live frontend:
+  - Stock In, Dispatch, and RTO product pickers now use type-to-search product selection
+  - Dispatch Analysis, Inward Analysis, and RTO Analysis product filters now use the same searchable selector
+  - the permanent-delete workflow now uses its own dedicated searchable product selector inside a full-width danger card
+  - the shared selector searches by product name, SKU, and category, with typed narrowing designed for larger catalogs
 
 ## VPS Baseline
 
@@ -207,9 +212,10 @@ Verified on 2026-04-04:
 - Deactivate/reactivate user management is still pending even though create/list is now live in the app.
 - Recovery email delivery still depends on replacing the placeholder self-hosted SMTP settings with a real outbound mail provider.
 - Guided cleanup for products with historical movements is still pending and intentionally separate from the direct delete path.
+- Broader record-level search across large ledgers and admin tables is still a future enhancement beyond the new product-selector search layer.
 
 ## Next Planned Actions
 
-1. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, and RTO flows using the guide.
-2. Validate the new admin-side user-management flow in the browser.
+1. Run live operator-path checks for dashboard, ledger, Stock In, Dispatch, RTO, and analysis flows using the guide and the new searchable selectors.
+2. Validate the new dedicated permanent-delete danger card with a temporary zero-stock SKU.
 3. Add deactivate/reactivate and future role-edit support to user management.

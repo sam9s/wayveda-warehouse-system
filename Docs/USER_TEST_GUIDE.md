@@ -52,6 +52,28 @@ What to test:
 - theme stays selected after page refresh
 - theme works on login screen and inside the app shell
 
+## Searchable Product Selectors
+
+Product-picking fields are now searchable instead of plain long dropdowns.
+
+Where this applies:
+
+- `Stock In`
+- `Dispatch`
+- `RTO`
+- `Dispatch Analysis`
+- `Inward Analysis`
+- `RTO Analysis`
+- `Product Management` permanent-delete danger card for `system_admin`
+
+What to test:
+
+- click into the product field and start typing
+- results narrow immediately by product name, SKU, or category
+- selecting a result fills the exact product
+- `Clear` resets the field cleanly
+- the search is usable without long manual scrolling
+
 ## Safe Read-Only Test Flow
 
 This is the best first pass because it does not alter live inventory.
@@ -138,7 +160,7 @@ Safe product-lifecycle test path:
 2. verify it appears in product management
 3. deactivate it
 4. verify it disappears from active product selectors
-5. if you are logged in as `system_admin`, run delete readiness
+5. if you are logged in as `system_admin`, open the separate permanent-delete danger card, search for the product there, and run delete readiness
 6. if the status is `Ready for delete`, permanently delete it
 
 Important:
@@ -146,7 +168,7 @@ Important:
 - deactivation does not alter inventory movements
 - deactivation is an active-visibility switch
 - inactive products disappear from active selectors and active operational views
-- permanent delete is only for `system_admin` and only when the readiness check passes
+- permanent delete is only for `system_admin` and only when the readiness check passes inside the dedicated delete card
 
 ## Movement Screen Test Checklist
 
@@ -160,6 +182,7 @@ Check before submit:
 - date and operator details render correctly
 - `+ Add Product` works
 - item count badge updates
+- product search narrows quickly while you type
 - validation behaves correctly for empty or invalid fields
 
 Expected behavior after a real submit:
@@ -177,6 +200,7 @@ Check:
 - `Manual Entry` tab works
 - `Shiprocket Synced` placeholder tab is visible
 - multi-product flow works
+- product search narrows quickly while you type
 - validation prevents empty submissions
 
 Expected behavior after a real submit:
@@ -192,6 +216,7 @@ Check:
 
 - Right / Wrong / Fake entry fields behave correctly
 - multi-product flow works
+- product search narrows quickly while you type
 - validation prevents invalid totals
 
 Expected behavior after a real submit:
@@ -263,6 +288,7 @@ Example:
 - no general movement delete/undo UI exists yet
 - user-management UI is live
 - product add, deactivate, reactivate, and `system_admin` delete-readiness are live
+- product selection now uses searchable type-to-filter controls in the main warehouse and analysis flows
 - permanent delete only works for inactive zero-balance products with no movement history
 
 ## Recommended First Test Sequence
